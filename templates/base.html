@@ -7,11 +7,24 @@
     {% endblock %}
   </head>
   <body>
-    <div id="content">{% block content %}{% endblock %}</div>
-    <div id="footer">
+    <header id="header" class="container">
+<hgroup>
+  <h1>Title</h1>
+  <p>How to use CSS to add glam to your Website?</p>
+</hgroup>
+      <nav>
+        <ul>
+          <li>link</li>
+        </ul>
+      </nav>
+</header>
+<main id="main" class="container">
+{% block content %}{% endblock %}
+</main>
+<footer id="footer" class="container">
       {% block footer %}
-      &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>.
+      &copy; Copyright 2025 by <a href="http://domain.invalid/">owner</a>.
       {% endblock %}
-    </div>
+</footer>
   </body>
 </html>
