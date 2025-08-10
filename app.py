@@ -70,7 +70,7 @@ DEFAULT_HTML = """
     <title>{{ title }}</title>
     <meta name="description" content="{{ description }}">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css?v=1.0') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="shortcut icon" href="/favicon.ico">
 </head>
 <body>
