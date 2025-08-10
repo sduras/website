@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} from template</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-<header>
-    <h1>{{ heading }}</h1>
-</header>
-<main>
-    <span>{{ message }}</span>
-</main>
-<footer>
-    <p>&copy; {{ year }}</p>
-</footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}from child template{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+  <h1>from child template</h1>
+  <p class="important">
+    Welcome on my awesome homepage.
+{% endblock %}

@@ -75,13 +75,13 @@ DEFAULT_HTML = """
 </head>
 <body>
 <header id="header" class="container">
-    <h1>{{ heading }}</h1>
+    <h1>Homepage</h1>
 </header>
 <main id="main" class="container">
-    <span>{{ message }}</span>
+    <span>🖖🏻 Hello, Sergiy</span>
 </main>
 <footer id="footer" class="container">
-    <p>&copy; {{ year }}</p>
+    <p>&copy; 2025</p>
 </footer>
 </body>
 </html>
@@ -90,16 +90,10 @@ DEFAULT_HTML = """
 
 @app.route("/")
 def home():
-    data = {
-        "title": "Anonymous Website",
-        "heading": "from default string",
-        "message": "🖖🏻 Hello, Sergiy",
-        "year": time.strftime("%Y"),
-    }
     try:
-        return render_template("index.html", **data)
+        return render_template("index.html")
     except TemplateNotFound:
-        return render_template_string(DEFAULT_HTML, **data)
+        return render_template_string(DEFAULT_HTML)
 
 
 @app.route("/api/status")
