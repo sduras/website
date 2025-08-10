@@ -92,7 +92,7 @@ DEFAULT_HTML = """
 def home():
     data = {
         "title": "Anonymous Website",
-        "heading": "Welcome to my Tor Hidden Service",
+        "heading": "from default string",
         "message": "🖖🏻 Hello, Sergiy",
         "year": time.strftime("%Y"),
     }
