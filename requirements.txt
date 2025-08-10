@@ -1,0 +1,10 @@
+Flask
+Jinja2
+MarkupSafe
+Werkzeug
+bleach
+blinker
+click
+itsdangerous
+markdown
+webencodings

@@ -1,207 +1,188 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[codz]
+# -------------------------------------------------------
+# Python bytecode, compiled, and interpreter artifacts
+# -------------------------------------------------------
 *$py.class
-
-# C extensions
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
 *.so
-
-# Distribution / packaging
+*.sage.py
+__pycache__/
+__pycache__/
+__pypackages__/
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
 MANIFEST
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+# -------------------------------------------------------
+# Backup, temporary, and autosave files
+# -------------------------------------------------------
+*.#*
+*.backup
+*.bak
+*.orig
+*.swp
+*.swo
+*.swn
+*.swm
+*.tmp
+*.temp
+*~
+~$*
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
+# -------------------------------------------------------
+# Log files and coverage
+# -------------------------------------------------------
+*.log
 .coverage
 .coverage.*
-.cache
-nosetests.xml
-coverage.xml
 *.cover
-*.py.cover
-.hypothesis/
-.pytest_cache/
+*.py,cover
 cover/
+coverage.xml
+htmlcov/
+pytestdebug.log
 
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-.pybuilder/
+# -------------------------------------------------------
+# Project-specific output and build artifacts
+# -------------------------------------------------------
+build/
+data/
+data/*
+dist/
+downloads/
+sdist/
+develop-eggs/
+eggs/
+.eggs/
+parts/
+wheels/
 target/
+cython_debug/
+docs/_build/
+_site/
+_site/*
 
-# Jupyter Notebook
+# -------------------------------------------------------
+# Environment files and virtual environments
+# -------------------------------------------------------
+.env
+.env/
+.env.bak/
+.venv
+.venv/
+venv/
+venv.bak/
+ENV/
+env/
+threema-gateway-venv/
+api/.venv/
+vercel/
+.vercel
+.vercel/
+
+# -------------------------------------------------------
+# IDE/editor files
+# -------------------------------------------------------
+*.sublime-project
+*.sublime-workspace
+
+# -------------------------------------------------------
+# Configuration files for tools
+# -------------------------------------------------------
+.dmypy.json
+.mypy_cache/
+.pytype/
+.pyre/
+.pybuilder/
+.pytest_cache/
+.hypothesis/
+.pdm.toml
+pdm.toml
+.tox/
+.nox/
+.cache
+.installed.cfg
+.scrapy
+.webassets-cache
 .ipynb_checkpoints
-
-# IPython
-profile_default/
 ipython_config.py
 
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
+# -------------------------------------------------------
+# System-specific files
+# -------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Desktop.ini
+Thumbs.db
+ehthumbs.db
 
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
+# -------------------------------------------------------
+# File types (documents, data, and archives)
+# -------------------------------------------------------
+*.doc
+*.docx
+*.docx~
+*.xls
+*.xslx
+*.dtf
+*.mo
+*.pot
+*.gz
+*.json
+*.spec
+*.manifest
+*.xslx
 
-# UV
-#   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#uv.lock
+# -------------------------------------------------------
+# Flask and app settings
+# -------------------------------------------------------
+.flaskenv
+local_settings.py
+credentials.txt
 
-# poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-#poetry.lock
-#poetry.toml
+# -------------------------------------------------------
+# Database and storage
+# -------------------------------------------------------
+db.sqlite3
+db.sqlite3-journal
+database.json
+datafile.json
+data/
+/data
+data/database.json
 
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#   pdm recommends including project-wide configuration in pdm.toml, but excluding .pdm-python.
-#   https://pdm-project.org/en/latest/usage/project/#working-with-version-control
-#pdm.lock
-#pdm.toml
-.pdm-python
-.pdm-build/
-
-# pixi
-#   Similar to Pipfile.lock, it is generally recommended to include pixi.lock in version control.
-#pixi.lock
-#   Pixi creates a virtual environment in the .pixi directory, just like venv module creates one
-#   in the .venv directory. It is recommended not to include this directory in version control.
-.pixi
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
-
-# Celery stuff
+# -------------------------------------------------------
+# Instance and runtime files
+# -------------------------------------------------------
+instance/
 celerybeat-schedule
 celerybeat.pid
+profile_default/
 
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.envrc
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
-
-# Abstra
-# Abstra is an AI-powered process automation framework.
-# Ignore directories containing user credentials, local state, and settings.
-# Learn more at https://abstra.io/docs
-.abstra/
-
-# Visual Studio Code
-#  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
-#  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
-#  and can be added to the global gitignore or merged into this file. However, if you prefer, 
-#  you could uncomment the following to ignore the entire vscode folder
-# .vscode/
-
-# Ruff stuff:
-.ruff_cache/
-
-# PyPI configuration file
-.pypirc
-
-# Cursor
-#  Cursor is an AI-powered code editor. `.cursorignore` specifies files/directories to
-#  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data
-#  refer to https://docs.cursor.com/context/ignore-files
-.cursorignore
-.cursorindexingignore
-
-# Marimo
-marimo/_static/
-marimo/_lsp/
-__marimo__/
+# -------------------------------------------------------
+# Misc project directories
+# -------------------------------------------------------
+/output
+/output/*
+/backups
+backups/
+/drafts
+drafts/
+/instructions
+micropython/
+pico2/
+site/
+api/.pytest_cache/
+api/library/
+library/
+project/
+structure.txt
+lib/
+lib64/
+share/python-wheels/
+yarn-error.log
+npm-debug.log
+pip-log.txt
+pip-delete-this-directory.txt
