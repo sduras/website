@@ -3,6 +3,36 @@
 {% block title %}Contact{% endblock %}
 {% block head %}
   {{ super() }}
+<style>
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .toast.success {
+    background-color: #28a745;
+  }
+
+  .toast.error {
+    background-color: #dc3545;
+  }
+</style>
+
 {% endblock %}
 {% block content %}<section>
 <h1>Contact</h1>
@@ -27,35 +57,50 @@
     <div id="form-status"></div>
 </div>
 </section>
-  <script>
-    document.getElementById("current-year").textContent = new Date().getFullYear();
+<script>
+  const showToast = (message, type = 'success') => {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.className = `toast show ${type}`;
+    toast.hidden = false;
 
-    document.getElementById("contact-form").addEventListener("submit", function (event) {
-      event.preventDefault();
-      const formData = new FormData(this);
-      const submitButton = event.target.querySelector('button');
-      const formStatus = document.getElementById("form-status");
+    // Hide after 3 seconds
+    setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => {
+        toast.hidden = true;
+      }, 400);
+    }, 3000);
+  };
 
-      submitButton.disabled = true;
-      submitButton.textContent = "Sending...";
+  document.getElementById("contact-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+    const submitButton = event.target.querySelector('button');
 
-      fetch(this.action, {
-        method: this.method,
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        formStatus.textContent = data.success ? "Message sent successfully!" : data.error || "Submission failed.";
-        formStatus.style.color = data.success ? "green" : "red";
-      })
-      .catch(error => {
-        formStatus.textContent = `Error: ${error.message || "Could not send message."}`;
-        formStatus.style.color = "red";
-      })
-      .finally(() => {
-        submitButton.disabled = false;
-        submitButton.textContent = "Send Message";
-      });
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+
+    fetch(this.action, {
+      method: this.method,
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        showToast("Message sent successfully!", "success");
+      } else {
+        showToast(data.error || "Submission failed.", "error");
+      }
+    })
+    .catch(error => {
+      showToast(`Error: ${error.message || "Could not send message."}`, "error");
+    })
+    .finally(() => {
+      submitButton.disabled = false;
+      submitButton.textContent = "Send Message";
     });
-  </script>
+  });
+</script>
+<div id="toast" class="toast" hidden></div>
 {% endblock %}
