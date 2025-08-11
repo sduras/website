@@ -3,7 +3,7 @@ from flask import (Flask, jsonify, render_template, render_template_string,
                    url_for)
 from jinja2 import TemplateNotFound
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates", static_folder="static")
 
 DEFAULT_HTML = """
 <!DOCTYPE html>
