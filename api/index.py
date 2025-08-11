@@ -46,7 +46,7 @@ def home():
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
         
-@app.route("/")
+@app.route("/key")
 def key():
     try:
         return render_template("key.html")
