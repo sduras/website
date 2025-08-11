@@ -60,6 +60,13 @@ def now():
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
         
+@app.route("/contact")
+def contact():
+    try:
+        return render_template("contact.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
+        
 @app.route("/reading")
 def reading():
     try:

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}<section>
+<h1>Contact</h1>
+<div class="grid">
+<div><p>Privacy-focused web browsers typically incorporate private search as the default setting. The more advanced ones even provide Tor routing capabilities, which obfuscate your location and anonymise your browser fingerprint, rendering it more challenging for online entities to distinguish you from other internet users.</p>
+<p>For any queries or to get in touch, please use the contact form below.</p>
+</div>
+<div>
+    <form id="contact-form" action="/send_email" method="post">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required placeholder="Enter your name">
+      
+      <label for="email">Your Email:</label>
+      <input type="email" id="email" name="email" required placeholder="Enter your email">
+      
+      <label for="message">Your Message:</label>
+      <textarea id="message" name="message" rows="6" required placeholder="Enter your message"></textarea>
+      
+      <button type="submit">Send Message</button>
+    </form>
+    <br>
+    <div id="form-status"></div>
+</div>
+</section>
+  <script>
+    document.getElementById("current-year").textContent = new Date().getFullYear();
+
+    document.getElementById("contact-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+      const formData = new FormData(this);
+      const submitButton = event.target.querySelector('button');
+      const formStatus = document.getElementById("form-status");
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+
+      fetch(this.action, {
+        method: this.method,
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        formStatus.textContent = data.success ? "Message sent successfully!" : data.error || "Submission failed.";
+        formStatus.style.color = data.success ? "green" : "red";
+      })
+      .catch(error => {
+        formStatus.textContent = `Error: ${error.message || "Could not send message."}`;
+        formStatus.style.color = "red";
+      })
+      .finally(() => {
+        submitButton.disabled = false;
+        submitButton.textContent = "Send Message";
+      });
+    });
+  </script>
+{% endblock %}
