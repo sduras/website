@@ -130,7 +130,6 @@ ehthumbs.db
 *.mo
 *.pot
 *.gz
-*.json
 *.spec
 *.manifest
 *.xslx
