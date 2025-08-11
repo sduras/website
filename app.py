@@ -6,7 +6,7 @@ from flask import (Flask, jsonify, render_template, render_template_string,
                    url_for)
 from jinja2 import TemplateNotFound
 
-app = Flask(__name__, template_folder="templates", static_folder="static")
+app = Flask(__name__, template_folder="api/templates", static_folder="api/static")
 
 
 TOR_DIR = os.path.expanduser("~/.tor")

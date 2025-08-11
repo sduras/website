@@ -1,10 +1,1 @@
-Flask
-Jinja2
-MarkupSafe
-Werkzeug
-bleach
-blinker
-click
-itsdangerous
-markdown
-webencodings
+Flask==3.0.3
