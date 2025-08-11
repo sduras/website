@@ -27,7 +27,7 @@
   --color-success: #28bd14;
   --grid-maxWidth: 120rem;
   --grid-gutter: 2rem;
-  --font-size: font-size: clamp(100%, 1rem + 2vw, 24px);
+  --font-size: font-size: clamp(160%, 1rem + 2vw, 24px);
   --font-color: #333;
   --font-family-sans: "Agave Regular", "BlinkMacSystemFont", "Avenir",
     "Avenir Next", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
