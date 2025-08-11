@@ -814,7 +814,7 @@ button:active:not(:disabled) {
 }
 .tabs > .dropdown > summary,
 .tabs > a {
-  padding: 1rem 2rem;
+  padding: 1rem 1.6rem;
   -webkit-box-flex: 0;
       -ms-flex: 0 1 auto;
           flex: 0 1 auto;
