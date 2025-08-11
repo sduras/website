@@ -45,6 +45,13 @@ def home():
         return render_template("index.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
+        
+@app.route("/")
+def key():
+    try:
+        return render_template("key.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
 
 @app.route("/send_email", methods=["POST"])
 def send_email():
