@@ -52,6 +52,20 @@ def key():
         return render_template("key.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
+        
+@app.route("/now")
+def now():
+    try:
+        return render_template("now.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
+        
+@app.route("/reading")
+def reading():
+    try:
+        return render_template("reading.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
 
 @app.route("/send_email", methods=["POST"])
 def send_email():
