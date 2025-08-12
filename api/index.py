@@ -1,10 +1,17 @@
 import os
 import smtplib
-from flask import (Flask, jsonify, render_template, render_template_string,
-                   url_for, request)
-from jinja2 import TemplateNotFound
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+from flask import (
+    Flask,
+    jsonify,
+    render_template,
+    render_template_string,
+    request,
+    url_for,
+)
+from jinja2 import TemplateNotFound
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
@@ -45,34 +52,31 @@ def home():
         return render_template("index.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
-        
-@app.route("/key")
-def key():
-    try:
-        return render_template("key.html")
-    except TemplateNotFound:
-        return render_template_string(DEFAULT_HTML)
-        
+
+
 @app.route("/now")
 def now():
     try:
         return render_template("now.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
-        
+
+
 @app.route("/contact")
 def contact():
     try:
         return render_template("contact.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
-        
+
+
 @app.route("/reading")
 def reading():
     try:
         return render_template("reading.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
+
 
 @app.route("/send_email", methods=["POST"])
 def send_email():
@@ -117,4 +121,3 @@ def after_request(response):
 
 if __name__ == "__main__":
     app.run(debug=True)
-
