@@ -29,14 +29,13 @@ DEFAULT_HTML = """
     <meta name="description" content="{{ description }}">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="shortcut icon" href="/favicon.ico">
 </head>
 <body>
 <header id="header" class="container">
     <h1>Homepage</h1>
 </header>
 <main id="main" class="container">
-    <span>🖖🏻 Hello, Sergiy</span>
+    <span>🖖🏻 Hello</span>
 </main>
 <footer id="footer" class="container">
     <p>&copy; 2025</p>
@@ -49,7 +48,7 @@ DEFAULT_HTML = """
 @app.route("/")
 def home():
     try:
-        return render_template("index.html")
+        return render_template("home.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
 
@@ -62,18 +61,17 @@ def now():
         return render_template_string(DEFAULT_HTML)
 
 
-@app.route("/contact")
-def contact():
-    try:
-        return render_template("contact.html")
-    except TemplateNotFound:
-        return render_template_string(DEFAULT_HTML)
-
-
 @app.route("/reading")
 def reading():
     try:
         return render_template("reading.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
+
+@app.route("/contact")
+def contact():
+    try:
+        return render_template("contact.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
 
