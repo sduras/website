@@ -1,70 +1,70 @@
-{% extends "base.html" %}
-
-{% block title %}Contact{% endblock %}
-{% block description %}To contact Sergiy Duras, please use the contact form provided.{% endblock %}
-{% block head %}{{ super() }}{% endblock %}
-{% block content %}<section>
-        <h1>Contact</h1>
-        <div class="grid">
-          <div>
+{% extends "base.html" %} {% block title %}Contact{% endblock %} {% block
+description %}To contact Sergiy Duras, please use the contact form provided.{%
+endblock %} {% block head %}{{ super() }}{% endblock %} {% block content %}
+<section>
+    <h1>Contact</h1>
+    <div class="grid">
+        <div>
             <p>
-				If you would like to reach out, please fill out the form provided. Just enter your name, email address, and message, and I'll get back to you as soon as possible.
+                If you would like to reach out, please fill out the form
+                provided. Just enter your name, email address, and message, and
+                I'll get back to you as soon as possible.
             </p>
-          </div>
-          <div>
-            <form id="contact-form" action="/send_email" method="post">
-              <label for="name">Your Name:</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                class="form-control"
-                required
-                placeholder="Enter your name"
-              />
-              <label for="email">Your Email:</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                class="form-control"
-                required
-                placeholder="Enter your email"
-              />
-              <label for="message">Your Message:</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="3"
-                class="form-control"
-                required
-                placeholder="Enter your message"
-              ></textarea>
-
-              <button type="submit">Send Message</button>
-            </form>
-          </div>
         </div>
-      </section>
-      <script>
-        const showToast = (message, type = "success") => {
-          const toast = document.getElementById("toast");
-          toast.textContent = message;
-          toast.className = `toast show ${type}`;
-          toast.hidden = false;
+        <div>
+            <form id="contact-form" action="/send_email" method="post">
+                <label for="name">Your Name:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form-control"
+                    required
+                    placeholder="Enter your name"
+                />
+                <label for="email">Your Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    required
+                    placeholder="Enter your email"
+                />
+                <label for="message">Your Message:</label>
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="3"
+                    class="form-control"
+                    required
+                    placeholder="Enter your message"
+                ></textarea>
 
-          // Hide after 3 seconds
-          setTimeout(() => {
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+<script>
+    const showToast = (message, type = "success") => {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.className = `toast show ${type}`;
+        toast.hidden = false;
+
+        // Hide after 3 seconds
+        setTimeout(() => {
             toast.classList.remove("show");
             setTimeout(() => {
-              toast.hidden = true;
+                toast.hidden = true;
             }, 400);
-          }, 3000);
-        };
+        }, 3000);
+    };
 
-        document
-          .getElementById("contact-form")
-          .addEventListener("submit", function (event) {
+    document
+        .getElementById("contact-form")
+        .addEventListener("submit", function (event) {
             event.preventDefault();
             const formData = new FormData(this);
             const submitButton = event.target.querySelector("button");
@@ -73,27 +73,28 @@
             submitButton.textContent = "Sending...";
 
             fetch(this.action, {
-              method: this.method,
-              body: formData,
+                method: this.method,
+                body: formData,
             })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.success) {
-                  showToast("Message sent successfully!", "success");
-                } else {
-                  showToast(data.error || "Submission failed.", "error");
-                }
-              })
-              .catch((error) => {
-                showToast(
-                  `Error: ${error.message || "Could not send message."}`,
-                  "error"
-                );
-              })
-              .finally(() => {
-                submitButton.disabled = false;
-                submitButton.textContent = "Send Message";
-              });
-          });
-      </script>
-      <div id="toast" class="toast" hidden></div>{% endblock %}
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        showToast("Message sent successfully!", "success");
+                    } else {
+                        showToast(data.error || "Submission failed.", "error");
+                    }
+                })
+                .catch((error) => {
+                    showToast(
+                        `Error: ${error.message || "Could not send message."}`,
+                        "error"
+                    );
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Send Message";
+                });
+        });
+</script>
+<div id="toast" class="toast" hidden></div>
+{% endblock %}

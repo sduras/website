@@ -1,54 +1,73 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Homepage{% endblock %} {% block
+description %}To contact Sergiy Duras, please use the contact form provided.{%
+endblock %} {% block head %}{{ super() }}{% endblock %} {% block content %}
+<section>
+    <h1>Hello</h1>
+    <div class="grid">
+        <div>
+            <p>
+                I'm <strong>Sergiy Duras</strong>, a psychologist based in
+                Ukraine. Thanks for taking the time to visit my website.
+            </p>
 
-{% block title %}Homepage{% endblock %}
-{% block description %}To contact Sergiy Duras, please use the contact form provided.{% endblock %}
-{% block head %}{{ super() }}{% endblock %}
-{% block content %}<section>
-					<h1>Hello</h1>
-						<div class="grid">
-							<div>
-							
-<p>I'm <strong>Sergiy Duras</strong>, a psychologist based in Ukraine. Thanks for taking the time to visit my website.</p>
+            <p>
+                This website serves as both my personal contact page and a space
+                where I experiment with code, computer technologies, and tools
+                I'm currently learning. These include CPython and MicroPython,
+                data wrangling, the Vim editor, accessible HTML/CSS, the Onion
+                Router, and the Raspberry Pi Pico, among others.
+            </p>
 
-<p>This website serves as both my personal contact page and a space where I experiment with code, computer technologies, and tools I'm currently learning. These include CPython and MicroPython, data wrangling, the Vim editor, accessible HTML/CSS, the Onion Router, and the Raspberry Pi Pico, among others.</p>
+            <p>
+                The site also features my reading list, spanning from 2013 to
+                the present. To see what I’ve been reading lately, visit the
+                <a href="/reading" target="_blank">/reading</a> page. To see
+                what I'm currently up to, check out the
+                <a href="/now" target="_blank">/now</a> page. If you'd like to
+                say hello or have any questions, feel free to
+                <a href="/contact" target="_blank">contact me</a>.
+            </p>
+        </div>
+        <div>
+            <figure>
+                <picture>
+                    <source
+                        media="(max-width: 600px)"
+                        srcset="{{ url_for('static', filename='image-small.jpg') }}"
+                    />
+                    <source
+                        media="(min-width: 601px)"
+                        srcset="{{ url_for('static', filename='image-large.jpg') }}"
+                    />
+                    <img
+                        src="https://placehold.co/600x400/png"
+                        alt="A beautiful landscape"
+                    />
+                </picture>
+                <figcaption>Under the Wave off Kanagawa</figcaption>
+            </figure>
+        </div>
+    </div>
+</section>
+<script>
+    const showToast = (message, type = "success") => {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.className = `toast show ${type}`;
+        toast.hidden = false;
 
-<p>The site also features my reading list, spanning from 2013 to the present. To see what I’ve been reading lately, visit the <a href="/reading" target="_blank">/reading</a> page. To see what I'm currently up to, check out the <a href="/now" target="_blank">/now</a> page. If you'd like to say hello or have any questions, feel free to <a href="/contact" target="_blank">contact me</a>.</p>
-
-<p>Live long and prosper.</p>						
-							
-							
-							</div>
-							<div>
-								<figure>
-								  <picture>
-									<source media="(max-width: 600px)" srcset="{{ url_for('static', filename='image-small.jpg') }}">
-									<source media="(min-width: 601px)" srcset="{{ url_for('static', filename='image-large.jpg') }}">
-									<img src="https://placehold.co/600x400/png" alt="A beautiful landscape">
-								  </picture>
-								  <figcaption>Under the Wave off Kanagawa</figcaption>
-								</figure>			
-							</div>	
-							</div>
-					</section>
-      <script>
-        const showToast = (message, type = "success") => {
-          const toast = document.getElementById("toast");
-          toast.textContent = message;
-          toast.className = `toast show ${type}`;
-          toast.hidden = false;
-
-          // Hide after 3 seconds
-          setTimeout(() => {
+        // Hide after 3 seconds
+        setTimeout(() => {
             toast.classList.remove("show");
             setTimeout(() => {
-              toast.hidden = true;
+                toast.hidden = true;
             }, 400);
-          }, 3000);
-        };
+        }, 3000);
+    };
 
-        document
-          .getElementById("contact-form")
-          .addEventListener("submit", function (event) {
+    document
+        .getElementById("contact-form")
+        .addEventListener("submit", function (event) {
             event.preventDefault();
             const formData = new FormData(this);
             const submitButton = event.target.querySelector("button");
@@ -57,27 +76,28 @@
             submitButton.textContent = "Sending...";
 
             fetch(this.action, {
-              method: this.method,
-              body: formData,
+                method: this.method,
+                body: formData,
             })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.success) {
-                  showToast("Message sent successfully!", "success");
-                } else {
-                  showToast(data.error || "Submission failed.", "error");
-                }
-              })
-              .catch((error) => {
-                showToast(
-                  `Error: ${error.message || "Could not send message."}`,
-                  "error"
-                );
-              })
-              .finally(() => {
-                submitButton.disabled = false;
-                submitButton.textContent = "Send Message";
-              });
-          });
-      </script>
-      <div id="toast" class="toast" hidden></div>{% endblock %}
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        showToast("Message sent successfully!", "success");
+                    } else {
+                        showToast(data.error || "Submission failed.", "error");
+                    }
+                })
+                .catch((error) => {
+                    showToast(
+                        `Error: ${error.message || "Could not send message."}`,
+                        "error"
+                    );
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Send Message";
+                });
+        });
+</script>
+<div id="toast" class="toast" hidden></div>
+{% endblock %}

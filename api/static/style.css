@@ -9,14 +9,17 @@
 
 
 :root {
-  --color-primary: green;
-  --color-secondary: darkgrey;
-  --color-text: #212529;
+  --color-primary: #727169;
+  --color-secondary: #223249;
+  --color-text: #16161D;
+  --color-titles: #000;
+  --color-bold: #000;
   --color-bg: #fff;
   --color-light: lightgrey;
   --color-form-bg: #fff;
   --color-success: #28a745;
   --color-error: #dc3545;
+  --color-url: #2D4F67;
 
   --font-body: "Agave Regular", -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "Agave Regular", monospace;
@@ -114,6 +117,7 @@ h3,
 h4,
 h5,
 h6 {
+  color: var(--color-titles);
   font-weight: bold;
   letter-spacing: -0.01px;
   word-spacing: -0.1ch;
@@ -122,7 +126,6 @@ h6 {
 }
 
 h1 {	
-  margin-block: 0.67em;
   font-size: 2em;
   font-size: clamp(2rem, 1.5rem + 2.618vw, 2.618rem);
 }
@@ -154,6 +157,12 @@ p {
 	letter-spacing: -0.61px;
   }
   
+}
+
+b,
+strong {
+  font-weight: bolder;
+  color: var(--color-bold);
 }
 
 ol,
@@ -240,6 +249,26 @@ svg {
   vertical-align: middle;
 }
 
+a {
+  color: var(--color-url);
+}
+
+a.onion-link {
+  text-decoration: none;
+  color: #9CABCA;
+  font-weight:normal;
+}
+
+/* a.onion-link::before {
+  content: "🧅";
+  margin-right: 3px;
+} */
+
+a.onion-link .underline-text {
+  border-bottom: 1px dotted #6a0dad;
+  padding-bottom: 2px;
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -261,7 +290,7 @@ svg {
   text-decoration: none;
   color: var(--color-primary);
   white-space: nowrap;
-  min-height: 60px;
+  min-height: 100px;
 }
 
 .nav .logo img {
@@ -352,22 +381,6 @@ svg {
   background-color: var(--color-error);
 }
 
-a.onion-link {
-  text-decoration: none;
-  color: #6a0dad;
-  font-weight:normal;
-}
-
-/* a.onion-link::before {
-  content: "🧅";
-  margin-right: 3px;
-} */
-
-a.onion-link .underline-text {
-  border-bottom: 1px dotted #6a0dad;
-  padding-bottom: 2px;
-}
-
 figure {
   display: block;
   margin: var(--space-lg) auto;
@@ -396,12 +409,14 @@ figcaption {
 }
 
 
-
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #121212;
-    --color-text: #e0e0e0;
-    --color-secondary: #aaa;
+    --color-bg: #1F1F28;
+    --color-text: #DCD7BA;
+    --color-titles: #DCD7BA;
+    --color-url: #72A7BC;
+    --color-bold: #938056;
+    --color-secondary: #DCD7BA;
     --color-light: #333;
     --color-form-bg: #1e1e1e;
     --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.6);
