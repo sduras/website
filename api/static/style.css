@@ -51,8 +51,8 @@ body {
   font-family:
     var(--font-body), "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
-  font-size: clamp(16px, 1rem + 0.5vw, 19px);
-  line-height: 1.5;
+  font-size: clamp(16px, 1rem + 0.5vw, 18px);
+  line-height: 1.6;
   color: var(--color-text);
   background-color: var(--color-bg);
   text-rendering: optimizeLegibility;
@@ -142,8 +142,16 @@ h6 {
 
 p {
   max-width: 55ch;
-  line-height: 1.6;
+  line-height: 1.25;
   margin-bottom: var(--space-md);
+}
+
+@media (max-width: 900px) {
+  p {
+    font-size: 90%;
+	letter-spacing: -0.61px;
+  }
+  
 }
 
 ol,
@@ -239,7 +247,7 @@ svg {
   padding: var(--space-md) var(--space-lg);
   min-height: clamp(3.5rem, 3rem + 1vw, 5rem);
   background-color: var(--color-bg);
-  border-bottom: 2px solid var(--color-light);
+  border-bottom: none;
 }
 
 .nav .logo {
@@ -251,11 +259,16 @@ svg {
   text-decoration: none;
   color: var(--color-primary);
   white-space: nowrap;
+  min-height: 60px;
 }
 
 .nav .logo img {
   max-height: 100px;
+  height: 100px;
+  width: auto;
+  display: block;
 }
+
 
 .nav .nav-items {
   display: flex;
@@ -293,10 +306,16 @@ svg {
     align-items: stretch;
   }
 
+  .nav .logo {
+    justify-content: center;
+    margin: 0 auto;
+  }
+
   .nav .nav-items {
     justify-content: center;
   }
 }
+
 
 .toast {
   position: fixed;
