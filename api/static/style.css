@@ -121,7 +121,9 @@ h6 {
   line-height: 1.2;
 }
 
-h1 {
+h1 {	
+  margin-block: 0.67em;
+  font-size: 2em;
   font-size: clamp(2rem, 1.5rem + 2.618vw, 2.618rem);
 }
 h2 {
