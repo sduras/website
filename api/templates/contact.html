@@ -3,107 +3,110 @@
 {% block title %}Contact{% endblock %}
 {% block head %}
   {{ super() }}
-<style>
-.toast {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
-  background-color: #333;
-  color: #fff;
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  text-align: center;
-  max-width: 90%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.toast.show {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.toast.success {
-  background-color: #28a745;
-}
-
-.toast.error {
-  background-color: #dc3545;
-
-</style>
-
 {% endblock %}
-{% block content %}<section>
-<h1>Contact</h1>
-<div class="grid">
-<div><p>Privacy-focused web browsers typically incorporate private search as the default setting. The more advanced ones even provide Tor routing capabilities, which obfuscate your location and anonymise your browser fingerprint, rendering it more challenging for online entities to distinguish you from other internet users.</p>
-<p>For any queries or to get in touch, please use the contact form below.</p>
-</div>
-<div>
-    <form id="contact-form" action="/send_email" method="post">
-      <label for="name">Your Name:</label>
-      <input type="text" id="name" name="name" required placeholder="Enter your name">
-      
-      <label for="email">Your Email:</label>
-      <input type="email" id="email" name="email" required placeholder="Enter your email">
-      
-      <label for="message">Your Message:</label>
-      <textarea id="message" name="message" rows="6" required placeholder="Enter your message"></textarea>
-      
-      <button type="submit">Send Message</button>
-    </form>
-    <br>
-    <div id="form-status"></div>
-</div>
-</section>
-<script>
-  const showToast = (message, type = 'success') => {
-    const toast = document.getElementById("toast");
-    toast.textContent = message;
-    toast.className = `toast show ${type}`;
-    toast.hidden = false;
+{% block content %}
+      <section>
+        <h2>Contact</h2>
+        <div class="grid">
+          <div>
+            <p>
+              Privacy-focused web browsers typically incorporate private search
+              as the default setting. The more advanced ones even provide Tor
+              routing capabilities, which obfuscate your location and anonymise
+              your browser fingerprint, rendering it more challenging for online
+              entities to distinguish you from other internet users.
+            </p>
+            <p>
+              For any queries or to get in touch, please use the contact form
+              below.
+            </p>
+          </div>
 
-    // Hide after 3 seconds
-    setTimeout(() => {
-      toast.classList.remove("show");
-      setTimeout(() => {
-        toast.hidden = true;
-      }, 400);
-    }, 3000);
-  };
+          <div>
+            <form id="contact-form" action="/send_email" method="post">
+              <label for="name">Your Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-control"
+                required
+                placeholder="Enter your name"
+              />
+              <label for="email">Your Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control"
+                required
+                placeholder="Enter your email"
+              />
+              <label for="message">Your Message:</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="3"
+                class="form-control"
+                required
+                placeholder="Enter your message"
+              ></textarea>
 
-  document.getElementById("contact-form").addEventListener("submit", function (event) {
-    event.preventDefault();
-    const formData = new FormData(this);
-    const submitButton = event.target.querySelector('button');
+              <button type="submit">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </section>
 
-    submitButton.disabled = true;
-    submitButton.textContent = "Sending...";
+      <script>
+        const showToast = (message, type = "success") => {
+          const toast = document.getElementById("toast");
+          toast.textContent = message;
+          toast.className = `toast show ${type}`;
+          toast.hidden = false;
 
-    fetch(this.action, {
-      method: this.method,
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        showToast("Message sent successfully!", "success");
-      } else {
-        showToast(data.error || "Submission failed.", "error");
-      }
-    })
-    .catch(error => {
-      showToast(`Error: ${error.message || "Could not send message."}`, "error");
-    })
-    .finally(() => {
-      submitButton.disabled = false;
-      submitButton.textContent = "Send Message";
-    });
-  });
-</script>
-<div id="toast" class="toast" hidden></div>
-{% endblock %}
+          // Hide after 3 seconds
+          setTimeout(() => {
+            toast.classList.remove("show");
+            setTimeout(() => {
+              toast.hidden = true;
+            }, 400);
+          }, 3000);
+        };
+
+        document
+          .getElementById("contact-form")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const submitButton = event.target.querySelector("button");
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+
+            fetch(this.action, {
+              method: this.method,
+              body: formData,
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  showToast("Message sent successfully!", "success");
+                } else {
+                  showToast(data.error || "Submission failed.", "error");
+                }
+              })
+              .catch((error) => {
+                showToast(
+                  `Error: ${error.message || "Could not send message."}`,
+                  "error"
+                );
+              })
+              .finally(() => {
+                submitButton.disabled = false;
+                submitButton.textContent = "Send Message";
+              });
+          });
+      </script>
+      <div id="toast" class="toast" hidden></div>
+      {% endblock %}
