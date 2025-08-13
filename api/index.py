@@ -3,7 +3,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
-from api.data.reading import *
+from api.books.reading import *
 
 from flask import (
     Flask,
