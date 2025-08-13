@@ -25,6 +25,7 @@
   --color-onion: #7F00FF;
   --color-button: #93b8bc;
   --color-form-bg: #e5c8a8;
+  --color-textarea: #16161D;
 
   --font-body: "Agave Regular", -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "Agave Regular", monospace;
@@ -210,6 +211,7 @@ label {
 
 .form-control {
   font: inherit;
+  color: var(--color-textarea);
   font-size: 90%;
   width: 100%;
   padding: var(--space-sm) var(--space-md);
@@ -424,6 +426,7 @@ figcaption {
     --color-onion: #9CABCA;
     --color-button: #181820;
     --color-form-bg: #363646;
+	--color-textarea: #FF9E3B;
 
     --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.6);
     --shadow-lg: 0 8px 13px rgba(0, 0, 0, 0.7);
