@@ -2,6 +2,8 @@ import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from dotenv import load_dotenv
+from api.data.reading import *
 
 from flask import (
     Flask,
@@ -12,10 +14,14 @@ from flask import (
     url_for,
 )
 from jinja2 import TemplateNotFound
+from api.data.reading import load_books, get_unique_years, filter_books_by_year, generate_html_table, summary
+
+load_dotenv()
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
 MAIL_USER = os.getenv("MAIL_USER")
+MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")
 MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
 MAIL_HOST = os.getenv("MAIL_HOST")
 MAIL_PORT = int(os.getenv("MAIL_PORT", 587))
@@ -61,11 +67,46 @@ def now():
         return render_template_string(DEFAULT_HTML)
 
 
+# Assume these functions are defined elsewhere in your application
+# def load_books(): ...
+# def get_unique_years(books): ...
+# def filter_books_by_year(books, year): ...
+# def generate_html_table(books): ...
+# def summary(books, year): ...
+# DEFAULT_HTML = "..."
+
 @app.route("/reading")
 def reading():
+    # 1. Load data and get available years
+    books = load_books()
+    years = get_unique_years(books)
+
+    # 2. Determine the default year
+    # This checks if the 'years' list is not empty.
+    # If it is, 'default_year' will be None.
+    default_year = years[-1] if years else None
+
+    # 3. Get the selected year from the request
+    # Use 'type=int' to ensure the year is an integer.
+    # The default value is set to the most recent year.
+    selected_year = request.args.get("year", default_year, type=int)
+
+    # 4. Filter books and generate content
+    filtered_books = filter_books_by_year(books, selected_year)
+    table_html = generate_html_table(filtered_books)
+    summary_html = summary(filtered_books, selected_year)
+
+    # 5. Render the template
     try:
-        return render_template("reading.html")
+        return render_template(
+            "reading.html",
+            years=years,
+            selected_year=selected_year,
+            summary_html=summary_html,
+            table_html=table_html
+        )
     except TemplateNotFound:
+        # Fallback for when the template file is not found
         return render_template_string(DEFAULT_HTML)
 
 @app.route("/contact")

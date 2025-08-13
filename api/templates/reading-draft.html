@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Reading List{% endblock %}
+{% block description %}My years in books.{% endblock %}
+{% block content %}
+
+{% endblock %} 
+
+
+<h1 class="title rl">Reading List</h1>
+<nav class="tabs">
+    {% for year in unique_years %}
+    <a
+        class="tab {% if loop.index == 12 %}active{% endif %}"
+        onclick="openTab(event, '{{ year }}')"
+        >{{ year }}</a
+    >
+    {% endfor %}
+</nav>
+{% for year in unique_years %}
+<section
+    class="content-tab"
+    id="{{ year }}"
+    {%
+    if
+    loop.index
+    !="1"
+    %}style="display: none;"
+    {%
+    endif
+    %}
+>
+    <table class="rl-table">
+        <caption>
+            <p>{{ summaries[year]|safe }}</p>
+        </caption>
+        <thead>
+            <tr>
+                <th scope="col">Date Read</th>
+                <th scope="col">Author</th>
+                <th scope="col">Title</th>
+                <th scope="col">Published</th>
+                <th scope="col">Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %} {% if book.date_read.year == year %}
+            <tr>
+                <td data-label="read">
+                    {{ book.date_read.strftime("%Y-%m-%d") }}
+                </td>
+                <td data-label="author">{{ book.author }}</td>
+                <td data-label="title">{{ book.title }}</td>
+                <td data-label="published">{{ book.published }}</td>
+                <td data-label="rating">
+                    {{ generate_rating_stars(book.rating|int|safe) }}
+                </td>
+            </tr>
+            {% endif %} {% endfor %}
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+</section>
+{% endfor %}
+{% endblock %} 
+
+{% block tab_script %}
+<script>
+    document.querySelectorAll(".content-tab").forEach((tab) => {
+        tab.style.display = "none";
+    });
+    document.getElementById("{{ unique_years[11] }}").style.display = "block";
+
+    function openTab(evt, tabName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("content-tab");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
+<script>
+    (function () {
+        $("dd").filter(":nth-child(n+4)").addClass("hide");
+
+        $("dl").on("mouseenter touchstart", "dt", function () {
+            $(this).next().slideDown(300).siblings("dd").slideUp(200);
+        });
+    })();
+</script>
+{% endblock %}

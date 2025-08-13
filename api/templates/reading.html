@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block head %}{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<!-- <div class="year-selector">
+    <form method="get">
+        <label for="year">Select year:</label>
+        <select name="year" id="year" onchange="this.form.submit()">
+            {% for y in years %}
+                <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+    </form>
+</div> -->
+
+<div class="year-selector">
+    <form method="get">
+        <label for="year" class="year-label">Select year:</label>
+        <div class="select-wrapper">
+            <select name="year" id="year" onchange="this.form.submit()">
+                {% for y in years %}
+                    <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+</div>
+
+
+
+<table class="reading-table">
+   <caption class="summary">
+    {{ summary_html | safe }}
+   </caption>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Published</th>
+            <th>Format</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ table_html | safe }}
+    </tbody>
+</table>
+
+{% endblock %}
