@@ -30,6 +30,7 @@ def install_dependencies():
     os.system("pkg update -y && pkg upgrade -y")
     os.system("pkg install python tor -y")
     os.system("pip install --upgrade pip")
+    os.system("pip install python-dotenv")
     os.system("pip install -r requirements.txt")
 
 
