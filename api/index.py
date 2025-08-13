@@ -14,7 +14,7 @@ from flask import (
     url_for,
 )
 from jinja2 import TemplateNotFound
-from api.data.reading import load_books, get_unique_years, filter_books_by_year, generate_html_table, summary
+from api.books.reading import load_books, get_unique_years, filter_books_by_year, generate_html_table, summary
 
 load_dotenv()
 

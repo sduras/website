@@ -1,7 +1,9 @@
-import os
 import json
+import os
 from datetime import datetime
+
 from markupsafe import Markup
+
 
 class Book:
     def __init__(self, **kwargs):
@@ -45,8 +47,10 @@ def load_books(filepath="books.json"):
 def get_unique_years(books):
     return sorted({book.date_read.year for book in books})
 
+
 def filter_books_by_year(books, target_year):
     return [book for book in books if book.date_read.year == target_year]
+
 
 def generate_html_table(books):
     table_rows = ""
@@ -63,17 +67,23 @@ def generate_html_table(books):
             </tr>"""
     return table_rows
 
+
 def generate_rating_stars(rating):
     try:
         rating = int(rating)
     except (ValueError, TypeError):
         return ""
 
-    stars = ''.join(
-        '<span class="starsf">&starf;</span>' if i < rating else '<span class="stars">&star;</span>'
+    stars = "".join(
+        (
+            '<span class="starsf">&starf;</span>'
+            if i < rating
+            else '<span class="stars">&star;</span>'
+        )
         for i in range(5)
     )
     return Markup(stars)
+
 
 def summary(books, target_year):
     num_books = len(books)
@@ -82,17 +92,20 @@ def summary(books, target_year):
     if valid_books:
         highest_rating = max(int(book.rating) for book in valid_books)
         highest_rating_books = [
-            (book.title, book.author) for book in valid_books if int(book.rating) == highest_rating
+            (book.title, book.author)
+            for book in valid_books
+            if int(book.rating) == highest_rating
         ]
         highest_rating_info = ", ".join(
             f'<span class="diamond">"{title}"</span> by {author}'
             for title, author in highest_rating_books
         )
         return (
-            f'Books Read in year {target_year}: <b>{num_books}</b>.<br>'
+            f"Books Read in year {target_year}: <b>{num_books}</b>.<br>"
             f'<span class="diamonds">💎 Best book(s)</span>: {highest_rating_info}.'
         )
     return f"No valid ratings found for year {target_year}."
+
 
 if __name__ == "__main__":
     books = load_books()
