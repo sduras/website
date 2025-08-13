@@ -2,23 +2,23 @@ import os
 import subprocess
 import time
 import smtplib
+from pathlib import Path
+from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
 from flask import (Flask, jsonify, render_template, render_template_string,
                    url_for, request)
 from jinja2 import TemplateNotFound
 
 app = Flask(__name__, template_folder="api/templates", static_folder="api/static")
 
+load_dotenv()
 
-TOR_DIR = os.path.expanduser("~/.tor")
+TOR_DIR = os.path.expanduser(os.getenv("TOR_DIR", "~/.tor"))
 HIDDEN_SERVICE_DIR = os.path.join(TOR_DIR, "hidden_service")
 LOG_FILE = os.path.join(TOR_DIR, "tor.log")
-
 ONION_ADDRESS = None
 ONION_MTIME = None
-
 MAIL_USER = os.getenv("MAIL_USER")
 MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
 MAIL_HOST = os.getenv("MAIL_HOST")
@@ -30,7 +30,7 @@ def install_dependencies():
     os.system("pkg update -y && pkg upgrade -y")
     os.system("pkg install python tor -y")
     os.system("pip install --upgrade pip")
-    os.system("pip install flask")
+    os.system("pip install -r requirements.txt")
 
 
 def configure_tor():
