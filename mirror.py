@@ -20,6 +20,7 @@ LOG_FILE = os.path.join(TOR_DIR, "tor.log")
 ONION_ADDRESS = None
 ONION_MTIME = None
 MAIL_USER = os.getenv("MAIL_USER")
+MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")
 MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
 MAIL_HOST = os.getenv("MAIL_HOST")
 MAIL_PORT = int(os.getenv("MAIL_PORT", 587))
@@ -140,10 +141,10 @@ def send_email():
     msg = MIMEMultipart()
     msg["From"] = MAIL_USER
     msg["To"] = MAIL_USER
-    msg["Subject"] = "📩 New message"
+    msg["Subject"] = "🧅 New message"
 
     body = f"""
-    New message from website:
+    New message from Tor website:
     Sender: {name}
     Email: {email}
     Message: {message}
@@ -154,7 +155,7 @@ def send_email():
         with smtplib.SMTP(MAIL_HOST, MAIL_PORT) as server:
             server.starttls()
             server.login(MAIL_USER, MAIL_PASSWORD)
-            server.sendmail(MAIL_USER, MAIL_USER, msg.as_string())
+            server.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
             server.quit()
         return jsonify({"success": True}), 200
     except Exception as e:
