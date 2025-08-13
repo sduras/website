@@ -20,7 +20,7 @@ class Book:
         self.note_file = kwargs.get("NoteFile", "")
 
 
-def load_books(filepath="reading.json"):
+def load_books(filepath="books.json"):
     filepath = os.path.join(os.path.dirname(__file__), filepath)
     try:
         with open(filepath, "r", encoding="utf-8") as f:
