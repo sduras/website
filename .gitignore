@@ -47,8 +47,6 @@ pytestdebug.log
 # Project-specific output and build artifacts
 # -------------------------------------------------------
 build/
-data/
-data/*
 dist/
 downloads/
 sdist/
