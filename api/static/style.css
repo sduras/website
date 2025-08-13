@@ -12,14 +12,19 @@
   --color-primary: #727169;
   --color-secondary: #223249;
   --color-text: #16161D;
-  --color-titles: #000;
-  --color-bold: #000;
-  --color-bg: #fff;
+  --color-titles: #0d0f49;
+  --color-bold: #0d164a;
+  --color-bg: #f2eed5;
   --color-light: lightgrey;
   --color-form-bg: #fff;
-  --color-success: #28a745;
-  --color-error: #dc3545;
-  --color-url: #2D4F67;
+  --color-success: #76946A;
+  --color-error: #E82424;
+  --color-url: #3b6886;
+  --color-tab-bottom: #7ea7b2;
+  --color-tab-hover: #12204f;
+  --color-onion: #7F00FF;
+  --color-button: #93b8bc;
+  --color-form-bg: #e5c8a8;
 
   --font-body: "Agave Regular", -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "Agave Regular", monospace;
@@ -54,7 +59,7 @@ body {
   font-family:
     var(--font-body), "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
-  font-size: clamp(16px, 1rem + 0.5vw, 18px);
+  font-size: clamp(17px, 1rem + 0.5vw, 19px);
   line-height: 1.6;
   color: var(--color-text);
   background-color: var(--color-bg);
@@ -188,7 +193,6 @@ form {
   max-width: 600px;
   width: 100%;
   margin: var(--space-lg) auto;
-  margin-top: -0.02em;
   padding: var(--space-lg);
   background: var(--color-form-bg);
   border-radius: var(--radius-md);
@@ -200,7 +204,7 @@ form {
 
 label {
   font-weight: 400;
-  font-size: 95%;
+  font-size: 90%;
   margin-bottom: var(--space-xs);
 }
 
@@ -211,7 +215,7 @@ label {
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-light);
-  background-color: #fff;
+  background-color: var(--color-bg);
   transition: all 0.2s ease;
 }
 
@@ -230,7 +234,7 @@ button {
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  background-color: var(--color-primary);
+  background-color: var(--color-button);
   color: #fff;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
@@ -255,7 +259,7 @@ a {
 
 a.onion-link {
   text-decoration: none;
-  color: #9CABCA;
+  color: var(--color-onion);
   font-weight:normal;
 }
 
@@ -285,11 +289,6 @@ a.onion-link .underline-text {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  font-size: clamp(2rem, 1.5rem + 2.618vw, 1.618rem);
-  font-weight: bold;
-  text-decoration: none;
-  color: var(--color-primary);
-  white-space: nowrap;
   min-height: 100px;
 }
 
@@ -298,6 +297,7 @@ a.onion-link .underline-text {
   height: 100px;
   width: auto;
   display: block;
+  margin-left: -0.9em;
 }
 
 
@@ -314,16 +314,16 @@ a.onion-link .underline-text {
   padding: var(--space-sm) var(--space-md);
   text-decoration: none;
   font-size: 1rem;
-  color: var(--color-secondary);
-  border-bottom: 2px solid transparent;
+  color: var(--color-tab-bottom);
+  border-bottom: 2px solid var(--color-tab-bottom);
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .nav .nav-items a:hover,
 .nav .nav-items a.active,
 .nav .nav-items a[aria-current="page"] {
-  color: var(--color-primary);
-  border-bottom-color: var(--color-primary);
+  color: var(--color-tab-hover);
+  border-bottom-color: var(--color-tab-hover);
 }
 
 .nav .nav-items.is-full a {
@@ -415,10 +415,16 @@ figcaption {
     --color-text: #DCD7BA;
     --color-titles: #DCD7BA;
     --color-url: #72A7BC;
-    --color-bold: #938056;
+    --color-bold: #FF9E3B;
     --color-secondary: #DCD7BA;
+    --color-tab-bottom: #717C7C;
+    --color-tab-hover: #DCD7BA;
     --color-light: #333;
     --color-form-bg: #1e1e1e;
+    --color-onion: #9CABCA;
+    --color-button: #181820;
+    --color-form-bg: #363646;
+
     --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.6);
     --shadow-lg: 0 8px 13px rgba(0, 0, 0, 0.7);
   }
