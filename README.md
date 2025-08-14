@@ -1,3 +1,5 @@
+For Tor (.onion) version:
+
 ```bash
 pkg install python -y
 pip install flask -y
