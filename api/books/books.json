@@ -4234,8 +4234,88 @@
         "Title": "Для домашнього огнища",
         "Published": "1892",
         "Format": "e-book",
+        "Rating": 3,
+        "Date Read": "2025-06-20",
+        "Note": 0,
+        "NoteFile": ""
+    },
+	{
+        "Author": "Bertrand Russell",
+        "Title": "Why I Am Not a Christian",
+        "Published": "1927",
+        "Format": "e-book",
         "Rating": 4,
         "Date Read": "2025-06-20",
+        "Note": 0,
+        "NoteFile": ""
+    },
+    {
+        "Author": "Peter Clines",
+        "Title": "The Broken Room",
+        "Published": "2022",
+        "Format": "e-book",
+        "Rating": 3,
+        "Date Read": "2025-06-25",
+        "Note": 0,
+        "NoteFile": ""
+    },
+	    {
+        "Author": "David Enrich",
+        "Title": "Dark Towers",
+        "Published": "2020",
+        "Format": "e-book",
+        "Rating": 3,
+        "Date Read": "2025-06-29",
+        "Note": 0,
+        "NoteFile": ""
+    },
+    {
+        "Author": "Patrick McGee",
+        "Title": "Apple in China",
+        "Published": "2025",
+        "Format": "e-book",
+        "Rating": 3,
+        "Date Read": "2025-07-10",
+        "Note": 0,
+        "NoteFile": ""
+    },
+	    {
+        "Author": "Edgar Jones, Simon Wessely",
+        "Title": "Shell Shock to PTSD",
+        "Published": "2005",
+        "Format": "e-book",
+        "Rating": 3,
+        "Date Read": "2025-07-12",
+        "Note": 0,
+        "NoteFile": ""
+    },
+		    {
+        "Author": " Richard Bett",
+        "Title": "Sextus Empiricus",
+        "Published": "2005",
+        "Format": "e-book",
+        "Rating": 4,
+        "Date Read": "2025-07-20",
+        "Note": 0,
+        "NoteFile": ""
+    },
+		    {
+        "Author": "Секст Эмпирик",
+        "Title": "Пирроновы положения",
+        "Published": "175",
+        "Format": "e-book",
+        "Rating": 5,
+        "Date Read": "2025-08-01",
+        "Note": 0,
+        "NoteFile": ""
+    },
+		    {
+        "Author": "Yamada Koun",
+        "Title": "The Gateless Gate",
+        "Published": "2004",
+        "Format": "e-book",
+        "Rating":5,
+        "Date Read": "2025-08-10",
         "Note": 0,
         "NoteFile": ""
     },

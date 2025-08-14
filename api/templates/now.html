@@ -1,8 +1,10 @@
-{% extends "base.html" %} {% block title %}Now page{% endblock %} {% block description %}"This is where I am and what I&#x27;m doing right now.{% endblock %} {% block head %}{{ super() }}{% endblock %} {% block content %} <section>
+{% extends "base.html" %} {% block title %}Now page{% endblock %} {% block description %}"This is where I am and what I&#x27;m doing right now.{% endblock %} {% block head %}{{ super() }}<style>.updated {opecity: 0.75; font-size: 85%;}
+</style>{% endblock %} {% block content %}<section>
 <hgroup>
   <h1>What I’m Doing Right Now</h1>
   <p>Inspired by <a href="http://sivers.org/nowff" rel="noopener noreferrer">Derek Sivers</a> /now page project.</p>
 </hgroup>
+<p class="updated">Updated 14/08/2025</p>
   <h2>What I’m Currently Learning</h2>
   <p>I’m self-taught when it comes to programming. At the moment, I’m putting all my energy into learning <strong>Python</strong> and mastering <strong>Vim</strong>, with the goal of eventually using both in a professional context. It’s a  challenge, but one I believe I can overcome. And if I do – the sky’s the limit. </p>
   <h2>What I’m Reading</h2>
