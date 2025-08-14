@@ -75,25 +75,56 @@ def load_onion_address(force_reload=False):
 DEFAULT_HTML = """
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>{{ title }}</title>
-    <meta name="description" content="{{ description }}">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="shortcut icon" href="/favicon.ico">
-</head>
-<body>
-<header id="header" class="container">
-    <h1>Homepage</h1>
-</header>
-<main id="main" class="container">
-    <span>🖖🏻 Hello, Sergiy</span>
-</main>
-<footer id="footer" class="container">
-    <p>&copy; 2025</p>
-</footer>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Homepage · Sergiy Duras</title>
+    <meta name="description" content="Homepage of Sergiy Duras (Сергій Дурас), a psychologist and programmer based in 🇺🇦 Ukraine." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/css/base.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="shortcut icon" href="/static/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  </head>
+  <body>
+    <header role="banner">
+      <div class="container">
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/">
+                <strong>Sergiy Duras</strong>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <a href="/now">Now</a>
+            </li>
+            <li>
+              <a href="/reading">Reading</a>
+            </li>
+            <li>
+              <a href="/contact">Contact</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main role="main" class="container">
+      <article>
+        <h1>Hello</h1>
+        <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong>. </p>
+        <p>Thanks for taking the time to visit my website.</p>
+      </article>
+    </main>
+    <footer role="contentinfo" class="container">
+      <small> &copy; 2025 Sergiy Duras <br />
+        <a href="http://r56vkbtowacs5aijj3knqjsqg6sgdq6pz3mhcof7kntbaht6f3rqeryd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
+          <span class="underline-text">Access via Tor (.onion)</span>
+        </a>
+      </small>
+    </footer>
+  </body>
 </html>
 """
 
@@ -172,7 +203,6 @@ def after_request(response):
 
 @app.route("/status")
 def status():
-    # Check if .onion changed since last read
     load_onion_address()
     return jsonify({"status": "running", "onion": ONION_ADDRESS})
 

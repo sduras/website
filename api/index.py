@@ -29,24 +29,56 @@ MAIL_PORT = int(os.getenv("MAIL_PORT", 587))
 DEFAULT_HTML = """
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>{{ title }}</title>
-    <meta name="description" content="{{ description }}">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-<header id="header" class="container">
-    <h1>Homepage</h1>
-</header>
-<main id="main" class="container">
-    <span>🖖🏻 Hello</span>
-</main>
-<footer id="footer" class="container">
-    <p>&copy; 2025</p>
-</footer>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Homepage · Sergiy Duras</title>
+    <meta name="description" content="Homepage of Sergiy Duras (Сергій Дурас), a psychologist and programmer based in Ukraine." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/static/css/base.css" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="shortcut icon" href="/static/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+  </head>
+  <body>
+    <header role="banner">
+      <div class="container">
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/">
+                <strong>Sergiy Duras</strong>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <a href="/now">Now</a>
+            </li>
+            <li>
+              <a href="/reading">Reading</a>
+            </li>
+            <li>
+              <a href="/contact">Contact</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main role="main" class="container">
+      <article>
+        <h1>Hello</h1>
+        <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong>. </p>
+        <p>Thanks for taking the time to visit my website.</p>
+      </article>
+    </main>
+    <footer role="contentinfo" class="container">
+      <small> &copy; 2025 Sergiy Duras <br />
+        <a href="http://r56vkbtowacs5aijj3knqjsqg6sgdq6pz3mhcof7kntbaht6f3rqeryd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
+          <span class="underline-text">Access via Tor (.onion)</span>
+        </a>
+      </small>
+    </footer>
+  </body>
 </html>
 """
 
@@ -67,36 +99,16 @@ def now():
         return render_template_string(DEFAULT_HTML)
 
 
-# Assume these functions are defined elsewhere in your application
-# def load_books(): ...
-# def get_unique_years(books): ...
-# def filter_books_by_year(books, year): ...
-# def generate_html_table(books): ...
-# def summary(books, year): ...
-# DEFAULT_HTML = "..."
-
 @app.route("/reading")
 def reading():
-    # 1. Load data and get available years
     books = load_books()
     years = get_unique_years(books)
-
-    # 2. Determine the default year
-    # This checks if the 'years' list is not empty.
-    # If it is, 'default_year' will be None.
     default_year = years[-1] if years else None
-
-    # 3. Get the selected year from the request
-    # Use 'type=int' to ensure the year is an integer.
-    # The default value is set to the most recent year.
     selected_year = request.args.get("year", default_year, type=int)
-
-    # 4. Filter books and generate content
     filtered_books = filter_books_by_year(books, selected_year)
     table_html = generate_html_table(filtered_books)
     summary_html = summary(filtered_books, selected_year)
 
-    # 5. Render the template
     try:
         return render_template(
             "reading.html",
@@ -106,7 +118,6 @@ def reading():
             table_html=table_html
         )
     except TemplateNotFound:
-        # Fallback for when the template file is not found
         return render_template_string(DEFAULT_HTML)
 
 @app.route("/contact")

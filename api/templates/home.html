@@ -1,21 +1,27 @@
-{% extends "base.html" %} {% block title %}Homepage{% endblock %} {% block description %}Homepage of Sergiy Duras (Сергій Дурас), a psychologist and programmer based in 🇺🇦 Ukraine.{% endblock %} {% block head %}{{ super() }}{% endblock %} {% block content %} <section>
-  <h1>Hello</h1>
-  <div class="grid">
+{% extends "base.html" %} {% block title %}Homepage{% endblock %} {% block description %}Homepage of Sergiy Duras (Сергій Дурас), a psychologist and programmer based in 🇺🇦 Ukraine.{% endblock %} {% block head_extra %}
+<!-- *** --> {% endblock %} {% block content %} <article>
+  <header>
+    <h1>Hello</h1>
+  </header>
+  <section class="grid">
     <div>
-      <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong>.</p>
-	  <p>Thanks for taking the time to visit my website.</p>
-      <p>This website serves as both my personal contact page and a space where I experiment with code, computer technologies, and tools I'm currently learning. These include CPython and MicroPython, data wrangling, the Vim editor, accessible HTML/CSS and the Raspberry Pi Pico, among others.</p>
-      <p>The site also features my reading list, spanning from 2013 to the present. To see what I’ve been reading lately, visit the <a href="/reading" target="_blank">reading</a> page. To see what I'm currently up to, check out the <a href="/now" target="_blank">/now</a> page. If you'd like to say hello or have any questions, feel free to <a href="/contact" target="_blank">contact me</a>. </p>
+      <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong>. </p>
+      <p>Thanks for taking the time to visit my website.</p>
+      <p> This website serves as both my personal contact page and a space where I experiment with code, computer technologies, and tools I'm currently learning. These include CPython and MicroPython, data wrangling, the Vim editor, accessible HTML/CSS, and the Raspberry Pi Pico, among others. </p>
+      <p> The site also features my reading list, spanning from 2013 to the present. To see what I’ve been reading lately, visit the <a href="/reading">reading</a> page. To see what I'm currently up to, check out the <a href="/now">/now</a> page. If you'd like to say hello or have any questions, feel free to <a href="/contact">contact me</a>. </p>
     </div>
     <div>
-      <figure>
-        <picture>
-          <source media="(max-width: 600px)" srcset="{{ url_for('static', filename='image-small.jpg') }}">
-          <source media="(min-width: 601px)" srcset="{{ url_for('static', filename='image-large.jpg') }}">
-          <img src="https://placehold.co/600x400/png" alt="大波の下で">
-        </picture>
-        <figcaption></figcaption>
-      </figure>
+		<figure>
+		  <picture>
+			<source media="(max-width: 600px)" srcset="{{ url_for('static', filename='image-small.jpg') }}" type="image/jpeg">
+			<source media="(min-width: 601px)" srcset="{{ url_for('static', filename='image-large.jpg') }}" type="image/jpeg">
+			<img src="{{ url_for('static', filename='image-large.jpg') }}" alt="An illustration representing calm under pressure — 大波の下で" loading="lazy">
+		  </picture>
+		  <figcaption>大波の下で</figcaption>
+		</figure>
     </div>
-  </div>
-</section>{% endblock %}
+  </section>
+</article> {% endblock %}
+
+
+

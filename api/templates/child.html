@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Page Title Here{% endblock %}
+{% block description %}description.{% endblock %}
+
+{% block head_extra %}
+<!-- extra <head> content -->
+{% endblock %}
+
+{% block content %}
+<article>
+  <h1>Heading Level 1</h1>
+  <section>
+    <p>This is a section of content.</p>
+  </section>
+</article>
+{% endblock %}
+
+{% block footer %}
+<small>
+  &copy; 2025 Sergiy Duras.
+</small>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/child-specific.js') }}"></script>
+{% endblock %}

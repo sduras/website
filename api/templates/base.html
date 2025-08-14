@@ -1,29 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head> {% block head %}
+  <head>
     <meta charset="utf-8" />
     <title>{% block title %}{% endblock %} · Sergiy Duras</title>
-    <meta name="description" content="{% block description %}{% endblock %}" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="{% block description %}Default description.{% endblock %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
-    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}" /> {% endblock %}
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}" /> {% block head_extra %}{% endblock %}
   </head>
   <body>
-    <header class="container">
-      <nav>
-        <ul>
-          <li><a href="/"><strong>Sergiy Duras</strong></a></li>
-        </ul>
-        <ul>
-          <li><a href="/now">Now</a></li>
-          <li><a href="/reading">Reading</a></li>
-          <li><a href="contact" aria-current="page">Contact</a></li>
-        </ul>
-      </nav>
+    <header role="banner">
+      <div class="container">
+        <nav role="navigation">
+          <ul>
+            <li>
+              <a href="/">
+                <strong>Sergiy Duras</strong>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <a href="/now">Now</a>
+            </li>
+            <li>
+              <a href="/reading">Reading</a>
+            </li>
+            <li>
+              <a href="/contact">Contact</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
-    <main role="main" class="container"> {% block content %}{% endblock %}</main>
-    <footer role="contentinfo" class="container"> {% block footer %}<small> &copy; 2025 Sergiy Duras<br /><a href="http://r56vkbtowacs5aijj3knqjsqg6sgdq6pz3mhcof7kntbaht6f3rqeryd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank"><span class="underline-text">Access via Tor (.onion)</span></a></small>{% endblock %} </footer>
+    <main role="main" class="container"> {% block content %}{% endblock %} </main>
+    <footer role="contentinfo" class="container"> {% block footer %} <small> &copy; 2025 Sergiy Duras <br />
+        <a href="http://r56vkbtowacs5aijj3knqjsqg6sgdq6pz3mhcof7kntbaht6f3rqeryd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
+          <span class="underline-text">Access via Tor (.onion)</span>
+        </a>
+      </small> {% endblock %} </footer> {% block scripts %} <script src="{{ url_for('static', filename='js/main.js') }}"></script> {% endblock %}
   </body>
 </html>
