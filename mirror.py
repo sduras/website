@@ -147,10 +147,25 @@ def now():
 
 @app.route("/reading")
 def reading():
+    books = load_books()
+    years = get_unique_years(books)
+    default_year = years[-1] if years else None
+    selected_year = request.args.get("year", default_year, type=int)
+    filtered_books = filter_books_by_year(books, selected_year)
+    table_html = generate_html_table(filtered_books)
+    summary_html = summary(filtered_books, selected_year)
+
     try:
-        return render_template("reading.html")
+        return render_template(
+            "reading.html",
+            years=years,
+            selected_year=selected_year,
+            summary_html=summary_html,
+            table_html=table_html
+        )
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
+
 
 @app.route("/contact")
 def contact():
