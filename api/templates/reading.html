@@ -1,26 +1,18 @@
 {% extends 'base.html' %}
-
 {% block head %}{{ super() }}
 {% endblock %}
-
 {% block content %}
-
-<!-- <div class="year-selector">
-    <form method="get">
-        <label for="year">Select year:</label>
-        <select name="year" id="year" onchange="this.form.submit()">
-            {% for y in years %}
-                <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
-            {% endfor %}
-        </select>
-    </form>
-</div> -->
+<aricle>
+<hgroup>
+  <h1>Reading List</h1>
+  <p>My years in books.</p>
+</hgroup>
 
 <div class="year-selector">
     <form method="get">
         <label for="year" class="year-label">Select year:</label>
         <div class="select-wrapper">
-            <select name="year" id="year" onchange="this.form.submit()">
+            <select name="year" id="year" aria-label="Select reading year.." onchange="this.form.submit()" required>
                 {% for y in years %}
                     <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
                 {% endfor %}
@@ -28,10 +20,7 @@
         </div>
     </form>
 </div>
-
-
-
-<table class="reading-table">
+<table class="reading-table striped">
    <caption class="summary">
     {{ summary_html | safe }}
    </caption>
@@ -49,5 +38,5 @@
         {{ table_html | safe }}
     </tbody>
 </table>
-
+</article>
 {% endblock %}

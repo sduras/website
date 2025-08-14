@@ -97,12 +97,13 @@ def summary(books, target_year):
             if int(book.rating) == highest_rating
         ]
         highest_rating_info = ", ".join(
-            f'<span class="diamond">"{title}"</span> by {author}'
+            f'<strong style="color: #BF6E00;">{title}</strong> by {author}'
             for title, author in highest_rating_books
         )
         return (
-            f"Books Read in year {target_year}: <b>{num_books}</b>.<br>"
-            f'<span class="diamonds">💎 Best book(s)</span>: {highest_rating_info}.'
+            f"Books Read in {target_year}: <strong><span class='books_in_year' style='color: darkorange'>{num_books}</span></strong><br><br>"
+            
+            f"Best book(s): {highest_rating_info}."
         )
     return f"No valid ratings found for year {target_year}."
 

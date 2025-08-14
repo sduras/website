@@ -2,99 +2,91 @@
 description %}To contact Sergiy Duras, please use the contact form provided.{%
 endblock %} {% block head %}{{ super() }}{% endblock %} {% block content %}
 <section>
-    <h1>Contact</h1>
-    <div class="grid">
-        <div>
-            <p>
-                If you would like to reach out, please fill out the form
-                provided. Just enter your name, email address, and message, and
-                I'll get back to you as soon as possible.
-            </p>
-        </div>
-        <div>
-            <form id="contact-form" action="/send_email" method="post">
-                <label for="name">Your Name:</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    class="form-control"
-                    required
-                    placeholder="Enter your name"
-                />
-                <label for="email">Your Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    class="form-control"
-                    required
-                    placeholder="Enter your email"
-                />
-                <label for="message">Your Message:</label>
-                <textarea
-                    id="message"
-                    name="message"
-                    rows="3"
-                    class="form-control"
-                    required
-                    placeholder="Enter your message"
-                ></textarea>
-
-                <button type="submit">Send Message</button>
-            </form>
-        </div>
+  <h1>Contact</h1>
+  <div class="grid">
+    <div>
+      <p>
+        If you would like to reach out, please fill out the form provided.
+        Just enter your name, email address, and message, and I'll get back to you as soon as possible.
+      </p>
     </div>
+    <div>
+      <form id="contact-form" action="/send_email" method="post">
+        <label for="name">Your Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          placeholder="Enter your name"
+        />
+        <label for="email">Your Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="Enter your email"
+        />
+        <label for="message">Your Message:</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="3"
+          required
+          placeholder="Enter your message"
+        ></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
 </section>
+
+<!-- Pico dialog -->
+<dialog id="message-dialog">
+  <article>
+    <header>
+      <h3 id="dialog-title">Message Sent</h3>
+    </header>
+    <p id="dialog-content">Your message was sent successfully!</p>
+    <footer>
+      <button onclick="document.getElementById('message-dialog').close()">Close</button>
+    </footer>
+  </article>
+</dialog>
+
+<!-- Inline JS -->
 <script>
-    const showToast = (message, type = "success") => {
-        const toast = document.getElementById("toast");
-        toast.textContent = message;
-        toast.className = `toast show ${type}`;
-        toast.hidden = false;
+  const form = document.getElementById('contact-form');
+  const dialog = document.getElementById('message-dialog');
+  const dialogTitle = document.getElementById('dialog-title');
+  const dialogContent = document.getElementById('dialog-content');
 
-        // Hide after 3 seconds
-        setTimeout(() => {
-            toast.classList.remove("show");
-            setTimeout(() => {
-                toast.hidden = true;
-            }, 400);
-        }, 3000);
-    };
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-    document
-        .getElementById("contact-form")
-        .addEventListener("submit", function (event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const submitButton = event.target.querySelector("button");
+    const formData = new FormData(form);
 
-            submitButton.disabled = true;
-            submitButton.textContent = "Sending...";
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+      });
 
-            fetch(this.action, {
-                method: this.method,
-                body: formData,
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        showToast("Message sent successfully!", "success");
-                    } else {
-                        showToast(data.error || "Submission failed.", "error");
-                    }
-                })
-                .catch((error) => {
-                    showToast(
-                        `Error: ${error.message || "Could not send message."}`,
-                        "error"
-                    );
-                })
-                .finally(() => {
-                    submitButton.disabled = false;
-                    submitButton.textContent = "Send Message";
-                });
-        });
+      if (response.ok) {
+        dialogTitle.textContent = 'Thank you!';
+        dialogContent.textContent = 'Your message has been sent successfully.';
+        dialog.showModal();
+        form.reset();
+      } else {
+        throw new Error('Sending failed');
+      }
+    } catch (error) {
+      dialogTitle.textContent = 'Error!';
+      dialogContent.textContent = 'There was a problem sending your message.';
+      dialog.showModal();
+    }
+  });
 </script>
-<div id="toast" class="toast" hidden></div>
 {% endblock %}
