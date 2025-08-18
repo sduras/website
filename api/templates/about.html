@@ -5,23 +5,39 @@
     font-style: italic;
     opacity: 0.8;
   }
+
+  .diploma {
+    margin-top: 3em;
+    display: block;
+    max-width: 600px;
+  }
 </style> {% endblock %} {% block content %} <article>
   <header>
     <h1>About</h1>
   </header>
-  <section>
-    <header>
-      <h2>A Strategic Pivot</h2>
-      <p class="subtitle">From Human Risk to Human-Centered Technology</p>
-    </header>
-    <p>I bring two decades of experience at the intersection of psychology, law, and organizational risk — now evolving into a new chapter focused on technology and programming.</p>
-    <p>With a Master’s in Psychology and a Bachelor’s in Law, my career began in corporate psychology, where I led high-stakes personnel assessments, built risk mitigation frameworks, and advised executive leadership in Ukraine’s largest commercial bank. My work was not only about understanding people — it was about protecting organization by applying deep behavioral insights to real-world systems. </p>
-    <p>In 2010, I founded and ran a consulting firm dedicated to human risk and organizational psychology. For over a decade, I worked with major clients on leadership evaluation, post-incident interventions, and people-related risks in M&A transactions. Along the way, I also trained polygraph examiners, earned legal qualifications to support regulatory compliance, and stepped in as interim Chief People Officer for a regional HR transformation initiative. </p>
-    <p>When Russia attacked Ukraine and the war escalated, like many, I faced profound disruption. I transitioned into humanitarian work as an HR Coordinator with an international NGO — continuing to apply my expertise in human systems under extraordinary circumstances. A serious health issue soon followed, prompting both personal and professional reassessment. </p>
-    <p>Rather than returning to the status quo, I chose to redirect.</p>
-    <p>Today, I’m focusing on computer programming and Python development — not as a break from my past, but as a strategic evolution of it. I see enormous potential in using technology to address complex human challenges, especially in areas like behavioral data, people risk modeling, and ethical system design. My goal is to integrate my background into this new path, bringing human insight into digital solutions.</p>
-  </section>
-  <hr>
+  <div class="grid">
+    <section>
+      <header>
+        <h2>A Strategic Pivot</h2>
+        <p class="subtitle">From Human Risk to Human-Centered Technology</p>
+      </header>
+      <p>I bring two decades of experience at the intersection of psychology, law, and organizational risk — now evolving into a new chapter focused on technology and programming.</p>
+      <p>With a Master’s in Psychology and a Bachelor’s in Law, my career began in corporate psychology, where I led high-stakes personnel assessments, built risk mitigation frameworks, and advised executive leadership in Ukraine’s largest commercial bank. My work was not only about understanding people — it was about protecting organization by applying deep behavioral insights to real-world systems. </p>
+      <p>In 2010, I founded and ran a consulting firm dedicated to human risk and organizational psychology. For over a decade, I worked with major clients on leadership evaluation, post-incident interventions, and people-related risks in M&A transactions. Along the way, I also trained polygraph examiners, earned legal qualifications to support regulatory compliance, and stepped in as interim Chief People Officer for a regional HR transformation initiative. </p>
+      <p>When Russia attacked Ukraine and the war escalated, like many, I faced profound disruption. I transitioned into humanitarian work as an HR Coordinator with an international NGO — continuing to apply my expertise in human systems under extraordinary circumstances. A serious health issue soon followed, prompting both personal and professional reassessment. </p>
+      <p>Rather than returning to the status quo, I chose to redirect.</p>
+      <p>Today, I’m focusing on computer programming and Python development — not as a break from my past, but as a strategic evolution of it. I see enormous potential in using technology to address complex human challenges, especially in areas like behavioral data, people risk modeling, and ethical system design. My goal is to integrate my background into this new path, bringing human insight into digital solutions.</p>
+    </section>
+    <div>
+      <figure>
+        <picture class="diploma">
+          <source media="(max-width: 600px)" srcset="{{ url_for('static', filename='/img/npa2025-small.jpg') }}" type="image/jpeg">
+          <source media="(min-width: 601px)" srcset="{{ url_for('static', filename='/img/npa2025-large.jpg') }}" type="image/jpeg">
+          <img loading="lazy" src="{{ url_for('static', filename='/img/npa2025-large.jpg') }}" alt="All-Ukrainian Psychodiagnostic Association Membership Certifificate, 2025">
+        </picture>
+      </figure>
+    </div>
+  </div>
   <section>
     <h2>Education & Training</h2>
     <p>I hold a Master’s degree with Honours in Psychology and a Bachelor’s degree in Law from <a href="https://karazin.ua/en/fakulteti-ta-instituti/psikhologiyi/" target="_blank" rel="noopener noreferrer">Kharkiv University</a>. My academic background has always reflected a strong interest in the psychological and philosophical dimensions of human behavior — especially in high-stakes or complex environments. </p>
