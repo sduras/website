@@ -6,7 +6,7 @@ footer {
   font-size: smaller;
 }
 
-p {
+p, li, dd {
   max-width: 61ch;
 }
 
@@ -86,4 +86,36 @@ figcaption {
     align-items: flex-start;
   }
 
+}
+
+  
+  .grid {margin-bottom: 2em;}
+  
+figure {max-width: 600px; display: block; margin: 0 auto;}
+
+
+.diploma img {
+  --r: 5px;
+  padding: calc(2 * var(--r));
+  filter: grayscale(0.4);
+  background: radial-gradient(var(--r), #0000 98%, #ff9500) round
+      calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r))
+      calc(3 * var(--r)),
+    linear-gradient(#fff 0 0) no-repeat 50% / calc(100% - 3 * var(--r))
+      calc(100% - 3 * var(--r));
+  margin: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .diploma img {
+    --r: 5px;
+    padding: calc(2 * var(--r));
+    filter: grayscale(0.4);
+    background: radial-gradient(var(--r), #0000 98%, #ff9500) round
+        calc(-1.5 * var(--r)) calc(-1.5 * var(--r)) / calc(3 * var(--r))
+        calc(3 * var(--r)),
+      linear-gradient(#fff 0 0) no-repeat 50% / calc(100% - 3 * var(--r))
+        calc(100% - 3 * var(--r));
+    margin: auto;
+  }
 }

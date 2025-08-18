@@ -1,4 +1,11 @@
 {% extends "base.html" %} {% block title %}Now page{% endblock %} {% block description %}This is where I am and what I'm doing right now.{% endblock %} {% block head_extra %} <style>
+  .subtitle {
+    margin-top: -0.6rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
   .updated {
     opacity: 0.75;
     margin-top: 1em;
@@ -6,7 +13,7 @@
 </style> {% endblock %} {% block content %} <article>
   <header>
     <h1>What I’m Doing Right Now</h1>
-    <p> Inspired by <a href="http://sivers.org/nowff" rel="noopener noreferrer" target="_blank">Derek Sivers</a> /now page project. </p>
+    <p> Inspired by <a href="https://nownownow.com/about" rel="noopener noreferrer" target="_blank">Derek Sivers</a> /now page project. </p>
     <p class="updated"> Updated <time datetime="2025-08-14">August 14, 2025</time>
     </p>
   </header>

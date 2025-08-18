@@ -3,7 +3,6 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
-from api.books.reading import *
 
 from flask import (
     Flask,
@@ -52,10 +51,10 @@ DEFAULT_HTML = """
           </ul>
           <ul>
             <li>
-              <a href="/now">Now</a>
+              <a href="/about">About</a>
             </li>
             <li>
-              <a href="/reading">Reading</a>
+              <a href="/now">Now</a>
             </li>
             <li>
               <a href="/contact">Contact</a>
@@ -97,7 +96,14 @@ def now():
         return render_template("now.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
-
+        
+@app.route("/about")
+def about():
+    try:
+        return render_template("about.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
+        
 
 @app.route("/reading")
 def reading():

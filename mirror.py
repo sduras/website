@@ -79,12 +79,12 @@ DEFAULT_HTML = """
   <head>
     <meta charset="utf-8" />
     <title>Homepage · Sergiy Duras</title>
-    <meta name="description" content="Homepage of Sergiy Duras (Сергій Дурас), a psychologist and programmer based in 🇺🇦 Ukraine." />
+    <meta name="description" content="Homepage of Sergiy Duras (Сергій Дурас), a psychologist and programmer based in Ukraine." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/static/css/base.css" />
     <link rel="stylesheet" href="/static/css/style.css" />
     <link rel="shortcut icon" href="/static/favicon.ico" />
-    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" /> 
   </head>
   <body>
     <header role="banner">
@@ -99,10 +99,10 @@ DEFAULT_HTML = """
           </ul>
           <ul>
             <li>
-              <a href="/now">Now</a>
+              <a href="/about">About</a>
             </li>
             <li>
-              <a href="/reading">Reading</a>
+              <a href="/now">Now</a>
             </li>
             <li>
               <a href="/contact">Contact</a>
@@ -111,20 +111,33 @@ DEFAULT_HTML = """
         </nav>
       </div>
     </header>
-    <main role="main" class="container">
-      <article>
-        <h1>Hello</h1>
-        <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong>. </p>
-        <p>Thanks for taking the time to visit my website.</p>
-      </article>
-    </main>
-    <footer role="contentinfo" class="container">
-      <small> &copy; 2025 Sergiy Duras <br />
+    <main role="main" class="container">  <article>
+  <header>
+    <h1>Hello</h1>
+  </header>
+  <section class="grid">
+    <div>
+      <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong> with two decades of experience at the intersection of psychology, law, and organisational risk assessment. My professional path has recently taken a strategic turn—towards programming and human-centred technology. </p>
+      <p>This site serves as both my personal contact page and a space for exploring the technical tools I'm currently learning. If you'd like to know more about my background—from corporate psychology and human risk consulting to my transition into tech—please visit the <a href="/about">/about</a> page. You’ll also find a <a href="/reading">reading list</a>, spanning from 2013 to the present, as well as a <a href="/now">/now</a> page with updates on what I’m currently focused on. </p>
+      <p>If you have any questions, thoughts, or just want to say hello, feel free to <a href="/contact">get in touch</a>. </p>
+    </div>
+    <div>
+      <figure>
+        <picture>
+          <source media="(max-width: 600px)" srcset="/static//img/image-small.jpg" type="image/jpeg">
+          <source media="(min-width: 601px)" srcset="/static//img/image-large.jpg" type="image/jpeg">
+          <img src="/static//img/image-large.jpg" alt="An illustration representing calm under pressure — 大波の下で">
+        </picture>
+        <figcaption>大波の下で</figcaption>
+      </figure>
+    </div>
+  </section>
+</article>  </main>
+    <footer role="contentinfo" class="container">  <small> &copy; 2025 Sergiy Duras <br />
         <a href="http://r56vkbtowacs5aijj3knqjsqg6sgdq6pz3mhcof7kntbaht6f3rqeryd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
           <span class="underline-text">Access via Tor (.onion)</span>
         </a>
-      </small>
-    </footer>
+      </small>  </footer>  <script src="/static/js/main.js"></script> 
   </body>
 </html>
 """
@@ -142,6 +155,14 @@ def home():
 def now():
     try:
         return render_template("now.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
+        
+        
+@app.route("/about")
+def about():
+    try:
+        return render_template("about.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
 

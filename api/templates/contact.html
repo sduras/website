@@ -1,10 +1,18 @@
-{% extends "base.html" %} {% block title %}Contact{% endblock %} {% block description %}To contact Sergiy Duras, please use the contact form provided.{% endblock %} {% block content %} <article>
+{% extends "base.html" %} {% block title %}Contact{% endblock %} {% block description %}To contact Sergiy Duras, please use the contact form provided.{% endblock %} {% block head_extra %} <style> p {max-width: 55ch;} </style> {% endblock %}{% block content %} <article>
   <header>
     <h1>Contact</h1>
   </header>
   <section class="grid">
     <div>
-      <p> If you would like to reach out, please fill out the form provided. Just enter your name, email address, and message, and I'll get back to you as soon as possible.</p>
+	
+	<p>I’m open to new opportunities and collaborations — particularly in areas where psychology, risk, and technology intersect.</p>
+
+	<p>If you’re looking for professional HR consulting, interested in partnership or remote collaboration, working in an NGO or humanitarian tech initiative for Ukraine, or seeking expertise in behavioral insight, people risk assessment, or human-centered system design — I’d be glad to hear from you. I’m also available for remote roles and project-based work.</p>
+
+	<p>I also welcome your thoughts on the site — feel free to share your opinion or just say hello. I developed this website myself and welcome any feedback on its content, structure, or usability.</p>
+
+    <p>To get in touch, please fill out the contact form below — just enter your name, email address, and message. I’ll respond as soon as possible.</p>
+		  
     </div>
     <div>
       <form id="contact-form" action="/send_email" method="post" novalidate>
