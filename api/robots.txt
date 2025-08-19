@@ -1,0 +1,200 @@
+Sitemap: https://sergiy.duras.org/sitemap.xml
+
+User-agent: *
+Disallow: /no/
+
+User-agent: YandexCalendar
+Disallow: /
+
+User-agent: YandexImages
+Disallow: /
+
+User-agent: YandexMetrika
+Disallow: /
+
+User-agent: YandexMedia
+Disallow: /
+
+User-agent: YaDirectFetcher
+Disallow: /
+
+User-agent: YandexBlogs
+Disallow: /
+
+User-agent: YandexNews
+Disallow: /
+
+User-agent: YandexPagechecker
+Disallow: /
+
+User-agent: YandexDirect
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: Baiduspider-image
+Disallow: /
+
+User-agent: MSIECrawler
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: EmailCollector
+Disallow: /
+
+User-agent: EmailSiphon
+Disallow: /
+
+User-agent: WebBandit
+Disallow: /
+
+User-agent: EmailWolf
+Disallow: /
+
+User-agent: ExtractorPro
+Disallow: /
+
+User-agent: CopyRightCheck
+Disallow: /
+
+User-agent: Alexibot
+Disallow: /
+
+User-agent: Web Image Collector
+Disallow: /
+
+User-agent: Zeus
+Disallow: /
+
+User-agent: Zeus Link Scout
+Disallow: /
+
+User-agent: EroCrawler
+Disallow: /
+
+User-agent: LinkScan/8.1a Unix
+Disallow: /
+
+User-agent: Keyword Density/0.9
+Disallow: /
+
+User-agent: WebCopier v3.2a
+Disallow: /
+
+User-agent: WebCapture 2.0
+Disallow: /
+
+User-agent: WebCopier v.2.2
+Disallow: /
+
+User-agent: EtaoSpider
+Disallow: /
+
+User-agent: Black Hole
+Disallow: /
+
+User-agent: Orthogaffe
+Disallow: /
+
+User-agent: UbiCrawler
+Disallow: /
+
+User-agent: DOC
+Disallow: /
+
+User-agent: Zao
+Disallow: /
+
+User-agent: gsa-crawler
+Disallow: /
+
+User-agent: sitecheck.internetseer.com
+Disallow: /
+
+User-agent: Zealbot
+Disallow: /
+
+User-agent: MSIECrawler
+Disallow: /
+
+User-agent: SiteSnagger
+Disallow: /
+
+User-agent: WebStripper
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: Fetch
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: Teleport
+Disallow: /
+
+User-agent: TeleportPro
+Disallow: /
+
+User-agent: WebZIP
+Disallow: /
+
+User-agent: linko
+Disallow: /
+
+User-agent: HTTrack
+Disallow: /
+
+User-agent: Microsoft.URL.Control
+Disallow: /
+
+User-agent: Xenu
+Disallow: /
+
+User-agent: larbin
+Disallow: /
+
+User-agent: libwww
+Disallow: /
+
+User-agent: ZyBORG
+Disallow: /
+
+User-agent: Download Ninja
+Disallow: /
+
+User-agent: wget
+Disallow: /
+
+User-agent: grub-client
+Disallow: /
+
+User-agent: k2spider
+Disallow: /
+
+User-agent: NPBot
+Disallow: /
+
+User-agent: WebReaper
+Disallow: /
+
+User-agent: CNCDialer
+Disallow: /
+
+User-agent: Maxthon
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: Slurp
+Disallow: /
+
+User-agent: Screaming Frog SEO Spider
+Disallow: /
+
