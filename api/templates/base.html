@@ -76,6 +76,14 @@
         <a href="http://r56vkbtowacs5aijj3knqjsqg6sgdq6pz3mhcof7kntbaht6f3rqeryd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
           <span class="underline-text">Access via Tor (.onion)</span>
         </a>
-      </small> {% endblock %} </footer> {% block scripts %} <script src="{{ url_for('static', filename='js/main.js') }}"></script> {% endblock %}
+      </small> {% endblock %} </footer> {% block scripts %}
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVK7WTG3T0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VVK7WTG3T0');
+</script> {% endblock %}
   </body>
 </html>
