@@ -6,10 +6,6 @@ footer {
   font-size: smaller;
 }
 
-p, li, dd {
-  max-width: 61ch;
-}
-
 a.onion-link {
   text-decoration: none;
   color: #7D4698;
@@ -88,10 +84,8 @@ figcaption {
 
 }
 
-  
-  .grid {margin-bottom: 2em;}
-  
-figure {max-width: 600px; display: block; margin: 0 auto;}
+
+
 
 
 .diploma img {

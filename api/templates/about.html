@@ -1,104 +1,217 @@
-{% extends 'base.html' %} {% block title %}About{% endblock %} {% block description %}a psychologist and human risk specialist with over 20 years of experience in behavioral assessment, organizational consulting, and strategic HR. Today, in the process of transitioning into computer programming, with a particular focus on Python and data-driven applications.{% endblock %} {% block head_extra %} <style>
+{% extends 'base.html' %} {% block title %}About{% endblock %} {% block description %}Psychologist and legal expert applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.{% endblock %} {% block head_extra %} <style>
+  h4 {
+    font-size: 1.125rem
+  }
+
   .subtitle {
-    margin-top: -0.6rem;
-    margin-bottom: 2rem;
+    margin-top: -.6rem;
+    margin-bottom: 1rem;
     font-style: italic;
-    opacity: 0.8;
+    opacity: .8
   }
 
   .diploma {
-    margin-top: 3em;
     display: block;
-    max-width: 600px;
+    max-width: 600px
+  }
+
+  p,
+  li,
+  dt,
+  dd,
+  summary,
+  details {
+    max-width: 61ch
+  }
+
+  .grid {
+    margin-bottom: 1.6em
+  }
+
+  .figure {
+    width: 480px;
+    max-width: 100%;
+    margin: 0 auto
   }
 </style> {% endblock %} {% block content %} <article>
   <header>
     <h1>About</h1>
   </header>
+  <!-- section 1, 2 -->
+  <section>
+    <header>
+      <h2>A Strategic Pivot</h2>
+      <p class="subtitle">From Human Risk to Human-Centered Technology</p>
+    </header>
+    <div class="grid">
+      <div>
+        <p>I bring <strong>20+ years of experience</strong> at the intersection of psychology, law, and people risk — now transitioning into a <strong>technology-focused practice</strong>. </p>
+        <p>My career began in corporate psychology as <strong>Head of Psychological Services</strong> at Ukraine’s largest commercial bank, where I built and led the psychological risk unit. I designed a large-scale screening program, led a cross-regional team, and conducted behavioral evaluations for high-risk roles. I also advised executive leadership on people risks and contributed to internal investigations and fraud prevention efforts. </p>
+        <p>In 2010, I founded <strong>Psiwell</strong>, a consulting firm specializing in human risk and organizational psychology. I advised clients on people strategy, risk, and performance; applied people analytics to support data-driven decisions; and led major HR and change initiatives, including M&A integrations and policy design. I also trained polygraph operators and earned legal qualifications to support compliance work. </p>
+      </div>
+      <div>
+        <p>Following the escalation of war in Ukraine and a significant health event, I reevaluated how to apply my background more sustainably and at scale. I transitioned into <strong>technology</strong> — applying programming and data analysis to address challenges in behavioral risk, ethical system design, and human-centered decision-making. </p>
+        <p>
+          <mark>My current focus</mark> is <strong>Python development</strong>, using <strong>Flask</strong>, <strong>Django</strong>, <strong>Pandas</strong>, and <strong>NumPy</strong> to build tools that integrate psychological insight into digital services. I also work with <strong>accessible HTML and CSS</strong> for inclusive, user-friendly design, and apply <strong>natural language processing</strong> for structured text analysis and behavioral insight.
+        </p>
+        <p>In parallel, I practice <em>Solution-Focused Brief Therapy (SFBT)</em> — a short-term, goal-oriented, evidence-based model focused on practical change. Its emphasis on clarity, minimalism, and future orientation shapes how I build <strong>user-facing applications</strong> for behavioral feedback, adaptive interfaces, and decision support systems. </p>
+      </div>
+    </div>
+  </section>
+  <hr>
+  <!-- section 3, 4 -->
+  <section>
+    <hgroup>
+      <h2>Education &amp; Training</h2>
+      <p>Advanced study and practical certification in psychological theory and applied psychotherapy.</p>
+    </hgroup>
+    <div class="grid">
+      <div>
+        <details>
+          <summary role="button">Degrees</summary>
+          <p>
+            <strong>Master’s in Psychology (with Honours)</strong>, <a href="https://karazin.ua/en/fakulteti-ta-instituti/psikhologiyi/" target="_blank" rel="noopener noreferrer">Kharkiv University</a>
+          </p>
+          <p>
+            <strong>Bachelor’s in Law</strong>, <a href="https://karazin.ua/en/fakulteti-ta-instituti/iuridichnii/" target="_blank" rel="noopener noreferrer">Kharkiv University</a>
+          </p>
+        </details>
+        <details>
+          <summary role="button">Additional Academic Work</summary>
+          <p>
+            <strong>Postgraduate Research, School of Philosophy</strong>, <a href="https://karazin.ua/en/fakulteti-ta-instituti/filosofskii/" target="_blank" rel="noopener noreferrer">Kharkiv University</a>
+            <br>
+            <span>Focus: Psycho-analytic theories of aggression and war</span>
+          </p>
+          <p>
+            <strong>Lecturer</strong>, School of Philosophy, <a href="https://karazin.ua/en/fakulteti-ta-instituti/filosofskii/" target="_blank" rel="noopener noreferrer">Kharkiv University</a>
+            <br>
+            <span>Focus: Combined academic instruction with applied research</span>
+          </p>
+        </details>
+        <details>
+          <summary role="button">Professional Training</summary>
+          <p>
+            <strong>Five-Year Program in Group Analytic Psychotherapy</strong>, ( <a href="https://www.europsyche.org/" target="_blank" rel="noopener noreferrer">EAP</a>/ <a href="https://usp.community/" target="_blank" rel="noopener noreferrer">UUAP</a>) <br>
+            <span>Joint accreditation: European Association for Psychotherapy and Ukrainian Umbrella Association of Psychotherapists. Meets European standards for supervised clinical practice and theory and qualifies me to apply for the European Certificate of Psychotherapy.</span>
+          </p>
+          <p>
+            <strong>Forensic Psychophysiology</strong>, <a href="https://web.archive.org/web/20050209110015/http://www.azpolygraphschool.com/index.htm" target="_blank" rel="noopener noreferrer">Arizona School of Polygraph Science</a>
+            <br>
+            <span>Joint accreditation: American Polygraph Association (APA) and American Association of Police Polygraphists (AAPP). Curriculum modeled on U.S. Department of Defense Polygraph Institute (DoDPI).</span>
+          </p>
+        </details>
+        <details>
+          <summary role="button">Academic Translation</summary>
+          <p>Completed academic translations of key works by British psychoanalyst <strong>Melanie Klein</strong> and her colleagues from English into Russian. These translations were published (ISBN 5-8291-0126-2, ISBN 5-8291-0239-0) and remain in use and circulation. </p>
+        </details>
+      </div>
+      <div>
+        <figure class="figure">
+          <picture class="diploma">
+            <source media="(max-width: 600px)" srcset="{{ url_for('static', filename='/img/npa2025-small.jpg') }}" type="image/jpeg">
+            <source media="(min-width: 601px)" srcset="{{ url_for('static', filename='/img/npa2025-large.jpg') }}" type="image/jpeg">
+            <img loading="lazy" src="{{ url_for('static', filename='/img/npa2025-large.jpg') }}" alt="National Psychological Association of Ukraine Membership Certificate, 2025">
+          </picture>
+          <figcaption>Membership Certificate – National Psychological Association of Ukraine (2025)</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+  <!-- section 5, 6 -->
   <div class="grid">
     <section>
-      <header>
-        <h2>A Strategic Pivot</h2>
-        <p class="subtitle">From Human Risk to Human-Centered Technology</p>
-      </header>
-      <p>I bring two decades of experience at the intersection of psychology, law, and organizational risk — now evolving into a new chapter focused on technology and programming.</p>
-      <p>With a Master’s in Psychology, my career began in corporate psychology, where I led high-stakes personnel assessments, built risk mitigation frameworks, and advised executive leadership in Ukraine’s largest commercial bank. My work was not only about understanding people — it was about protecting organization by applying deep behavioral insights to real-world systems. </p>
-      <p>In 2010, I founded and ran a consulting firm dedicated to human risk and organizational psychology. For over a decade, I worked with major clients on leadership evaluation, post-incident interventions, and people-related risks in M&A transactions. Along the way, I also trained polygraph examiners, earned legal qualifications to support regulatory compliance, and stepped in as interim Chief People Officer for a regional HR transformation initiative. </p>
-      <p>When Russia attacked Ukraine and the war escalated, like many, I faced profound disruption. I transitioned into humanitarian work as an HR Coordinator with an international NGO — continuing to apply my expertise in human systems under extraordinary circumstances. A serious health issue soon followed, prompting both personal and professional reassessment. </p>
-      <p>Rather than returning to the status quo, I chose to redirect.</p>
-      <p>Today, I’m focusing on computer programming and Python development — not as a break from my past, but as a strategic evolution of it. I see enormous potential in using technology to address complex human challenges, especially in areas like behavioral data, people risk modeling, and ethical system design. My goal is to integrate my background into this new path, bringing human insight into digital solutions.</p>
+      <hgroup>
+        <h2>Corporate Practice</h2>
+        <p>Psychological risk function within Ukraine’s largest commercial bank, integrating behavioral assessment into core risk operations.</p>
+      </hgroup>
+      <details>
+        <summary role="button">Privatbank</summary>
+        <p>
+          <strong>Head of Psychological Services</strong>, <a href="https://privatbank.ua/en" target="_blank" rel="noopener noreferrer">PrivatBank</a>
+          <br>
+          <span>&#12539; Built and led the bank’s psychological risk unit</span>
+          <br>
+          <span>&#12539; Designed screening program assessing 15,000+ individuals annually</span>
+          <br>
+          <span>&#12539; Led a cross-regional team of 25 psychologists</span>
+          <br>
+          <span>&#12539; Conducted behavioral evaluations for high-risk roles</span>
+          <br>
+          <span>&#12539; Advised on internal investigations and fraud prevention</span>
+          <br>
+          <span>&#12539; Provided executive-level guidance on people risks</span>
+          <br>
+        </p>
+      </details>
     </section>
-    <div>
-      <figure>
-        <picture class="diploma">
-          <source media="(max-width: 600px)" srcset="{{ url_for('static', filename='/img/npa2025-small.jpg') }}" type="image/jpeg">
-          <source media="(min-width: 601px)" srcset="{{ url_for('static', filename='/img/npa2025-large.jpg') }}" type="image/jpeg">
-          <img loading="lazy" src="{{ url_for('static', filename='/img/npa2025-large.jpg') }}" alt="All-Ukrainian Psychodiagnostic Association Membership Certifificate, 2025">
-        </picture>
-      </figure>
-    </div>
+    <section>
+      <hgroup>
+        <h2>Consulting</h2>
+        <p>Strategic HR and People Risk consulting to organizations navigating growth, change, and M&amp;A.</p>
+      </hgroup>
+      <details>
+        <summary role="button">Psiwell</summary>
+        <p>
+          <strong>Director &amp; Owner</strong>, <a href="https://www.psiwell.com/" target="_blank" rel="noopener noreferrer">Psiwell</a>
+          <br>
+          <span>&#12539; Advised on people strategy, risks, and organizational performance</span>
+          <br>
+          <span>&#12539; Applied people analytics to support data-driven decisions</span>
+          <br>
+          <span>&#12539; Designed HR policies and performance management frameworks</span>
+          <br>
+          <span>&#12539; Supported M&amp;A integrations with people risk analysis</span>
+          <br>
+          <span>&#12539; Supported change management and process improvement</span>
+          <br>
+          <span>&#12539; Served as Interim Chief People Officer in travel-tech IT company</span>
+          <br>
+        </p>
+      </details>
+    </section>
   </div>
-  <section>
-    <h2>Education & Training</h2>
-    <p>I hold a Master’s degree with Honours in Psychology and a Bachelor’s degree in Law from <a href="https://karazin.ua/en/fakulteti-ta-instituti/psikhologiyi/" target="_blank" rel="noopener noreferrer">Kharkiv University</a>. My academic background has always reflected a strong interest in the psychological and philosophical dimensions of human behavior — especially in high-stakes or complex environments. </p>
-    <p>To deepen my clinical and theoretical expertise, I completed a five-year professional training program in Group Analytic Psychotherapy. This program, jointly accredited by the <a href="https://www.europsyche.org/" target="_blank" rel="noopener noreferrer">European Association for Psychotherapy</a> (EAP) and the <a href="https://usp.community/" target="_blank" rel="noopener noreferrer">Ukrainian Umbrella Association of Psychotherapists</a> (UUAP), met European standards for supervised practice, theory, and personal development. It qualifies me to apply for the European Certificate of Psychotherapy. </p>
-    <p>Following my graduate studies in Psychology, I pursued postgraduate research at the <a href="https://karazin.ua/en/fakulteti-ta-instituti/filosofskii/" target="_blank" rel="noopener noreferrer">School of Philosophy</a> at Kharkiv University, with a focus on psycho-analytic theories of aggression and war. I later joined the Department of Theoretical and Practical Philosophy as a lecturer, combining academic rigor with a practical commitment to applied psychology. </p>
-  </section>
-  <hr>
-  <section>
-    <h2>Corporate Practice & Risk Psychology</h2>
-    <p>In 2003, I joined <a href="https://privatbank.ua/en" target="_blank" rel="noopener noreferrer">PrivatBank</a> — then Ukraine’s largest commercial bank — as Head of Psychological Services, where I built and led a department that played a central role in the bank’s people risk management: </p>
-    <ul>
-      <li>Designing and implementing a large-scale psychodiagnostic screening program assessing over 15,000 individuals annually.</li>
-      <li>Leading and mentoring a cross-regional team of 25 psychologists.</li>
-      <li>Conducting individual evaluations for high-risk roles in IT, security, and finance.</li>
-      <li>Advising on psychological risk within internal investigations and fraud prevention programs.</li>
-      <li>Providing strategic guidance to executive leadership on people issues.</li>
-    </ul>
-    <p>Under my leadership, psychological screening became a formal part of the bank’s approach to vetting employees in sensitive roles. This was not traditional HR; it was a specialized function embedded within the bank’s risk infrastructure — using behavioral science to protect assets, ensure long-term reliability, and uphold institutional integrity.</p>
-  </section>
-  <hr>
-  <section>
-    <h2>Polygraph & Forensic Psychophysiology</h2>
-    <p>To enhance the forensic dimension of my work, I completed advanced polygraph examiner training in the United States. The program met the rigorous standards of the American Polygraph Association (APA), the American Association of Police Polygraphists (AAPP), and relevant state licensing boards. Its curriculum was modeled after the U.S. Department of Defense Polygraph Institute (DoDPI). </p>
-    <p>Over the following two decades, I conducted more than 2,000 polygraph examinations and trained over 70 examiners, helping to build professional capacity in Ukraine and beyond. While I have since developed a more critical view of the method and no longer incorporate polygraph into my professional practice, this phase of my career provided valuable insight into forensic psychophysiology, behavioral detection, and decision-making under uncertainty — all of which continue to inform my data-oriented approach today.</p>
-  </section>
-  <hr>
-  <section>
-    <h2>Consulting & People Risk Advisory</h2>
-    <p>In 2010, I founded a specialist consulting firm focused on human risk and organisational psychology. Over more than a decade, I worked closely with corporate clients navigating complex people challenges, often at times of change or strategic vulnerability.</p>
-    <p>My advisory services included:</p>
-    <ul>
-      <li>
-        <strong>Organisational Assessment</strong>: Leading psychodiagnostic reviews and post-incident evaluations to enhance workforce resilience and reliability.
-      </li>
-      <li>
-        <strong>HR Consultancy</strong>: Supporting the development and rollout of people policies, especially in areas related to compliance, ethics, and behavioral risk.
-      </li>
-      <li>
-        <strong>Human Due Diligence in M&A</strong>: Helping clients identify and manage people-related risks during acquisitions, integrations, and leadership transitions.
-      </li>
-    </ul>
-    <p>To support this work, I completed a Bachelor of Laws degree, which enhanced my ability to navigate regulatory frameworks and national labour law requirements.</p>
-    <p>In 2019, I partnered with a <a href="https://ttn.global/" target="_blank" rel="noopener noreferrer">leading EMEA-region travel platform</a> to support an ambitious HR transformation project. I stepped in as Interim Chief People Officer, leading a people analytics–driven initiative designed to reshape culture, structure, and talent practices. While the project gained strong initial traction, it was eventually paused due to the onset of the COVID-19 pandemic. </p>
-  </section>
-  <hr>
-  <section>
-    <h2>Recent Work & Career Transition</h2>
-    <p>When full-scale war escalated in Ukraine, my consulting business faced inevitable disruption. I transitioned into the humanitarian sector as an HR Coordinator for <a href="https://www.nrc.no/" target="_blank" rel="noopener noreferrer">Norwegian Refugee Council</a>, where I supported emergency response efforts as an HR Coordinator for Western Ukraine. </p>
-    <p>During this time, I faced a significant health challenge that required surgery and an extended period of recovery. This experience led me to profoundly reassess how I work and the kind of professional future I wish to pursue.</p>
-    <p>Rather than returning to my previous roles, I chose to adapt—shifting towards technology as a means to apply my analytical skills more flexibly and sustainably. Today, I focus on Python programming and exploring how technology can be harnessed to address behavioural, ethical, and organisational challenges at scale. I view this as a natural extension of my lifelong work: translating complex human dynamics into actionable, evidence-based systems.</p>
-  </section>
-  <hr>
-  <section>
-    <h2>Professional Memberships & Affiliations</h2>
-    <p>I maintain membership in several professional organizations, including:</p>
-    <ul>
-      <li>All-Ukrainian Psychodiagnostic Association ( <a href="https://vpa.org.ua/" target="_blank" rel="noopener noreferrer">AUPA</a>) </li>
-      <li>National Psychological Association of Ukraine ( <a href="https://npa-ua.org/en/" target="_blank" rel="noopener noreferrer">NPA</a>) </li>
-      <li>Solution Focused Brief Therapy Association ( <a href="https://www.sfbta.org/" target="_blank" rel="noopener noreferrer">SFBTA</a>) </li>
-    </ul>
-  </section>
-  <hr>
+  <!-- section 7, 8 -->
+  <div class="grid">
+    <section>
+      <hgroup>
+        <h2>Forensic Psychophysiology</h2>
+        <p>Psychophysiological examinations to support high-stakes decision-making, training, and standards development in forensic settings.</p>
+      </hgroup>
+      <details>
+        <summary role="button">Psiwell</summary>
+        <p>
+          <strong>Polygraph Examiner</strong>, ( <a href="https://privatbank.ua/en" target="_blank" rel="noopener noreferrer">PrivatBank</a>/ <a href="https://www.psiwell.com/" target="_blank" rel="noopener noreferrer">Psiwell</a>) <br>
+          <span>&#12539; Conducted 2,000+ PDD examinations</span>
+          <br>
+          <span>&#12539; Trained 70+ examiners in Ukraine and abroad</span>
+          <br>
+          <span>&#12539; Participated in the development of standards ( <a href="https://www.astm.org/membership-participation/technical-committees/committee-e52" target="_blank" rel="noopener noreferrer">Committee E52</a>) </span>
+          <br>
+          <span>&#12539; Contributed to <a href=https://stoeltingco.com/Polygraph-Instruments/Instruments/Software" target="_blank" rel="noopener noreferrer">Stoelting Co.</a> software testing and localization </span>
+          <br>
+        </p>
+        <p>Though no longer part of my practice, this experience deepened my understanding of decision-making under uncertainty, and psychophysiological data — all relevant to my current work.</p>
+      </details>
+    </section>
+    <section>
+      <hgroup>
+        <h2>NGO</h2>
+        <p>Emergency response support and end-to-end recruitment for humanitarian operations.</p>
+      </hgroup>
+      <details>
+        <summary role="button">Norwegian Refugee Council</summary>
+        <p>
+          <strong>HR Coordinator</strong>, <a href="https://www.nrc.no/" target="_blank" rel="noopener noreferrer">Norwegian Refugee Council</a>
+          <br>
+          <span>&#12539; Supported emergency response in Ukraine</span>
+          <br>
+          <span>&#12539; Managed the full recruitment cycle in the West Area Office</span>
+          <br>
+        </p>
+        <p>Following the full-scale invasion of Ukraine, I joined the Norwegian Refugee Council (NRC) as an HR Coordinator to support humanitarian operations. I contributed to the emergency response, ensuring rapid staffing in a high-pressure, rapidly changing environment. </p>
+      </details>
+    </section>
+  </div>
   <footer></footer>
 </article> {% endblock %}
