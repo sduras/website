@@ -6,10 +6,22 @@ from pathlib import Path
 from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from flask import (Flask, jsonify, render_template, render_template_string,
-                   url_for, request)
+from flask import (
+    Flask,
+    jsonify,
+    render_template,
+    render_template_string,
+    url_for,
+    request,
+)
 from jinja2 import TemplateNotFound
-from api.books.reading import load_books, get_unique_years, filter_books_by_year, generate_html_table, summary
+from api.books.reading import (
+    load_books,
+    get_unique_years,
+    filter_books_by_year,
+    generate_html_table,
+    summary,
+)
 
 app = Flask(__name__, template_folder="api/templates", static_folder="api/static")
 
@@ -157,8 +169,8 @@ def now():
         return render_template("now.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
-        
-        
+
+
 @app.route("/about")
 def about():
     try:
@@ -183,7 +195,7 @@ def reading():
             years=years,
             selected_year=selected_year,
             summary_html=summary_html,
-            table_html=table_html
+            table_html=table_html,
         )
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
@@ -195,8 +207,8 @@ def contact():
         return render_template("contact.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
-        
-        
+
+
 @app.route("/send_email", methods=["POST"])
 def send_email():
     name = request.form.get("name")
@@ -236,7 +248,7 @@ def after_request(response):
     response.headers.add("Access-Control-Allow-Methods", "POST")
     response.headers.add("Access-Control-Allow-Headers", "Content-Type")
     return response
-        
+
 
 @app.route("/status")
 def status():

@@ -1,0 +1,12 @@
+{
+    "editor.fontSize": 16,
+    "editor.cursorStyle": "underline",
+    "editor.formatOnSave": true,
+    "workbench.colorTheme": "Kanagawa Wave",
+    "github.gitProtocol": "ssh",
+    "isort.check": true,
+    "html.trace.server": "verbose",
+    "html.format.indentInnerHtml": true,
+    "html.format.indentHandlebars": true,
+    "html.format.templating": true
+}
