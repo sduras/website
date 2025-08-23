@@ -1,25 +1,27 @@
 import os
+import smtplib
 import subprocess
 import time
-import smtplib
-from pathlib import Path
-from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from pathlib import Path
+
+from dotenv import load_dotenv
 from flask import (
     Flask,
     jsonify,
     render_template,
     render_template_string,
-    url_for,
     request,
+    url_for,
 )
 from jinja2 import TemplateNotFound
+
 from api.books.reading import (
-    load_books,
-    get_unique_years,
     filter_books_by_year,
     generate_html_table,
+    get_unique_years,
+    load_books,
     summary,
 )
 
