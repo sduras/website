@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block title %}List{% endblock %} {% block description %}A collection of technical and reference-oriented lists on topics I’m currently learning, with a few non-technical ones like favourite songs and book recommendations.{% endblock %} {% block head_extra %} <style>
+  figure: {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  figure img {
+    display: block;
+    margin: 0 auto;
+  }
+</style>{% endblock %} {% block content %} <article>
+  <header>
+    <h1>Lists</h1>
+    <div class="grid">
+      <div>
+        <p>This webpage contains a <strong>collection of lists</strong>. Most are technical and act as quick guides for tools I’m currently using and learning. A few are non-technical, like favourite songs or books by genre. To view the available lists, please use the selector below to <strong>choose a topic</strong>. </p>
+      </div>
+      <div>
+        <figure>
+          <img src="{{ url_for('static', filename='/img/list.svg') }}" alt="Short, focused lists for future reference" />
+        </figure>
+      </div>
+    </div>
+  </header>
+  <section class="topic-selector">
+    <form method="get">
+      <details class="dropdown">
+        <summary> {% if selected_topic %} {{ selected_topic }} {% else %} Select a topic... {% endif %} </summary>
+        <ul>
+          <li>
+            <label>
+              <input type="radio" name="topic" value="" onchange="this.form.submit()" {% if not selected_topic %}checked{% endif %}> All topics </label>
+          </li> {% for t in topics %} <li>
+            <label>
+              <input type="radio" name="topic" value="{{ t }}" onchange="this.form.submit()" {% if t == selected_topic %}checked{% endif %}>
+              {{ t }}
+            </label>
+          </li> {% endfor %}
+        </ul>
+      </details>
+    </form>
+  </section> {% if selected_topic %} {% if lists %} <section class="lists-container"> {% for lst in lists %} <details name="list-accordion" class="list-card">
+      <summary>
+        <strong>🔸 {{ lst.title }}</strong>
+      </summary> {% if lst["items"] %} {% if lst["type"] == 'ordered' %} <ol> {% for item in lst["items"] %} <li>
+          <strong>{{ item.text }}</strong> {% if item.note %} <small>({{ item.note }})</small> {% endif %} {% if item.link %} - <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer" class="secondary">More info</a> {% endif %}
+        </li> {% endfor %} </ol> {% else %} <ul> {% for item in lst["items"] %} <li>
+          <strong>{{ item.text }}</strong> {% if item.note %} <small>({{ item.note }})</small> {% endif %} {% if item.link %} - <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer" class="secondary">More info</a> {% endif %}
+        </li> {% endfor %} </ul> {% endif %} {% else %} <p>
+        <em>No items in this list.</em>
+      </p> {% endif %}
+    </details> {% endfor %} </section> {% else %} <p>🤔 No lists found for this topic..</p> {% endif %} {% else %} <p style="text-align: center;">👆 Please select a topic to view its lists.</p> {% endif %}
+</article> {% endblock %}

@@ -2,18 +2,15 @@ import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from dotenv import load_dotenv
 
-from flask import (
-    Flask,
-    jsonify,
-    render_template,
-    render_template_string,
-    request,
-    url_for,
-)
+from dotenv import load_dotenv
+from flask import (Flask, jsonify, render_template, render_template_string,
+                   request, url_for)
 from jinja2 import TemplateNotFound
-from api.books.reading import load_books, get_unique_years, filter_books_by_year, generate_html_table, summary
+
+from api.lists.lists import load_lists_index
+from api.books.reading import (filter_books_by_year, generate_html_table,
+                               get_unique_years, load_books, summary)
 
 load_dotenv()
 
@@ -96,14 +93,50 @@ def now():
         return render_template("now.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
-        
+
+
 @app.route("/about")
 def about():
     try:
         return render_template("about.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
-        
+
+
+@app.route("/lists")
+def lists():
+    selected_topic = request.args.get("topic")
+
+    # Load JSON structure with {"lists": [...]}
+    list_data = load_lists_index()
+    all_lists = list_data.get("lists", [])
+    
+    print("🔍 Number of loaded lists:", len(all_lists))
+    print("🔍 Example list:", all_lists[0] if all_lists else "None")
+
+    # Collect all unique tags from lists for topic filter
+    topics = sorted(set(
+        tag
+        for lst in all_lists
+        for tag in lst.get("tags", [])
+    ))
+
+    # Filter lists if a topic is selected
+    if selected_topic:
+        filtered_lists = [
+            lst for lst in all_lists if selected_topic in lst.get("tags", [])
+        ]
+    else:
+        filtered_lists = all_lists
+
+    return render_template(
+        "lists.html",
+        lists=filtered_lists,
+        topics=topics,
+        selected_topic=selected_topic
+    )
+
+
 
 @app.route("/reading")
 def reading():
@@ -121,10 +154,11 @@ def reading():
             years=years,
             selected_year=selected_year,
             summary_html=summary_html,
-            table_html=table_html
+            table_html=table_html,
         )
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
+
 
 @app.route("/contact")
 def contact():

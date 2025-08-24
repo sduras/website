@@ -1,0 +1,305 @@
+{
+  "lists": [
+    {
+      "title": "Creating & Using a Git Development Branch",
+      "type": "ordered",
+      "tags": [
+        "Git"
+      ],
+      "items": [
+        {
+          "text": "General Rule",
+          "note": "Never commit directly to the 'master' branch. Do all development work in feature or development branches and merge into 'master' only for public releases.",
+          "link": "https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging"
+        },
+        {
+          "text": "git branch -a",
+          "note": "List existing branches. '*' shows your current branch.",
+          "link": null
+        },
+        {
+          "text": "git checkout -b development",
+          "note": "Create and switch to a development branch",
+          "link": null
+        },
+        {
+          "text": "git add . git commit -m \"whatever\"",
+          "note": "Work as usual",
+          "link": null
+        },
+        {
+          "text": "git push --set-upstream origin development",
+          "note": "Push development branch to remote (first time)",
+          "link": null
+        },
+        {
+          "text": "git checkout master git merge development git push origin master",
+          "note": "Merge development into master (once ready for release)",
+          "link": null
+        },
+        {
+          "text": "git push -d origin development",
+          "note": "Delete remote branch",
+          "link": null
+        },
+        {
+          "text": "git branch -d development",
+          "note": "Delete local branch",
+          "link": null
+        },
+        {
+          "text": "git flow init",
+          "note": "Using Git Flow. Accept defaults, or customise branch names. Usually 'master' – production releases, 'develop' – integration branch for features.",
+          "link": null
+        },
+        {
+          "text": "git flow feature start feature-name",
+          "note": "Create a new feature branch from 'develop'",
+          "link": null
+        },
+        {
+          "text": "git add . git commit -m \"Work in progress\" git push origin feature/feature-name",
+          "note": "Work, commit, and push as usual",
+          "link": null
+        },
+        {
+          "text": "git flow feature finish feature-name",
+          "note": "Finish feature and merge back into 'develop'",
+          "link": null
+        },
+        {
+          "text": "git push origin develop",
+          "note": "This automatically merges the feature into 'develop' and deletes the feature branch locally. Push the updated 'develop'",
+          "link": null
+        }
+      ]
+    },
+    {
+      "title": "Signing Git Commits with GnuPG",
+      "type": "ordered",
+      "tags": [
+        "Git",
+        "GnuPG"
+      ],
+      "items": [
+        {
+          "text": "gpg --full-generate-key",
+          "note": "Choose RSA and RSA, 4096 bits min, expiration optional. Name and email must match git config email.",
+          "link": "https://www.gnupg.org/documentation/manuals/gnupg/Agent-GENKEY.html#Agent-GENKEY"
+        },
+        {
+          "text": "gpg --list-secret-keys --keyid-format=long",
+          "note": "Get GPG key ID",
+          "link": null
+        },
+        {
+          "text": "git config --global user.signingkey 8F15725CD7003013",
+          "note": null,
+          "link": null
+        },
+        {
+          "text": "git config --global commit.gpgsign true",
+          "note": null,
+          "link": null
+        },
+        {
+          "text": "gpg --armor --export 8F15725CD7003013",
+          "note": "Export GPG Key to GitHub",
+          "link": null
+        },
+        {
+          "text": "gpg --armor --export 8F15725CD7003013",
+          "note": "Copy the output and paste it into GitHub under GPG keys",
+          "link": null
+        },
+        {
+          "text": "git commit -S -m \"Signed commit using GPG\"",
+          "note": "Basic usage",
+          "link": null
+        },
+        {
+          "text": "git commit -m \"Auto-signed commit\"",
+          "note": "If commit.gpgsign is set globally, just use regular commit",
+          "link": "https://github.com/microsoft/vscode/wiki/Commit-Signing"
+        }
+      ]
+    },
+    {
+      "title": "Usable Fonts",
+      "type": "unordered",
+      "tags": [
+        "Fonts"
+      ],
+      "items": [
+        {
+          "text": "agave",
+          "note": "A small, monospaced outline typeface designed by type agaric. Geometrically regular and simple, with support for Ukrainian characters.",
+          "link": "https://b.agaric.net/page/agave"
+        },
+        {
+          "text": "Nerd Fonts",
+          "note": "A large collection of patched, developer-focused fonts including over 3,600 icons from popular sets.",
+          "link": "https://www.nerdfonts.com/font-downloads"
+        },
+        {
+          "text": "Ubuntu Sans Mono",
+          "note": "A set of matching open-source fonts developed by Canonical for the Ubuntu project and the wider Free Software community.",
+          "link": "https://github.com/canonical/Ubuntu-Sans-Mono-fonts"
+        }
+      ]
+    },
+    {
+      "title": "Vim Built-in Color Schemes",
+      "type": "unordered",
+      "tags": [
+        "Vim"
+      ],
+      "items": [
+        {
+          "text": "How to set",
+          "note": "Inside Vim, :colorscheme name (or :colo for short).",
+          "link": null
+        },
+        {
+          "text": "default",
+          "note": "No-color scheme",
+          "link": null
+        },
+        {
+          "text": "blue",
+          "note": "Soft blue background with white/yellow text",
+          "link": null
+        },
+        {
+          "text": "darkblue",
+          "note": "Darker variant of `blue`, better for dark themes",
+          "link": null
+        },
+        {
+          "text": "delek",
+          "note": "Bright colors with a beige/yellowish background",
+          "link": null
+        },
+        {
+          "text": "desert",
+          "note": "Warm, muted tones – good for terminals",
+          "link": null
+        },
+        {
+          "text": "elflord",
+          "note": "Dark scheme with blue and red highlights",
+          "link": null
+        },
+        {
+          "text": "evening",
+          "note": "Very dark background with soft syntax colors",
+          "link": null
+        },
+        {
+          "text": "industry",
+          "note": "Grey/blueish tone; modern and clean",
+          "link": null
+        },
+        {
+          "text": "koehler",
+          "note": "Light background with rich syntax highlights",
+          "link": null
+        },
+        {
+          "text": "morning",
+          "note": "Light background, less saturated than `koehler`",
+          "link": null
+        },
+        {
+          "text": "murphy",
+          "note": "Classic dark theme with vivid colors",
+          "link": null
+        },
+        {
+          "text": "pablo",
+          "note": "Medium contrast, earthy tones",
+          "link": null
+        },
+        {
+          "text": "peachpuff",
+          "note": "Light pastel theme, soft on the eyes",
+          "link": null
+        },
+        {
+          "text": "ron",
+          "note": "High-contrast, dark background theme",
+          "link": null
+        },
+        {
+          "text": "shine",
+          "note": "Bright scheme, light on the eyes",
+          "link": null
+        },
+        {
+          "text": "slate",
+          "note": "Slate-grey theme with balanced contrast, nice",
+          "link": null
+        },
+        {
+          "text": "torte",
+          "note": "Soft colors on a light background",
+          "link": null
+        },
+        {
+          "text": "zellner",
+          "note": "Retro, minimal syntax highlighting",
+          "link": null
+        },
+        {
+          "text": "Optional enhancements",
+          "note": "To make sure colors display correctly: set t_Co=256, set termguicolors. Syntax highlighting customisation available through :hi <group>. Commands such as :highlight LineNr guifg=<color> and :highlight StatusLine guibg=<background_color> allows to make nuanced adjustments.",
+          "link": null
+        },
+        {
+          "text": "Every built-in colorscheme, with screenshots",
+          "note": null,
+          "link": "https://justinjoyce.dev/every-built-in-vim-color-scheme-with-screenshots/"
+        }
+      ]
+    },
+    {
+      "title": "Third-Party Themes for Vim",
+      "type": "unordered",
+      "tags": [
+        "Vim"
+      ],
+      "items": [
+        {
+          "text": "Solarized",
+          "note": "Precision colorscheme, reduces brightness contrast but retains contrasting hues for syntax highlighting readability.",
+          "link": "https://github.com/altercation/vim-colors-solarized"
+        },
+        {
+          "text": "Everforest",
+          "note": "A green based color scheme designed for long sessions. Soft contrast theme with natural colors.",
+          "link": "https://github.com/sainnhe/everforest"
+        },
+        {
+          "text": "Iceberg",
+          "note": "A well-designed, eye-friendly bluish colorscheme.",
+          "link": "https://github.com/cocopon/iceberg.vim"
+        },
+        {
+          "text": "Gruvbox",
+          "note": "Designed as a bright theme with pastel 'retro groove' colors. Colors are easily distinguishable, contrast enough and still pleasant for the eyes.",
+          "link": "https://github.com/morhetz/gruvbox"
+        },
+        {
+          "text": "ayu",
+          "note": "Clean and minimal theme. Supports three modes: dark, mirage, and light.",
+          "link": "https://github.com/ayu-theme/ayu-vim"
+        },
+        {
+          "text": "Jellybeans",
+          "note": "A colorful, dark color scheme. Disables italics in terminal Vim by default.",
+          "link": "https://github.com/nanotech/jellybeans.vim"
+        }
+      ]
+    }
+  ]
+}
