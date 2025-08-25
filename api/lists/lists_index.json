@@ -300,6 +300,61 @@
           "link": "https://github.com/nanotech/jellybeans.vim"
         }
       ]
+    },
+    {
+      "title": "Vim Book List",
+      "type": "unordered",
+      "tags": [
+        "Vim",
+        "Books"
+      ],
+      "items": [
+        {
+          "text": "VIM User Manual by Bram Moolenaar, 2023",
+          "note": "The definitive, task-oriented guide included with Vim. It's accessible via Vim itself and online",
+          "link": "https://vimhelp.org/usr_toc.txt.html"
+        },
+        {
+          "text": "Vi iMproved (VIM) by Steve Oualline, 2001",
+          "note": "This tutorial takes a task oriented approach allowing you to learn only the commands that make your job easier.",
+          "link": null
+        },
+        {
+          "text": "Learning the vi and Vim Editors by Arnold Robbins, Elbert Hannah, Linda Lamb, 2022",
+          "note": "A comprehensive guide covering both vi and vim, updated for modern platforms. Also covers other vi clones like nvi, elvis, and vile",
+          "link": null
+        },
+        {
+          "text": "Painless Vim: A Sane Person’s Guide by Nate Dickson, 2017",
+          "note": "A beginner-friendly, step-by-step journey through Vim",
+          "link": null
+        },
+        {
+          "text": "Gourmet Vim Cookbook by Igor Irianto, 2021",
+          "note": "100+ practical Vim examples. Designed to introduce lesser-known features",
+          "link": null
+        },
+        {
+          "text": "Use Vim Like a Pro by Tim Ottinger, 2014",
+          "note": "A small but purposeful micro‑book licensed under Creative Commons",
+          "link": "https://ia600600.us.archive.org/31/items/hybridphilosophy-collection/Tim%20Ottinger%20-%20Vim%20Like%20A%20Pro.pdf"
+        },
+        {
+          "text": "Vim Reference Guide by Sundeep Agarwal, 2024",
+          "note": "A concise, cheatsheet-style guide aimed at beginner to intermediate users",
+          "link": null
+        },
+        {
+          "text": "Practical Vim by Drew Neil, 2015",
+          "note": "A masterclass in efficient editing via over 120 well-crafted tips",
+          "link": null
+        },
+        {
+          "text": "Vim 101 HACKS by Ramesh Natarajan, 1999",
+          "note": "101 practical, easy-to-follow \"hacks\" to speed up and streamline Vim usage",
+          "link": null
+        }
+      ]
     }
   ]
 }
