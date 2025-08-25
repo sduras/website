@@ -24,6 +24,7 @@ from api.books.reading import (
     load_books,
     summary,
 )
+from api.lists.lists import load_lists_index
 
 app = Flask(__name__, template_folder="api/templates", static_folder="api/static")
 
@@ -93,12 +94,48 @@ DEFAULT_HTML = """
   <head>
     <meta charset="utf-8" />
     <title>Homepage · Sergiy Duras</title>
-    <meta name="description" content="Homepage of Sergiy Duras (Сергій Дурас), a psychologist and programmer based in Ukraine." />
+    <meta name="description" content="Sergiy Duras (Сергій Дурас) is a Ukrainian psychologist and Python developer specializing in behavioral risk, human-centered design, and solution-focused brief therapy (SFBT). This personal website offers insights into his multidisciplinary work at the intersection of psychology and technology, with updates on current projects, reading lists, and contact information." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/static/css/base.css" />
     <link rel="stylesheet" href="/static/css/style.css" />
-    <link rel="shortcut icon" href="/static/favicon.ico" />
+    <link rel="shortcut icon" href="https://sergiy.duras.org/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" /> 
+    <meta name="author" content="Sergiy Duras · Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
+    <meta name="keywords" content="Sergiy Duras, psychologist, legal expert, human risk, solution-focused therapy, SFBT, behavioral risk, Python developer, Ukraine">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sergiy Duras">
+    <meta property="og:description" content="Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
+    <meta property="og:url" content="https://sergiy.duras.org/">
+    <meta property="og:image" content="https://sergiy.duras.org/static/img/npa2025-large.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About · Sergiy Duras">
+    <meta name="twitter:description" content="Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
+    <meta name="twitter:image" content="https://sergiy.duras.org/static/img/npa2025-large.jpg">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Sergiy Duras",
+        "url": "https://sergiy.duras.org",
+        "image": "https://sergiy.duras.org/static/img/npa2025-large.jpg",
+        "sameAs": ["https://www.psiwell.com/", "https://www.linkedin.com/in/duras/", "https://github.com/sduras", "https://codeberg.org/duras", "https://nownownow.com/p/svyZ", "https://npa-ua.org/register/duras-serhiy-hennadiyovych-2228/", "https://vpa.org.ua/about/chleni-asotsiatsiy/povni-diysni-chleni-asotsiatsiy/"],
+        "jobTitle": "Psychologist, Legal Expert, Python Developer",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Psiwell",
+          "url": "https://www.psiwell.com/"
+        },
+        "alumniOf": [{
+          "@type": "CollegeOrUniversity",
+          "name": "Kharkiv University",
+          "url": "https://karazin.ua/en/"
+        }],
+        "knowsAbout": ["Psychology", "Law", "Behavioral Risk", "Polygraph", "Solution-Focused Brief Therapy", "Python", "Human-Centered Design"],
+        "description": "Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.",
+        "nationality": "Ukrainian"
+      }
+    </script>
   </head>
   <body>
     <header role="banner">
@@ -131,9 +168,8 @@ DEFAULT_HTML = """
   </header>
   <section class="grid">
     <div>
-      <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong> with two decades of experience at the intersection of psychology, law, and organisational risk assessment. My professional path has recently taken a strategic turn—towards programming and human-centred technology. </p>
-      <p>This site serves as both my personal contact page and a space for exploring the technical tools I'm currently learning. If you'd like to know more about my background—from corporate psychology and human risk consulting to my transition into tech—please visit the <a href="/about">/about</a> page. You’ll also find a <a href="/reading">reading list</a>, spanning from 2013 to the present, as well as a <a href="/now">/now</a> page with updates on what I’m currently focused on. </p>
-      <p>If you have any questions, thoughts, or just want to say hello, feel free to <a href="/contact">get in touch</a>. </p>
+      <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong> with two decades of experience at the intersection of psychology, law, and organisational risk assessment. My professional path has recently taken a strategic turn — towards programming and human-centred technology. </p>
+      <p>This site serves as both my personal contact page and a space for exploring the tools I'm currently learning. If you'd like to know more about my background — from corporate psychology and human risk consulting to my transition into tech — please visit the <a href="/about">/about</a> page. You’ll also find a <a href="/reading">reading list</a>, spanning from 2013 to the present, a number of <a href="/lists">/lists</a> on different subjects, as well as a <a href="/now">/now</a> page with updates on what I’m currently focused on. </p>
     </div>
     <div>
       <figure>
@@ -151,7 +187,15 @@ DEFAULT_HTML = """
         <a href="http://r56vkbtowacs5aijj3knqjsqg6sgdq6pz3mhcof7kntbaht6f3rqeryd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
           <span class="underline-text">Access via Tor (.onion)</span>
         </a>
-      </small>  </footer>  <script src="/static/js/main.js"></script> 
+      </small>  </footer> 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVK7WTG3T0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VVK7WTG3T0');
+</script> 
   </body>
 </html>
 """
@@ -179,6 +223,30 @@ def about():
         return render_template("about.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
+
+
+@app.route("/lists")
+def lists():
+    selected_topic = request.args.get("topic")
+
+    list_data = load_lists_index()
+    all_lists = list_data.get("lists", [])
+
+    print("🔍 Number of loaded lists:", len(all_lists))
+    print("🔍 Example list:", all_lists[0] if all_lists else "None")
+
+    topics = sorted(set(tag for lst in all_lists for tag in lst.get("tags", [])))
+
+    if selected_topic:
+        filtered_lists = [
+            lst for lst in all_lists if selected_topic in lst.get("tags", [])
+        ]
+    else:
+        filtered_lists = all_lists
+
+    return render_template(
+        "lists.html", lists=filtered_lists, topics=topics, selected_topic=selected_topic
+    )
 
 
 @app.route("/reading")
