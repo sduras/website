@@ -223,6 +223,50 @@ def about():
         return render_template("about.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
+        
+@app.route("/scraping")
+def scraping_dashboard():
+    exercises = {
+        "software": {"title": "Software", "enabled": True, "fetcher": get_updates},
+        "news": {"title": "News", "enabled": True, "fetcher": get_updates},
+        "weather": {"title": "Weather", "enabled": False, "fetcher": None},
+    }
+
+    selected = request.args.get("exercise", "")
+    articles = []
+
+    if selected in exercises and exercises[selected]["enabled"]:
+        raw_data = asyncio.run(exercises[selected]["fetcher"]())
+        updates = raw_data["updates"].get(selected, {})
+
+        for source, items in updates.items():
+            for item in items:
+                articles.append(
+                    {
+                        "source": source,
+                        "title": item.get("title", ""),
+                        "text": item.get("text") or item.get("description", ""),
+                        "url": item.get("url", ""),
+                        "fetched_at": item.get("fetched_at", ""),
+                        "fetched_at_kyiv": item.get("fetched_at_kyiv", ""),
+                    }
+                )
+
+        if selected == "software":
+            custom_order = ["Debian", "Vim", "Python", "GnuPG", "aShell", "cmus"]
+            order_index = {name.lower(): i for i, name in enumerate(custom_order)}
+
+            articles.sort(
+                key=lambda x: order_index.get(x["title"].lower(), len(custom_order))
+            )
+
+    return render_template(
+        "scraping.html",
+        exercises=exercises,
+        selected_exercise=selected,
+        articles=articles,
+    )
+
 
 
 @app.route("/lists")
