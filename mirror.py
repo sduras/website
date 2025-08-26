@@ -30,6 +30,7 @@ app = Flask(__name__, template_folder="api/templates", static_folder="api/static
 
 load_dotenv()
 
+
 TOR_DIR = os.path.expanduser(os.getenv("TOR_DIR", "~/.tor"))
 HIDDEN_SERVICE_DIR = os.path.join(TOR_DIR, "hidden_service")
 LOG_FILE = os.path.join(TOR_DIR, "tor.log")
