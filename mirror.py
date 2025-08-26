@@ -93,12 +93,48 @@ DEFAULT_HTML = """
   <head>
     <meta charset="utf-8" />
     <title>Homepage · Sergiy Duras</title>
-    <meta name="description" content="Homepage of Sergiy Duras (Сергій Дурас), a psychologist and programmer based in Ukraine." />
+    <meta name="description" content="Sergiy Duras (Сергій Дурас) is a Ukrainian psychologist and Python developer specializing in behavioral risk, human-centered design, and solution-focused brief therapy (SFBT). This personal website offers insights into his multidisciplinary work at the intersection of psychology and technology, with updates on current projects, reading lists, and contact information." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/static/css/base.css" />
     <link rel="stylesheet" href="/static/css/style.css" />
-    <link rel="shortcut icon" href="/static/favicon.ico" />
+    <link rel="shortcut icon" href="https://sergiy.duras.org/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" /> 
+    <meta name="author" content="Sergiy Duras · Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
+    <meta name="keywords" content="Sergiy Duras, psychologist, legal expert, human risk, solution-focused therapy, SFBT, behavioral risk, Python developer, Ukraine">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sergiy Duras">
+    <meta property="og:description" content="Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
+    <meta property="og:url" content="https://sergiy.duras.org/">
+    <meta property="og:image" content="https://sergiy.duras.org/static/img/npa2025-large.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About · Sergiy Duras">
+    <meta name="twitter:description" content="Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
+    <meta name="twitter:image" content="https://sergiy.duras.org/static/img/npa2025-large.jpg">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Sergiy Duras",
+        "url": "https://sergiy.duras.org",
+        "image": "https://sergiy.duras.org/static/img/npa2025-large.jpg",
+        "sameAs": ["https://www.psiwell.com/", "https://www.linkedin.com/in/duras/", "https://github.com/sduras", "https://codeberg.org/duras", "https://nownownow.com/p/svyZ", "https://npa-ua.org/register/duras-serhiy-hennadiyovych-2228/", "https://vpa.org.ua/about/chleni-asotsiatsiy/povni-diysni-chleni-asotsiatsiy/"],
+        "jobTitle": "Psychologist, Legal Expert, Python Developer",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Psiwell",
+          "url": "https://www.psiwell.com/"
+        },
+        "alumniOf": [{
+          "@type": "CollegeOrUniversity",
+          "name": "Kharkiv University",
+          "url": "https://karazin.ua/en/"
+        }],
+        "knowsAbout": ["Psychology", "Law", "Behavioral Risk", "Polygraph", "Solution-Focused Brief Therapy", "Python", "Human-Centered Design"],
+        "description": "Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.",
+        "nationality": "Ukrainian"
+      }
+    </script>
   </head>
   <body>
     <header role="banner">
@@ -131,9 +167,9 @@ DEFAULT_HTML = """
   </header>
   <section class="grid">
     <div>
-      <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong> with two decades of experience at the intersection of psychology, law, and organisational risk assessment. My professional path has recently taken a strategic turn—towards programming and human-centred technology. </p>
-      <p>This site serves as both my personal contact page and a space for exploring the technical tools I'm currently learning. If you'd like to know more about my background—from corporate psychology and human risk consulting to my transition into tech—please visit the <a href="/about">/about</a> page. You’ll also find a <a href="/reading">reading list</a>, spanning from 2013 to the present, as well as a <a href="/now">/now</a> page with updates on what I’m currently focused on. </p>
-      <p>If you have any questions, thoughts, or just want to say hello, feel free to <a href="/contact">get in touch</a>. </p>
+      <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong> with two decades of experience at the intersection of psychology, law, and organisational risk assessment. My professional path has recently taken a strategic turn — towards programming and human-centred technology. </p>
+      <p>This site serves both as my personal contact page and as a space to explore the tools and technologies I’m currently learning. If you’re interested in my background — from corporate psychology and human risk consulting to my transition into tech — please visit the <a href="/about" class="secondary">/about</a> page. </p>
+      <p>You’ll also find a <a href="/reading" class="secondary">reading list</a> spanning from 2013 to the present, a section showcasing my <a href="/experiments" class="secondary">experiments</a> with Python tools and concepts, and a <a href="/now" class="secondary">now</a> page with updates on what I’m currently focused on. To get in touch, please visit the <a href="/contact" class="secondary">contact</a> page. </p>
     </div>
     <div>
       <figure>
@@ -151,7 +187,15 @@ DEFAULT_HTML = """
         <a href="http://r56vkbtowacs5aijj3knqjsqg6sgdq6pz3mhcof7kntbaht6f3rqeryd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
           <span class="underline-text">Access via Tor (.onion)</span>
         </a>
-      </small>  </footer>  <script src="/static/js/main.js"></script> 
+      </small>  </footer> 
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVK7WTG3T0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-VVK7WTG3T0');
+</script> 
   </body>
 </html>
 """
@@ -209,7 +253,52 @@ def contact():
         return render_template("contact.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
-        
+
+
+@app.route("/scraping")
+def scraping_dashboard():
+    exercises = {
+        "software": {"title": "Software", "enabled": True, "fetcher": get_updates},
+        "news": {"title": "News", "enabled": True, "fetcher": get_updates},
+        "weather": {"title": "Weather", "enabled": False, "fetcher": None},
+    }
+
+    selected = request.args.get("exercise", "")
+    articles = []
+
+    if selected in exercises and exercises[selected]["enabled"]:
+        raw_data = asyncio.run(exercises[selected]["fetcher"]())
+        updates = raw_data["updates"].get(selected, {})
+
+        for source, items in updates.items():
+            for item in items:
+                articles.append(
+                    {
+                        "source": source,
+                        "title": item.get("title", ""),
+                        "text": item.get("text") or item.get("description", ""),
+                        "url": item.get("url", ""),
+                        "fetched_at": item.get("fetched_at", ""),
+                        "fetched_at_kyiv": item.get("fetched_at_kyiv", ""),
+                    }
+                )
+
+        if selected == "software":
+            custom_order = ["Debian", "Vim", "Python", "GnuPG", "aShell", "cmus"]
+            order_index = {name.lower(): i for i, name in enumerate(custom_order)}
+
+            articles.sort(
+                key=lambda x: order_index.get(x["title"].lower(), len(custom_order))
+            )
+
+    return render_template(
+        "scraping.html",
+        exercises=exercises,
+        selected_exercise=selected,
+        articles=articles,
+    )
+
+
 @app.route("/experiments")
 def experiments():
     try:
