@@ -1,3 +1,4 @@
+import asyncio
 import os
 import smtplib
 import subprocess
@@ -5,6 +6,10 @@ import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
+from api.books.reading import (filter_books_by_year, generate_html_table,
+                               get_unique_years, load_books, summary)
+from api.lists.lists import load_lists_index
+from api.scrap.scraping import format_output, get_updates
 
 from dotenv import load_dotenv
 from flask import (
@@ -25,6 +30,7 @@ from api.books.reading import (
     summary,
 )
 from api.lists.lists import load_lists_index
+from api.scrap.scraping import format_output, get_updates
 
 app = Flask(__name__, template_folder="api/templates", static_folder="api/static")
 
