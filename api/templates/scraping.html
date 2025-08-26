@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block title %}Scraping Exercises{% endblock %} {% block content %} <section class="exercise-selector">
+  <h1>Scraping Exercises</h1>
+  <form method="get">
+    <fieldset>
+      <legend>Select an exercise:</legend> {% for key, ex in exercises.items() %} <input type="radio" id="{{ key }}" name="exercise" value="{{ key }}" onchange="this.form.submit()" {% if key == selected_exercise %}checked{% endif %} {% if not ex.enabled %}disabled{% endif %}>
+      <label for="{{ key }}">
+        {{ ex.title }}{% if not ex.enabled %}{% endif %} </label> {% endfor %}
+    </fieldset>
+  </form>
+</section>
+<hr> {% if selected_exercise %} {% if data %} {# 1. Flatten all articles with source info #} {% set all_articles = [] %} {% for source, articles in data.items() %} {% for article in articles %} {% set _ = all_articles.append({
+          "source": source,
+          "text": article.text,
+          "url": article.url
+        }) %} {% endfor %} {% endfor %} {# 2. Batch into groups of 3 for grid rows #} {% for group in all_articles|batch(3, None) %} <div class="grid"> {% for article in group %} <div> {% if article %} <article>
+      <header>
+        <strong>{{ article.text[:60] }}</strong>
+      </header>
+      <p>{{ article.text }}</p>
+      <footer>
+        <small>{{ article.source }}</small>
+        <br>
+        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" role="button"> View update </a>
+      </footer>
+    </article> {% endif %} </div> {% endfor %} </div> {% endfor %} {% else %} <p style="text-align: center;">No data available for this exercise.</p> {% endif %} {% else %} <p style="text-align: center;">👆 Please select an exercise to view its data.</p> {% endif %} {% endblock %}

@@ -1,2 +1,13 @@
 Flask==3.0.3
 dotenv
+aiohappyeyeballs
+aiohttp
+aiosignal
+frozenlist
+multidict
+propcache
+yarl
+beautifulsoup4
+bs4
+soupsieve
+brotli

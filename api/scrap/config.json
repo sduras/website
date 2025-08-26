@@ -1,0 +1,48 @@
+{
+  "sources": [
+    {
+      "name": "Python",
+      "url": "https://www.python.org/downloads/source/",
+      "mode": "custom",
+      "category": "software"
+    },
+    {
+      "name": "Vim",
+      "url": "https://www.vim.org/download.php",
+      "mode": "custom",
+      "category": "software"
+    },
+    {
+      "name": "Debian",
+      "url": "https://www.debian.org/releases/index.en.html",
+      "mode": "custom",
+      "category": "software"
+    },
+    {
+      "name": "GnuPG",
+      "url": "https://gnupg.org/index.html",
+      "mode": "custom",
+      "category": "software"
+    },
+    {
+      "name": "cmus",
+      "url": "https://cmus.github.io/#download",
+      "mode": "custom",
+      "category": "software"
+    },
+    {
+      "name": "aShell",
+      "url": "https://holzschu.github.io/a-Shell_iOS/changelog/",
+      "mode": "custom",
+      "category": "software"
+    },
+    {
+      "name": "picoopenpgp",
+      "url": "https://github.com/polhenarejos/pico-openpgp/releases",
+      "mode": "custom",
+      "category": "software"
+    }
+  ]
+}
+
+

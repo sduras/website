@@ -1,16 +1,21 @@
+
 import os
+import asyncio
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 from dotenv import load_dotenv
 from flask import (Flask, jsonify, render_template, render_template_string,
-                   request, url_for)
+                   request, url_for, abort)
 from jinja2 import TemplateNotFound
 
 from api.lists.lists import load_lists_index
 from api.books.reading import (filter_books_by_year, generate_html_table,
                                get_unique_years, load_books, summary)
+
+from api.scrap.scraping import get_updates, format_output
+
 
 load_dotenv()
 
@@ -85,12 +90,61 @@ def home():
         return render_template("home.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
+      
 
+@app.route("/updates")
+def get_scraped_updates():
+    news = asyncio.run(get_updates())
+    return jsonify(news)
+
+@app.route("/updates/formatted")
+def get_formatted_updates():
+    news = asyncio.run(get_updates())
+    return format_output(news)
+      
+        
+@app.route("/scraping")
+def scraping_dashboard():
+    exercises = {
+        "software": {
+            "title": "Software",
+            "enabled": True,
+            "fetcher": get_news
+        },
+        "news": {
+            "title": "News",
+            "enabled": False,
+            "fetcher": None
+        },
+        "weather": {
+            "title": "Weather",
+            "enabled": False,
+            "fetcher": None
+        },
+    }
+
+    selected = request.args.get("exercise", "")
+
+    data = {}
+    if selected in exercises and exercises[selected]["enabled"]:
+        data = asyncio.run(exercises[selected]["fetcher"]())
+
+    return render_template("scraping.html",
+                           exercises=exercises,
+                           selected_exercise=selected,
+                           data=data)
 
 @app.route("/now")
 def now():
     try:
         return render_template("now.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
+        
+@app.route("/gallery")
+def gallery():
+    try:
+        return render_template("gallery.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
 

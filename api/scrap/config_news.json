@@ -1,0 +1,24 @@
+{
+  "sources": [
+    {
+      "name": "🇬🇧 BBC",
+      "url": "https://www.bbc.com/ukrainian",
+      "class_name": "bbc-14zb6im"
+    },
+    {
+      "name": "🇩🇪 DW",
+      "url": "https://www.dw.com/uk/",
+      "class_name": "news-title"
+    },
+    {
+      "name": "🇺🇸 CNN",
+      "url": "https://edition.cnn.com/world",
+      "class_name": "container_lead-plus-headlines__item"
+    },
+    {
+      "name": "🇮🇪 Irish Times",
+      "url": "https://www.irishtimes.com/",
+      "class_name": "b-flex-promo-card__text"
+    }
+  ]
+}

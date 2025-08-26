@@ -1,0 +1,78 @@
+
+
+
+{% extends 'base.html' %} {% block title %}About{% endblock %} {% block description %}Psychologist and legal expert applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.{% endblock %} {% block head_extra %} 
+<style>
+.masonry {
+    --masonry-gap: 1rem;
+    --masonry-brick-width: 280px;
+    column-gap: var(--masonry-gap);
+    column-fill: initial;
+    column-width: var(--masonry-brick-width);
+}
+
+.masonry > * {
+    break-inside: avoid;
+    margin-bottom: var(--masonry-gap);
+}
+
+@supports(grid-template-rows: masonry) {
+    .masonry {
+      display: grid;
+      gap: var(--masonry-gap);
+      grid-template-rows: masonry;
+      grid-template-columns: repeat(auto-fill, minmax(var(--masonry-brick-width), 1fr));
+      align-tracks: stretch;
+    }
+
+    .masonry > * {
+        margin-bottom: initial;
+    }
+}
+
+.masonry {
+    <!-- background: #f3f3f3; -->
+    padding: 2rem;
+}
+<!-- .brick:nth-child(4n - 7) { -->
+    <!-- background: #5A363A; -->
+<!-- } -->
+
+<!-- .brick:nth-child(4n - 6) { -->
+    <!-- background: #82212C; -->
+<!-- } -->
+
+<!-- .brick:nth-child(4n - 5) { -->
+    <!-- background: #3A3E41; -->
+<!-- } -->
+
+<!-- .brick:nth-child(4n - 4) { -->
+    <!-- background: #292A2B; -->
+<!-- } -->
+.brick {
+    <!-- color: white; -->
+    padding:1rem;
+}
+
+</style>{% endblock %}
+
+{% block content %}
+
+		<div class="masonry">
+        <div class="brick">
+		<span class="num">1</span> Perspiciatis dolor qui deserunt animi, quidem temporibus nam doloremque maiores quae ullam, quibusdam consequatur consequuntur et corporis laboriosam est facere ratione quaerat odio quas dolore fugit rem officiis odit! Ad.
+		</div>
+        <div class="brick"><span class="num">2</span> Perspiciatis dolor qui deserunt animi, quidem temporibus nam doloremque maiores quae ullam, quibusdam consequatur consequuntur et corporis laboriosam est facere ratione quaerat odio quas dolore fugit rem officiis odit! Ad.</div>
+        <div class="brick"><span class="num">3</span> Earum, voluptatum! Minima sapiente deserunt optio blanditiis, non atque voluptates libero molestias ipsam officiis reprehenderit ipsum tenetur deleniti quo dolore ut odio vero distinctio, error temporibus doloribus. Fugiat, accusantium aperiam!</div>
+        <div class="brick"><span class="num">4</span> Voluptatibus vel magnam a cupiditate at veniam eos voluptates harum incidunt minus. Nisi alias quis ab odit perspiciatis quisquam officVoluptatibus vel magnam a cupiditate at veniam eos voluptates harum incidunt minus.</div>
+        <div class="brick"><span class="num">5</span> Suscipit cum nihil id voluptatem omnis officia dolor quia. Saepe perferendis, quas, fuga magnam iure soluta nemo eligendi dignissimos repudiandae maxime, beatae sapiente possimus obcaecati ab necessitatibus voluptatem numquam commodi.</div>
+        <div class="brick"><span class="num">6</span> Inventore maiores velit possimus dolore in ipsa praesentium obcaecati. Velit nihil porro pariatur id culpa earum soluta ipsa autem repellat quisquam iure facilis totam sint, quod a quae delectus perferendis.</div>
+         <div class="brick"><span class="num">7</span> Lorem ipsum dolor inventore saepe maiores delectus? Quaerat excepturi repudiandae magnam in corporis? Corporis veritatis necessitatibus rem veniam explicabo iure ea incidunt ut dicta?</div>
+        <div class="brick"><span class="num">8</span> Perspiciatis dolor qui deserunt animi, quidem temporibus nam doloremque maiores quae ullam, quibusdam consequatur consequuntur et corporis laboriosam est facere ratione quaerat odio quas dolore fugit rem officiis odit! Ad.</div>
+        <div class="brick"><span class="num">9</span> Earum, voluptatum! Minima sapiente deserunt optio blanditiis, non atque voluptates libero molestias ipsam officiis reprehenderit ipsum tenetur deleniti quo dolore ut odio vero distinctio, error temporibus doloribus. Fugiat, accusantium aperiam!</div>
+        <div class="brick"><span class="num">10</span> Voluptatibus vel magnam a cupiditate at veniam eos voluptates harum incidunt minus. Nisi alias quis ab odit perspiciatis quisquam officVoluptatibus vel magnam a cupiditate at veniam eos voluptates harum incidunt minus.</div>
+        <div class="brick"><span class="num">11</span> Suscipit cum nihil id voluptatem omnis officia dolor quia. Saepe perferendis, quas, fuga magnam iure soluta nemo eligendi dignissimos repudiandae maxime, beatae sapiente possimus obcaecati ab necessitatibus voluptatem numquam commodi.</div>
+        <div class="brick"><span class="num">12</span> Suscipit cum nihil id voluptatem omnis officia dolor quia. Saepe perferendis, quas, fuga magnam iure soluta nemo eligendi dignissimos repudiandae maxime, beatae sapiente possimus obcaecati ab necessitatibus voluptatem numquam commodi.</div>
+    </div>
+
+{% endblock %}
