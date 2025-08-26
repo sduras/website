@@ -16,13 +16,13 @@
     </div>
     <div>
       <form id="contact-form" action="/send_email" method="post" novalidate>
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required autocomplete="name" placeholder="Enter your name" />
+		<label for="name">Your Name:</label>
+		<input type="text" id="name" name="text" placeholder="Enter your name" aria-label="Text">
         <label for="email">Your Email:</label>
-        <input type="email" id="email" name="email" required autocomplete="email" placeholder="Enter your email" />
+		<input type="email" id="email" name="email" required placeholder="Enter your email" aria-label="Email" autocomplete="email">		
         <label for="message">Your Message:</label>
-        <textarea id="message" name="message" rows="4" required placeholder="Enter your message"></textarea>
-        <button type="submit">Send Message</button>
+		<textarea type="text" id="message" name="text" rows="4" placeholder="Enter your message" aria-label="Enter your message"></textarea>	
+		<button type="submit">Send Message</button>
       </form>
     </div>
   </section>
