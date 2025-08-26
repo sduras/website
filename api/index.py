@@ -154,6 +154,13 @@ def about():
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
 
+@app.route("/experiments")
+def experiments():
+    try:
+        return render_template("experiments.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
+
 
 @app.route("/lists")
 def lists():

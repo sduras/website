@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block title %}Exercises{% endblock %} {% block description %}Explore a collection of Python experiments including web scraping, Raspberry Pi Pico projects, Telegram bots, and simple web apps like a coin flipper, transliteration tool, and tarot card reader. Continuously updated as I learn new technologies.{% endblock %} {% block head_extra %} <style>
+  .subtitle {
+    margin-top: -0.6rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  .updated {
+    opacity: 0.75;
+    margin-top: 1em;
+  }
+</style> {% endblock %} {% block content %} <article>
+  <header>
+    <h1>Exercises</h1>
+    <p> My experiments with Python</p>
+    <p class="updated"> Updated <time datetime="2025-08-14">August 26, 2025</time>
+    </p>
+  </header>
+  <p style="max-width: 55ch;">This page showcases my hands-on <strong>experiments</strong> with tools and concepts I'm currently exploring. I'll continue updating it as I learn new techniques. Right now, you’ll find: </p>
+  <ul>
+    <li>Interactive demos that pull <a href="/scraping" class="secondary">real-time data</a> from various sources. </li>
+    <li>A small MicroPython program for Raspberry Pi Pico that collects and displays environmental data using sensors.</li>
+    <li>A simple web app that flips a virtual coin to show "Yes" or "No", complete with animation and sound — useful for quick decisions.</li>
+    <li>A browser-based tool that converts Ukrainian Cyrillic text into Latin script (CMU 2010, <mark>DSTU 9112:2021</mark>) </li>
+    <li>A bot that fetches weather data from the Deutscher Wetterdienst, formats it into readable messages, and sends them to <del>Telegram</del>. </li>
+    <li>A small program that draws random Tarot Cards for you and explains their meaning.</li>
+    <li>Curated <a href="/lists" class="secondary">lists</a> on a range of topics I'm researching. </li>
+  </ul>
+</article> {% endblock %}

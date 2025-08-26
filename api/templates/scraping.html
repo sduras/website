@@ -54,7 +54,7 @@
 <hr> {% if selected_exercise %} {% if articles %} {# === Special layout for news === #} {% if selected_exercise == 'news' %} <div class="masonry"> {% for article in articles %} {% set sentences = article.text.split('.') %} {% set headline = sentences[0] ~ ('.' if article.text.find('.') != -1 else '') %} {% set body_text = article.text.replace(headline, '', 1).strip() %} <div class="brick">
     <article>
       <header style="display: flex; align-items: center; gap: 10px;">
-        <img src="{{ url_for('static', filename='logos/' + article.source|lower + '.svg') }}" alt="{{ article.source }} logo" width="24" height="24" onerror="this.style.display='none'" />
+        <img src="{{ url_for('static', filename='logos/' + article.source|lower + '.svg') }}" alt="{{ article.source }} logo" width="36" height="32" onerror="this.style.display='none'" />
         {{ article.source }}
       </header>
       <section style="margin: 0.5rem 0;">
