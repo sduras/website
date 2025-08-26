@@ -41,8 +41,33 @@
       "url": "https://github.com/polhenarejos/pico-openpgp/releases",
       "mode": "custom",
       "category": "software"
+    },
+    {
+      "name": "BBC",
+      "url": "https://www.bbc.com/ukrainian",
+      "mode": "custom",
+      "category": "news"
+    },
+    {
+      "name": "DW",
+      "url": "https://www.dw.com/uk/",
+      "mode": "custom",
+      "category": "news"
+    },
+    {
+      "name": "CNN",
+      "url": "https://edition.cnn.com/world",
+      "mode": "custom",
+      "category": "news"
+    },
+    {
+      "name": "Irish Times",
+      "url": "https://www.irishtimes.com/",
+      "mode": "custom",
+      "category": "news"
     }
   ]
 }
+
 
 

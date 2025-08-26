@@ -1,31 +1,30 @@
 # api/scrap/scraping.py
 
 import asyncio
+import datetime
 import json
+import logging
 import os
 import random
-import datetime
 from typing import Dict, List
 from urllib.parse import urljoin
 
+import pytz
 from aiohttp import ClientSession, ClientTimeout, TCPConnector
+from api.scrap import news, software
+from api.scrap.utils import clean_text, fetch_with_retry
 from bs4 import BeautifulSoup
 
-from api.scrap import software
-
-from api.scrap.utils import fetch_with_retry, clean_text
-
-
-import logging
 logging.debug("scraping.py loaded")
 
 
 HEADERS = {
     "Accept": "text/html",
     "Accept-Encoding": "gzip, deflate, br",
-    "Accept-Language": "uk-UA,uk;en;q=0.5",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Accept-Language": "uk-UA,uk;q=0.5",
+    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
 }
+
 
 RETRY_ATTEMPTS = 3
 RETRY_BACKOFF_MIN = 1
@@ -34,14 +33,18 @@ MAX_HEADLINES = 5
 
 
 SCRAPER_REGISTRY = {
-    "Python": software.fetch_python_version,
-    "cmus": software.fetch_cmus_stable_version,
-    "Vim": software.fetch_vim_version,
     "Debian": software.fetch_debian_stable_version,
-    "GnuPG": software.fetch_gpg_stable_version,
+    "Python": software.fetch_python_version,
+    "Vim": software.fetch_vim_version,
     "aShell": software.fetch_aShell_stable_version,
-    "picoopenpgp": software.fetch_pico_openpgp_stable_version,
+    "cmus": software.fetch_cmus_stable_version,
+    "GnuPG": software.fetch_gpg_stable_version,
+    "BBC": news.bbc,
+    "DW": news.dw,
+    "CNN": news.cnn,
+    "Irish Times": news.irishtimes,
 }
+
 
 def load_config(config_path: str = None) -> List[Dict]:
     if not config_path:
@@ -54,18 +57,22 @@ def load_config(config_path: str = None) -> List[Dict]:
         return []
 
 
-async def fetch_by_selector(session, url: str, css_selector: str) -> List[Dict[str, str]]:
+async def fetch_by_selector(
+    session, url: str, css_selector: str
+) -> List[Dict[str, str]]:
     try:
         html = await fetch_with_retry(session, url)
         soup = BeautifulSoup(html, "html.parser")
         elements = soup.select(css_selector)[:MAX_HEADLINES]
         return [
             {"text": clean_text(el.text), "url": urljoin(url, el.get("href", "#"))}
-            for el in elements if el.text.strip()
+            for el in elements
+            if el.text.strip()
         ]
     except Exception as e:
         logging.error(f"Selector scraping failed for {url}: {e}")
         return []
+
 
 async def get_updates() -> dict:
     sources = load_config()
@@ -73,7 +80,11 @@ async def get_updates() -> dict:
         logging.error("No sources found. Exiting.")
         return {}
 
-    async with ClientSession(connector=TCPConnector(ssl=False), headers=HEADERS) as session:
+    kyiv_tz = pytz.timezone("Europe/Kyiv")
+
+    async with ClientSession(
+        connector=TCPConnector(ssl=False), headers=HEADERS
+    ) as session:
         tasks = {}
         source_categories = {}
 
@@ -99,11 +110,17 @@ async def get_updates() -> dict:
             elif selector:
                 tasks[name] = fetch_by_selector(session, url, selector)
             else:
-                logging.warning(f"Skipping '{name}' — no CSS selector or valid mode provided.")
+                logging.warning(
+                    f"Skipping '{name}' — no CSS selector or valid mode provided."
+                )
 
         results = await asyncio.gather(*tasks.values(), return_exceptions=True)
 
         categorized_results = {}
+        utc_now = datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
+        kyiv_now = utc_now.astimezone(kyiv_tz)
+        formatted_kyiv_now = kyiv_now.strftime("%Y-%m-%d %H:%M")
+
         for name, result in zip(tasks.keys(), results):
             category = source_categories.get(name, "uncategorized")
 
@@ -114,22 +131,36 @@ async def get_updates() -> dict:
                 logging.error(f"Scraping for '{name}' failed: {result}")
                 categorized_results[category][name] = []
             else:
-                timestamp = datetime.datetime.utcnow().isoformat() + "Z"
                 items_with_timestamp = []
                 for item in result:
                     new_item = item.copy()
-                    new_item["fetched_at"] = timestamp
+                    new_item["fetched_at"] = utc_now.isoformat().replace("+00:00", "Z")
+
+                    if "fetched_at" in item:
+                        try:
+                            dt_utc = datetime.datetime.fromisoformat(
+                                item["fetched_at"].replace("Z", "+00:00")
+                            ).replace(tzinfo=pytz.utc)
+                        except Exception:
+                            dt_utc = utc_now
+                    else:
+                        dt_utc = utc_now
+                    dt_kyiv = dt_utc.astimezone(kyiv_tz)
+                    new_item["fetched_at_kyiv"] = dt_kyiv.strftime("%Y-%m-%d %H:%M")
+
                     items_with_timestamp.append(new_item)
 
                 categorized_results[category][name] = items_with_timestamp
 
         metadata = {
-            "fetched_at": datetime.datetime.utcnow().isoformat() + "Z",
+            "fetched_at": utc_now.isoformat().replace("+00:00", "Z"),
+            "fetched_at_kyiv": formatted_kyiv_now,
             "total_sources": len(tasks),
             "categories": list(categorized_results.keys()),
         }
 
     return {"metadata": metadata, "updates": categorized_results}
+
 
 def format_output(all_news: Dict[str, List[Dict[str, str]]]) -> str:
     parts = ["Updates\n"]

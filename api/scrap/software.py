@@ -23,7 +23,6 @@ __all__ = [
     "fetch_debian_stable_version",
     "fetch_gpg_stable_version",
     "fetch_aShell_stable_version",
-    "fetch_pico_openpgp_stable_version",
 ]
 
 
@@ -283,66 +282,4 @@ async def fetch_aShell_stable_version(
 
     except Exception as e:
         logging.error(f"Failed to scrape a-Shell page: {e}", exc_info=True)
-        return []
-
-
-async def fetch_pico_openpgp_stable_version(
-    session: ClientSession, url: str
-) -> List[Dict[str, str]]:
-    try:
-        html = await fetch_with_retry(session, url)
-        soup = BeautifulSoup(html, "html.parser")
-
-        latest_label = soup.select_one("a.Link span.Label--success")
-        if not latest_label or not latest_label.parent:
-            logging.warning("Could not find 'Latest' release label")
-            return []
-
-        href = latest_label.parent.get("href")
-        if not href:
-            return []
-
-        latest_url = urljoin(url, href)
-        release_html = await fetch_with_retry(session, latest_url)
-        release_soup = BeautifulSoup(release_html, "html.parser")
-
-        version = "Unknown"
-        url_match = re.search(r"/tag/v?(\d+\.\d+(?:\.\d+)?)", latest_url)
-        if url_match:
-            version = url_match.group(1)
-        else:
-            body_text = release_soup.get_text(" ", strip=True)
-            body_match = re.search(
-                r"Version\s+(\d+\.\d+(?:\.\d+)?)", body_text, re.IGNORECASE
-            )
-            if body_match:
-                version = body_match.group(1)
-
-        description = version or "Release available"
-
-        markdown_body = release_soup.select_one("div.markdown-body")
-        if markdown_body:
-            for heading in markdown_body.find_all("h2"):
-                if "new" in heading.get_text(strip=True).lower():
-                    ul = heading.find_next_sibling("ul")
-                    if ul:
-                        first_item = ul.select_one("li")
-                        if first_item:
-                            description = clean_text(str(first_item.get_text()))
-                    break
-
-        fetched_at = datetime.datetime.utcnow().isoformat() + "Z"
-
-        return [
-            {
-                "title": "pico-openpgp",
-                "latest_version": version,
-                "description": description,
-                "url": latest_url,
-                "fetched_at": fetched_at,
-            }
-        ]
-
-    except Exception as e:
-        logging.error(f"Failed to scrape pico-openpgp page: {e}", exc_info=True)
         return []

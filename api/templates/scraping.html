@@ -1,25 +1,82 @@
-{% extends 'base.html' %} {% block title %}Scraping Exercises{% endblock %} {% block content %} <section class="exercise-selector">
+{% extends 'base.html' %} {% block title %}Scraping Exercises{% endblock %} {% block description %} Explore a set of interactive web scraping exercises, fetching live data such as software updates, weather information, and the latest news. {% endblock %} {% block head_extra %} <style>
+  h2 {
+    font-size: 1.25rem;
+    line-height: 1.2;
+    margin-top: 1.874rem;
+  }
+
+  .masonry {
+    --masonry-gap: 1rem;
+    --masonry-brick-width: 380px;
+    column-gap: var(--masonry-gap);
+    column-fill: initial;
+    column-width: var(--masonry-brick-width);
+  }
+
+  .masonry>* {
+    break-inside: avoid;
+    margin-bottom: var(--masonry-gap);
+  }
+
+  @supports(grid-template-rows: masonry) {
+    .masonry {
+      display: grid;
+      gap: var(--masonry-gap);
+      grid-template-rows: masonry;
+      grid-template-columns: repeat(auto-fill, minmax(var(--masonry-brick-width), 1fr));
+      align-tracks: stretch;
+    }
+
+    .masonry>* {
+      margin-bottom: initial;
+    }
+  }
+
+  .masonry {
+    padding: 2rem;
+  }
+
+  .brick {
+    padding: 1rem;
+  }
+</style> {% endblock %} {% block content %} <section class="exercise-selector">
   <h1>Scraping Exercises</h1>
+  <section class="intro">
+    <p style="max-width: 65ch;"> This page is part of my ongoing experiments with <strong>web scraping</strong> using Python. It automatically retrieves and displays real-time data such as 🔥 <em>software version updates</em>, 📰 <em>news headlines</em>, and 🌦️ <em>weather conditions</em> (when available). Choose a category below to explore the latest scraped content. </p>
+  </section>
   <form method="get">
     <fieldset>
-      <legend>Select an exercise:</legend> {% for key, ex in exercises.items() %} <input type="radio" id="{{ key }}" name="exercise" value="{{ key }}" onchange="this.form.submit()" {% if key == selected_exercise %}checked{% endif %} {% if not ex.enabled %}disabled{% endif %}>
-      <label for="{{ key }}">
-        {{ ex.title }}{% if not ex.enabled %}{% endif %} </label> {% endfor %}
+      <legend>Select category:</legend> {% for key, ex in exercises.items() %} <input type="radio" id="{{ key }}" name="exercise" value="{{ key }}" onchange="this.form.submit()" {% if key == selected_exercise %}checked{% endif %} {% if not ex.enabled %}disabled{% endif %}>
+      <label for="{{ key }}">{{ ex.title }}</label> {% endfor %}
     </fieldset>
   </form>
 </section>
-<hr> {% if selected_exercise %} {% if data %} {# 1. Flatten all articles with source info #} {% set all_articles = [] %} {% for source, articles in data.items() %} {% for article in articles %} {% set _ = all_articles.append({
-          "source": source,
-          "text": article.text,
-          "url": article.url
-        }) %} {% endfor %} {% endfor %} {# 2. Batch into groups of 3 for grid rows #} {% for group in all_articles|batch(3, None) %} <div class="grid"> {% for article in group %} <div> {% if article %} <article>
-      <header>
-        <strong>{{ article.text[:60] }}</strong>
+<hr> {% if selected_exercise %} {% if articles %} {# === Special layout for news === #} {% if selected_exercise == 'news' %} <div class="masonry"> {% for article in articles %} {% set sentences = article.text.split('.') %} {% set headline = sentences[0] ~ ('.' if article.text.find('.') != -1 else '') %} {% set body_text = article.text.replace(headline, '', 1).strip() %} <div class="brick">
+    <article>
+      <header style="display: flex; align-items: center; gap: 10px;">
+        <img src="{{ url_for('static', filename='logos/' + article.source|lower + '.svg') }}" alt="{{ article.source }} logo" width="24" height="24" onerror="this.style.display='none'" />
+        {{ article.source }}
       </header>
-      <p>{{ article.text }}</p>
+      <section style="margin: 0.5rem 0;">
+        <h2>{{ headline }}</h2> {% if body_text %} <p>{{ body_text }}</p> {% endif %}
+      </section>
       <footer>
-        <small>{{ article.source }}</small>
+        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" role="button"> Read </a>
         <br>
-        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" role="button"> View update </a>
+        <small style="color: #666; padding: 7px;">🕒 {{ article.fetched_at_kyiv or "N/A" }}
+          <br>Kyiv time </small>
       </footer>
-    </article> {% endif %} </div> {% endfor %} </div> {% endfor %} {% else %} <p style="text-align: center;">No data available for this exercise.</p> {% endif %} {% else %} <p style="text-align: center;">👆 Please select an exercise to view its data.</p> {% endif %} {% endblock %}
+    </article>
+  </div> {% endfor %} </div> {# === Default layout for software and others === #} {% else %} {% for group in articles|batch(3, none) %} <div class="grid"> {% for article in group %} <div> {% if article %} <article>
+      <header style="display: flex; align-items: center; gap: 10px;">
+        <img src="{{ url_for('static', filename='logos/' + article.source|lower + '.svg') }}" alt="{{ article.source }} logo" width="24" height="24" onerror="this.style.display='none'" />
+        <strong>{{ article.title or article.text[:80] }}</strong>
+      </header>
+      <p>{{ article.text[:200] }}{% if article.text|length > 200 %}...{% endif %}</p>
+      <footer>
+        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" role="button"> View </a>
+        <br>
+        <small style="color: #666; padding: 7px;"> 🕒 {{ article.fetched_at_kyiv or "N/A" }}
+          <br>Kyiv time </small>
+      </footer>
+    </article> {% endif %} </div> {% endfor %} </div> {% endfor %} {% endif %} {% else %} <p style="text-align: center;">No data available for this exercise.</p> {% endif %} {% else %} <p style="text-align: center;">👆 Please select an exercise to view its data.</p> {% endif %} {% endblock %}
