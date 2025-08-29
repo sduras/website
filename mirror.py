@@ -1,16 +1,18 @@
 import asyncio
 import os
 import platform
-import smtplib
 import subprocess
-import socket
 import sys
 import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 
+from smtplib import SMTP
 import socks
+import smtplib
+import socket
+
 from dotenv import load_dotenv
 from flask import (
     Flask,
@@ -33,10 +35,6 @@ from api.lists.lists import load_lists_index
 from api.scrap.scraping import format_output, get_updates
 
 app = Flask(__name__, template_folder="api/templates", static_folder="api/static")
-
-sock = socks.socksocket()
-sock.set_proxy(socks.SOCKS5, "127.0.0.1", 9050)
-sock.connect(("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25))
 
 load_dotenv()
 
@@ -404,9 +402,9 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        # Patch smtplib to go through SOCKS5 (Tor)
         socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050)
         socks.wrapmodule(smtplib)
+        socks.wrapmodule(socket)
 
         smtp = smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30)
         smtp.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
@@ -417,6 +415,7 @@ Message:
     except Exception as e:
         print("⚠️ Email sending failed:", e)
         return jsonify({"error": str(e)}), 500
+
 
 
 
