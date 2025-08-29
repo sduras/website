@@ -100,7 +100,7 @@ DEFAULT_HTML = """
     <link rel="shortcut icon" href="https://sergiy.duras.org/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" /> 
     <meta name="author" content="Sergiy Duras · Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
-    <meta name="keywords" content="Sergiy Duras, psychologist, legal expert, human risk, solution-focused therapy, SFBT, behavioral risk, Python developer, Ukraine">
+    <meta name="keywords" content="Sergiy Duras, psychologist, human risk, solution-focused therapy, SFBT, behavioral risk, Python developer, Ukraine">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Sergiy Duras">
