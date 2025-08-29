@@ -402,21 +402,19 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050)
+        socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050, rdns=True)
+
         socks.wrapmodule(smtplib)
-        socks.wrapmodule(socket)
 
-        smtp = smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30)
-        smtp.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
-        smtp.quit()
-
+        with smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30) as smtp:
+            smtp.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
+        
         return jsonify({"success": True}), 200
 
     except Exception as e:
-        print("⚠️ Email sending failed:", e)
-        return jsonify({"error": str(e)}), 500
-
-
+        print(f"⚠️ Email sending failed: {e}")
+        error_message = f"Email could not be sent. Error: {e}"
+        return jsonify({"error": error_message}), 500
 
 
 @app.after_request
