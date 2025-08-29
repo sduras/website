@@ -7,6 +7,11 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 
+import socks
+
+socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050)
+socks.wrapmodule(smtplib)
+
 from dotenv import load_dotenv
 from flask import (
     Flask,
@@ -352,24 +357,35 @@ def send_email():
 
     msg = MIMEMultipart()
     msg["From"] = MAIL_USER
-    msg["To"] = MAIL_USER
-    msg["Subject"] = "🧅 New message"
+    msg["To"] = MAIL_RECEIVER
+    msg["Subject"] = "🧅 New message from Tor contact form"
 
     body = f"""
-    New message from Tor website:
-    Sender: {name}
-    Email: {email}
-    Message: {message}
+New message from your Tor site:
+Name: {name}
+Email: {email}
+Message:
+{message}
     """
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        with smtplib.SMTP(MAIL_HOST, MAIL_PORT) as server:
-            server.starttls()
+        with smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30) as server:
+            server.ehlo()
+
+            if MAIL_PORT in [587, 25]:
+                try:
+                    server.starttls()
+                    server.ehlo()
+                except Exception as tls_error:
+                    print("⚠️ STARTTLS failed or unsupported:", tls_error)
+
             server.login(MAIL_USER, MAIL_PASSWORD)
             server.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
             server.quit()
+
         return jsonify({"success": True}), 200
+
     except Exception as e:
         print("⚠️ Email sending failed:", e)
         return jsonify({"error": str(e)}), 500
