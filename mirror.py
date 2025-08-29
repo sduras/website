@@ -47,7 +47,7 @@ MAIL_USER = os.getenv("MAIL_USER")
 MAIL_RECEIVER = os.getenv("MAIL_RECEIVER")
 MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
 MAIL_HOST = os.getenv("MAIL_HOST")
-MAIL_PORT = int(os.getenv("MAIL_PORT", 587))
+MAIL_PORT = int(os.getenv("MAIL_PORT", 25))
 
 
 def install_dependencies():
@@ -56,6 +56,7 @@ def install_dependencies():
     os.system("pkg install python tor -y")
     os.system("pip install --upgrade pip")
     os.system("pip install python-dotenv")
+    os.system("pip install PySocks")
     os.system("pip install -r requirements.txt")
 
 
