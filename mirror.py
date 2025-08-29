@@ -184,7 +184,7 @@ DEFAULT_HTML = """
   </section>
 </article>  </main>
     <footer role="contentinfo" class="container">  <small> &copy; 2025 Sergiy Duras <br />
-        <a href="http://r56vkbtowacs5aijj3knqjsqg6sgdq6pz3mhcof7kntbaht6f3rqeryd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
+        <a href="http://durasqdaxox4ang72cs2zysqo7gri4fk7rbao72hajykruoglogtn7qd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
           <span class="underline-text">Access via Tor (.onion)</span>
         </a>
       </small>  </footer> 

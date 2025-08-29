@@ -365,6 +365,11 @@
           "link": null
         },
         {
+          "text": "Mastering Vim by Ruslan Osipov, 2018",
+          "note": "Aa comprehensive guide, and it includes a section on Vimscript.",
+          "link": null
+        },
+        {
           "text": "Vim Cookbook by Steve Oualline, 2001",
           "note": "Recipes for doing many simple and not so simple things in Vim.",
           "link": "http://www.oualline.com/vim/vim-cook.html"
