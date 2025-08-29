@@ -1,18 +1,17 @@
 import asyncio
 import os
 import platform
+import smtplib
+import socket
 import subprocess
 import sys
 import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
-
 from smtplib import SMTP
-import socks
-import smtplib
-import socket
 
+import socks
 from dotenv import load_dotenv
 from flask import (
     Flask,
@@ -110,7 +109,6 @@ def wait_for_tor(port=9050, host="127.0.0.1", timeout=60):
                 print("❌ Timed out waiting for Tor to become ready.")
                 return False
             time.sleep(1)
-
 
 
 def load_onion_address(force_reload=False):
@@ -402,19 +400,22 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050, rdns=True)
-
-        socks.wrapmodule(smtplib)
+        socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050)
+        socket.socket = socks.socksocket
 
         with smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30) as smtp:
+            smtp.set_debuglevel(1)
+            smtp.ehlo()
+            smtp.starttls()
+            smtp.ehlo()
+            smtp.login(MAIL_USER, MAIL_PASSWORD)
             smtp.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
-        
+
         return jsonify({"success": True}), 200
 
     except Exception as e:
-        print(f"⚠️ Email sending failed: {e}")
-        error_message = f"Email could not be sent. Error: {e}"
-        return jsonify({"error": error_message}), 500
+        print("⚠️ Email sending failed:", e)
+        return jsonify({"error": str(e)}), 500
 
 
 @app.after_request
@@ -436,7 +437,7 @@ if __name__ == "__main__":
     print("MAIL_PORT:", MAIL_PORT)
     start_tor()
 
-    if wait_for_tor(timeout=60):  # Wait up to 60 seconds
+    if wait_for_tor(timeout=60):
         load_onion_address(force_reload=True)
         if ONION_ADDRESS:
             print(f"Your Tor hidden service is running at: {ONION_ADDRESS}")
@@ -445,7 +446,6 @@ if __name__ == "__main__":
     else:
         print("❌ Could not connect to Tor. Exiting.")
         sys.exit(1)
-
 
     print("Starting Flask server...")
     app.run(host="127.0.0.1", port=5000)
