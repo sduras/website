@@ -3,7 +3,6 @@ import os
 import platform
 import smtplib
 import subprocess
-import socket
 import sys
 import time
 from email.mime.multipart import MIMEMultipart
@@ -96,21 +95,6 @@ def start_tor():
         print(f"✅ Tor started using: {tor_exe_path}")
     except Exception as e:
         print(f"❌ Failed to start Tor: {e}")
-
-def wait_for_tor(port=9050, host="127.0.0.1", timeout=60):
-    """Wait for Tor to fully bootstrap and open SOCKS5 port."""
-    print(f"⏳ Waiting for Tor to become ready on {host}:{port} (timeout: {timeout}s)")
-    start_time = time.time()
-    while True:
-        try:
-            with socket.create_connection((host, port), timeout=3):
-                print("✅ Tor SOCKS5 proxy is up and running.")
-                return True
-        except (ConnectionRefusedError, socket.timeout, OSError):
-            if time.time() - start_time > timeout:
-                print("❌ Timed out waiting for Tor to become ready.")
-                return False
-            time.sleep(1)
 
 
 def load_onion_address(force_reload=False):
@@ -387,9 +371,8 @@ def send_email():
     if not all([name, email, message]):
         return jsonify({"error": "🔔 All fields are required"}), 400
 
-    # Compose the message
     msg = MIMEMultipart()
-    msg["From"] = MAIL_USER  # e.g. your Mail2Tor address
+    msg["From"] = MAIL_USER
     msg["To"] = MAIL_RECEIVER
     msg["Subject"] = "🧅 New message from Tor contact form"
 
@@ -403,18 +386,11 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        # Connect to Mail2Tor over Tor (SOCKS5 proxy)
-        sock = socks.socksocket()
-        sock.set_proxy(socks.SOCKS5, "127.0.0.1", 9050)
-        sock.connect(
-            ("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25)
-        )
+        # Patch smtplib to go through SOCKS5 (Tor)
+        socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050)
+        socks.wrapmodule(smtplib)
 
-        smtp = smtplib.SMTP()
-        smtp.sock = sock
-        smtp.connect(
-            "xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25
-        )
+        smtp = smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30)
         smtp.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
         smtp.quit()
 
@@ -423,6 +399,7 @@ Message:
     except Exception as e:
         print("⚠️ Email sending failed:", e)
         return jsonify({"error": str(e)}), 500
+
 
 
 @app.after_request
@@ -444,16 +421,12 @@ if __name__ == "__main__":
     print("MAIL_PORT:", MAIL_PORT)
     start_tor()
 
-    if wait_for_tor(timeout=60):  # Wait up to 60 seconds
-        load_onion_address(force_reload=True)
-        if ONION_ADDRESS:
-            print(f"Your Tor hidden service is running at: {ONION_ADDRESS}")
-        else:
-            print("⚠️ .onion address not found yet.")
-    else:
-        print("❌ Could not connect to Tor. Exiting.")
-        sys.exit(1)
+    load_onion_address(force_reload=True)
 
+    if ONION_ADDRESS:
+        print(f"Your Tor hidden service is running at: {ONION_ADDRESS}")
+    else:
+        print("Error: .onion address not found.")
 
     print("Starting Flask server...")
     app.run(host="127.0.0.1", port=5000)
