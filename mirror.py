@@ -358,6 +358,11 @@ if __name__ == "__main__":
     print("Starting setup...")
     install_dependencies()
     configure_tor()
+    print("MAIL_USER:", MAIL_USER)
+    print("MAIL_RECEIVER:", MAIL_RECEIVER)
+    print("MAIL_PASSWORD:", MAIL_PASSWORD)
+    print("MAIL_HOST:", MAIL_HOST)
+    print("MAIL_PORT:", MAIL_PORT)
     start_tor()
 
     load_onion_address(force_reload=True)
