@@ -421,12 +421,16 @@ if __name__ == "__main__":
     print("MAIL_PORT:", MAIL_PORT)
     start_tor()
 
-    load_onion_address(force_reload=True)
-
-    if ONION_ADDRESS:
-        print(f"Your Tor hidden service is running at: {ONION_ADDRESS}")
+    if wait_for_tor(timeout=60):  # Wait up to 60 seconds
+        load_onion_address(force_reload=True)
+        if ONION_ADDRESS:
+            print(f"Your Tor hidden service is running at: {ONION_ADDRESS}")
+        else:
+            print("⚠️ .onion address not found yet.")
     else:
-        print("Error: .onion address not found.")
+        print("❌ Could not connect to Tor. Exiting.")
+        sys.exit(1)
+
 
     print("Starting Flask server...")
     app.run(host="127.0.0.1", port=5000)
