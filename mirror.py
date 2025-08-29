@@ -6,10 +6,6 @@ import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
-from api.books.reading import (filter_books_by_year, generate_html_table,
-                               get_unique_years, load_books, summary)
-from api.lists.lists import load_lists_index
-from api.scrap.scraping import format_output, get_updates
 
 from dotenv import load_dotenv
 from flask import (
@@ -176,7 +172,8 @@ DEFAULT_HTML = """
   <section class="grid">
     <div>
       <p>I'm <strong>Sergiy Duras</strong>, a psychologist based in <strong>Ukraine</strong> with two decades of experience at the intersection of psychology, law, and organisational risk assessment. My professional path has recently taken a strategic turn — towards programming and human-centred technology. </p>
-      <p>This site serves as both my personal contact page and a space for exploring the tools I'm currently learning. If you'd like to know more about my background — from corporate psychology and human risk consulting to my transition into tech — please visit the <a href="/about">/about</a> page. You’ll also find a <a href="/reading">reading list</a>, spanning from 2013 to the present, a number of <a href="/lists">/lists</a> on different subjects, as well as a <a href="/now">/now</a> page with updates on what I’m currently focused on. </p>
+      <p>This site serves both as my personal contact page and as a space to explore the tools and technologies I’m currently learning. If you’re interested in my background — from corporate psychology and human risk consulting to my transition into tech — please visit the <a href="/about" class="secondary">/about</a> page. </p>
+      <p>You’ll also find a <a href="/reading" class="secondary">reading list</a> spanning from 2013 to the present, a section showcasing my <a href="/experiments" class="secondary">experiments</a> with Python tools and concepts, and a <a href="/now" class="secondary">now</a> page with updates on what I’m currently focused on. To get in touch, please visit the <a href="/contact" class="secondary">contact</a> page. </p>
     </div>
     <div>
       <figure>
@@ -191,7 +188,7 @@ DEFAULT_HTML = """
   </section>
 </article>  </main>
     <footer role="contentinfo" class="container">  <small> &copy; 2025 Sergiy Duras <br />
-        <a href="http://r56vkbtowacs5aijj3knqjsqg6sgdq6pz3mhcof7kntbaht6f3rqeryd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
+        <a href="http://durasqdaxox4ang72cs2zysqo7gri4fk7rbao72hajykruoglogtn7qd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
           <span class="underline-text">Access via Tor (.onion)</span>
         </a>
       </small>  </footer> 
@@ -230,7 +227,8 @@ def about():
         return render_template("about.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
-        
+
+
 @app.route("/scraping")
 def scraping_dashboard():
     exercises = {
@@ -282,6 +280,7 @@ def experiments():
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
 
+
 @app.route("/lists")
 def lists():
     selected_topic = request.args.get("topic")
@@ -332,6 +331,58 @@ def reading():
 def contact():
     try:
         return render_template("contact.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
+
+
+@app.route("/scraping")
+def scraping_dashboard():
+    exercises = {
+        "software": {"title": "Software", "enabled": True, "fetcher": get_updates},
+        "news": {"title": "News", "enabled": True, "fetcher": get_updates},
+        "weather": {"title": "Weather", "enabled": False, "fetcher": None},
+    }
+
+    selected = request.args.get("exercise", "")
+    articles = []
+
+    if selected in exercises and exercises[selected]["enabled"]:
+        raw_data = asyncio.run(exercises[selected]["fetcher"]())
+        updates = raw_data["updates"].get(selected, {})
+
+        for source, items in updates.items():
+            for item in items:
+                articles.append(
+                    {
+                        "source": source,
+                        "title": item.get("title", ""),
+                        "text": item.get("text") or item.get("description", ""),
+                        "url": item.get("url", ""),
+                        "fetched_at": item.get("fetched_at", ""),
+                        "fetched_at_kyiv": item.get("fetched_at_kyiv", ""),
+                    }
+                )
+
+        if selected == "software":
+            custom_order = ["Debian", "Vim", "Python", "GnuPG", "aShell", "cmus"]
+            order_index = {name.lower(): i for i, name in enumerate(custom_order)}
+
+            articles.sort(
+                key=lambda x: order_index.get(x["title"].lower(), len(custom_order))
+            )
+
+    return render_template(
+        "scraping.html",
+        exercises=exercises,
+        selected_exercise=selected,
+        articles=articles,
+    )
+
+
+@app.route("/experiments")
+def experiments():
+    try:
+        return render_template("experiments.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
 
