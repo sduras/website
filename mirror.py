@@ -400,7 +400,7 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050)
+        socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050, rdns=True)
         socket.socket = socks.socksocket
 
         with smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30) as smtp:
