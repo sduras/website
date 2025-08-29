@@ -1,16 +1,12 @@
 import asyncio
 import os
+import socks
 import smtplib
 import subprocess
 import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
-
-import socks
-
-socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050)
-socks.wrapmodule(smtplib)
 
 from dotenv import load_dotenv
 from flask import (
@@ -35,8 +31,11 @@ from api.scrap.scraping import format_output, get_updates
 
 app = Flask(__name__, template_folder="api/templates", static_folder="api/static")
 
-load_dotenv()
+sock = socks.socksocket()
+sock.set_proxy(socks.SOCKS5, "127.0.0.1", 9050)
+sock.connect(("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25))
 
+load_dotenv()
 
 TOR_DIR = os.path.expanduser(os.getenv("TOR_DIR", "~/.tor"))
 HIDDEN_SERVICE_DIR = os.path.join(TOR_DIR, "hidden_service")
@@ -356,8 +355,9 @@ def send_email():
     if not all([name, email, message]):
         return jsonify({"error": "🔔 All fields are required"}), 400
 
+    # Compose the message
     msg = MIMEMultipart()
-    msg["From"] = MAIL_USER
+    msg["From"] = MAIL_USER  # e.g. your Mail2Tor address
     msg["To"] = MAIL_RECEIVER
     msg["Subject"] = "🧅 New message from Tor contact form"
 
@@ -371,19 +371,16 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        with smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30) as server:
-            server.ehlo()
+        # Connect to Mail2Tor over Tor (SOCKS5 proxy)
+        sock = socks.socksocket()
+        sock.set_proxy(socks.SOCKS5, "127.0.0.1", 9050)
+        sock.connect(("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25))
 
-            if MAIL_PORT in [587, 25]:
-                try:
-                    server.starttls()
-                    server.ehlo()
-                except Exception as tls_error:
-                    print("⚠️ STARTTLS failed or unsupported:", tls_error)
-
-            server.login(MAIL_USER, MAIL_PASSWORD)
-            server.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
-            server.quit()
+        smtp = smtplib.SMTP()
+        smtp.sock = sock
+        smtp.connect("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25)
+        smtp.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
+        smtp.quit()
 
         return jsonify({"success": True}), 200
 
