@@ -1,15 +1,12 @@
+import asyncio
 import os
+import socks
 import smtplib
 import subprocess
 import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
-
-import socks
-
-socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050)
-socks.wrapmodule(smtplib)
 
 from dotenv import load_dotenv
 from flask import (
@@ -29,8 +26,14 @@ from api.books.reading import (
     load_books,
     summary,
 )
+from api.lists.lists import load_lists_index
+from api.scrap.scraping import format_output, get_updates
 
 app = Flask(__name__, template_folder="api/templates", static_folder="api/static")
+
+sock = socks.socksocket()
+sock.set_proxy(socks.SOCKS5, "127.0.0.1", 9050)
+sock.connect(("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25))
 
 load_dotenv()
 
@@ -52,6 +55,7 @@ def install_dependencies():
     os.system("pkg install python tor -y")
     os.system("pip install --upgrade pip")
     os.system("pip install python-dotenv")
+    os.system("pip install PySocks")
     os.system("pip install -r requirements.txt")
 
 
@@ -260,6 +264,20 @@ def contact():
         return render_template_string(DEFAULT_HTML)
 
 
+@app.route("/updates")
+def get_scraped_updates():
+    news = asyncio.run(get_updates())
+    return jsonify(news)
+
+
+@app.route("/experiments")
+def experiments():
+    try:
+        return render_template("experiments.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
+
+
 @app.route("/scraping")
 def scraping_dashboard():
     exercises = {
@@ -304,12 +322,28 @@ def scraping_dashboard():
     )
 
 
-@app.route("/experiments")
-def experiments():
-    try:
-        return render_template("experiments.html")
-    except TemplateNotFound:
-        return render_template_string(DEFAULT_HTML)
+@app.route("/lists")
+def lists():
+    selected_topic = request.args.get("topic")
+
+    list_data = load_lists_index()
+    all_lists = list_data.get("lists", [])
+
+    print("🔍 Number of loaded lists:", len(all_lists))
+    print("🔍 Example list:", all_lists[0] if all_lists else "None")
+
+    topics = sorted(set(tag for lst in all_lists for tag in lst.get("tags", [])))
+
+    if selected_topic:
+        filtered_lists = [
+            lst for lst in all_lists if selected_topic in lst.get("tags", [])
+        ]
+    else:
+        filtered_lists = all_lists
+
+    return render_template(
+        "lists.html", lists=filtered_lists, topics=topics, selected_topic=selected_topic
+    )
 
 
 @app.route("/send_email", methods=["POST"])
@@ -321,8 +355,9 @@ def send_email():
     if not all([name, email, message]):
         return jsonify({"error": "🔔 All fields are required"}), 400
 
+    # Compose the message
     msg = MIMEMultipart()
-    msg["From"] = MAIL_USER
+    msg["From"] = MAIL_USER  # e.g. your Mail2Tor address
     msg["To"] = MAIL_RECEIVER
     msg["Subject"] = "🧅 New message from Tor contact form"
 
@@ -336,19 +371,16 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        with smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30) as server:
-            server.ehlo()
+        # Connect to Mail2Tor over Tor (SOCKS5 proxy)
+        sock = socks.socksocket()
+        sock.set_proxy(socks.SOCKS5, "127.0.0.1", 9050)
+        sock.connect(("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25))
 
-            if MAIL_PORT in [587, 25]:
-                try:
-                    server.starttls()
-                    server.ehlo()
-                except Exception as tls_error:
-                    print("⚠️ STARTTLS failed or unsupported:", tls_error)
-
-            server.login(MAIL_USER, MAIL_PASSWORD)
-            server.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
-            server.quit()
+        smtp = smtplib.SMTP()
+        smtp.sock = sock
+        smtp.connect("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25)
+        smtp.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
+        smtp.quit()
 
         return jsonify({"success": True}), 200
 
@@ -363,12 +395,6 @@ def after_request(response):
     response.headers.add("Access-Control-Allow-Methods", "POST")
     response.headers.add("Access-Control-Allow-Headers", "Content-Type")
     return response
-
-
-@app.route("/status")
-def status():
-    load_onion_address()
-    return jsonify({"status": "running", "onion": ONION_ADDRESS})
 
 
 if __name__ == "__main__":
