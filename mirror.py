@@ -104,7 +104,7 @@ DEFAULT_HTML = """
     <link rel="shortcut icon" href="https://sergiy.duras.org/favicon.ico">
     <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" /> 
     <meta name="author" content="Sergiy Duras · Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
-    <meta name="keywords" content="Sergiy Duras, psychologist, legal expert, human risk, solution-focused therapy, SFBT, behavioral risk, Python developer, Ukraine">
+    <meta name="keywords" content="Sergiy Duras, psychologist, human risk, solution-focused therapy, SFBT, behavioral risk, Python developer, Ukraine">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Sergiy Duras">
@@ -228,6 +228,7 @@ def about():
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
 
+
 @app.route("/reading")
 def reading():
     books = load_books()
@@ -254,6 +255,20 @@ def reading():
 def contact():
     try:
         return render_template("contact.html")
+    except TemplateNotFound:
+        return render_template_string(DEFAULT_HTML)
+
+
+@app.route("/updates")
+def get_scraped_updates():
+    news = asyncio.run(get_updates())
+    return jsonify(news)
+
+
+@app.route("/experiments")
+def experiments():
+    try:
+        return render_template("experiments.html")
     except TemplateNotFound:
         return render_template_string(DEFAULT_HTML)
 
@@ -302,12 +317,28 @@ def scraping_dashboard():
     )
 
 
-@app.route("/experiments")
-def experiments():
-    try:
-        return render_template("experiments.html")
-    except TemplateNotFound:
-        return render_template_string(DEFAULT_HTML)
+@app.route("/lists")
+def lists():
+    selected_topic = request.args.get("topic")
+
+    list_data = load_lists_index()
+    all_lists = list_data.get("lists", [])
+
+    print("🔍 Number of loaded lists:", len(all_lists))
+    print("🔍 Example list:", all_lists[0] if all_lists else "None")
+
+    topics = sorted(set(tag for lst in all_lists for tag in lst.get("tags", [])))
+
+    if selected_topic:
+        filtered_lists = [
+            lst for lst in all_lists if selected_topic in lst.get("tags", [])
+        ]
+    else:
+        filtered_lists = all_lists
+
+    return render_template(
+        "lists.html", lists=filtered_lists, topics=topics, selected_topic=selected_topic
+    )
 
 
 @app.route("/send_email", methods=["POST"])
@@ -349,12 +380,6 @@ def after_request(response):
     response.headers.add("Access-Control-Allow-Methods", "POST")
     response.headers.add("Access-Control-Allow-Headers", "Content-Type")
     return response
-
-
-@app.route("/status")
-def status():
-    load_onion_address()
-    return jsonify({"status": "running", "onion": ONION_ADDRESS})
 
 
 if __name__ == "__main__":
