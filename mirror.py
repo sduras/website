@@ -1,13 +1,15 @@
 import asyncio
 import os
-import socks
+import platform
 import smtplib
 import subprocess
+import sys
 import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 
+import socks
 from dotenv import load_dotenv
 from flask import (
     Flask,
@@ -52,7 +54,7 @@ MAIL_PORT = int(os.getenv("MAIL_PORT", 25))
 def install_dependencies():
     print("Installing dependencies..")
     os.system("pkg update -y && pkg upgrade -y")
-    os.system("pkg install python tor -y")
+    os.system("pkg update && pkg install tor -y")
     os.system("pip install --upgrade pip")
     os.system("pip install python-dotenv")
     os.system("pip install PySocks")
@@ -72,13 +74,27 @@ def configure_tor():
 
 
 def start_tor():
-    print("Starting Tor...")
-    subprocess.Popen(
-        ["tor", "-f", os.path.join(TOR_DIR, "torrc")],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
-    time.sleep(15)
+    system_platform = platform.system()
+
+    if system_platform == "Windows":
+        tor_exe_path = r"C:\Tor\tor.exe"
+        torrc_path = os.path.join(r"C:\Tor", "torrc")
+    else:
+        tor_exe_path = "tor"
+        torrc_path = os.path.expanduser("~/.tor/torrc")
+
+    if system_platform == "Windows" and not os.path.isfile(tor_exe_path):
+        raise FileNotFoundError(f"❌ Cannot find tor.exe at: {tor_exe_path}")
+
+    try:
+        subprocess.Popen(
+            [tor_exe_path, "-f", torrc_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        print(f"✅ Tor started using: {tor_exe_path}")
+    except Exception as e:
+        print(f"❌ Failed to start Tor: {e}")
 
 
 def load_onion_address(force_reload=False):
@@ -374,11 +390,15 @@ Message:
         # Connect to Mail2Tor over Tor (SOCKS5 proxy)
         sock = socks.socksocket()
         sock.set_proxy(socks.SOCKS5, "127.0.0.1", 9050)
-        sock.connect(("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25))
+        sock.connect(
+            ("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25)
+        )
 
         smtp = smtplib.SMTP()
         smtp.sock = sock
-        smtp.connect("xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25)
+        smtp.connect(
+            "xc7tgk2c5onxni2wsy76jslfsitxjbbptejnqhw6gy2ft7khpevhc7ad.onion", 25
+        )
         smtp.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
         smtp.quit()
 
