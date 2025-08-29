@@ -337,6 +337,7 @@ def send_email():
             server.quit()
         return jsonify({"success": True}), 200
     except Exception as e:
+        print("⚠️ Email sending failed:", e)
         return jsonify({"error": str(e)}), 500
 
 
