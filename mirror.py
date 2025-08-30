@@ -2,18 +2,18 @@ import asyncio
 import os
 import platform
 import smtplib
-import ssl
-import socks
 import socket
+import ssl
 import subprocess
 import sys
 import time
 import traceback
-from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from pathlib import Path
 from smtplib import SMTP
 
+import socks
 from dotenv import load_dotenv
 from flask import (
     Flask,
@@ -45,7 +45,7 @@ try:
     print(f"✅ PySocks is configured for all network traffic with remote DNS.")
 except Exception as e:
     print(f"❌ Failed to configure PySocks globally: {e}")
-    
+
 TOR_DIR = os.path.expanduser(os.getenv("TOR_DIR", "~/.tor"))
 HIDDEN_SERVICE_DIR = os.path.join(TOR_DIR, "hidden_service")
 LOG_FILE = os.path.join(TOR_DIR, "tor.log")
@@ -413,7 +413,9 @@ Message:
         SOCKS_HOST = "127.0.0.1"
         SOCKS_PORT = 9050
 
-        print(f"🛠 Creating SOCKS5 proxy socket with rdns=True to {MAIL_HOST}:{MAIL_PORT}")
+        print(
+            f"🛠 Creating SOCKS5 proxy socket with rdns=True to {MAIL_HOST}:{MAIL_PORT}"
+        )
         socks.set_default_proxy(socks.SOCKS5, SOCKS_HOST, SOCKS_PORT, rdns=True)
         tor_socket = socks.socksocket()
         tor_socket.settimeout(30)
@@ -441,11 +443,10 @@ Message:
         smtp.sock = tor_socket
         smtp.file = smtp.sock.makefile("rb", 0)
 
-
         print("🤝 Re-negotiating connection with EHLO over TLS...")
         smtp.ehlo("localhost.localdomain")
 
-         print("🔑 Logging in...")
+        print("🔑 Logging in...")
         smtp.login(MAIL_USER, MAIL_PASSWORD)
         print("📧 Sending email...")
         smtp.sendmail(msg["From"], MAIL_RECEIVER, msg.as_string())
@@ -459,8 +460,8 @@ Message:
         print("❌ Exception during email sending:")
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
-        
-        
+
+
 @app.after_request
 def after_request(response):
     response.headers.add("Access-Control-Allow-Origin", "*")
@@ -479,9 +480,9 @@ if __name__ == "__main__":
     print("MAIL_PASSWORD:", MAIL_PASSWORD)
     print("MAIL_HOST:", MAIL_HOST)
     print("MAIL_PORT:", MAIL_PORT)
-    
+
     start_tor()
-    
+
     if wait_for_tor(timeout=60):
         SOCKS_PORT = 9050
         SOCKS_HOST = "127.0.0.1"
