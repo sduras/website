@@ -1,55 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>{% block title %}{% endblock %} · Sergiy Duras</title>
-    <meta name="description" content="{% block description %}Default description.{% endblock %}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-    <link rel="shortcut icon" href="https://sergiy.duras.org/favicon.ico">
-    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}" /> {% block head_extra %}{% endblock %}
-    <meta name="author" content="Sergiy Duras · Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
-    <meta name="keywords" content="Sergiy Duras, psychologist, legal expert, human risk, solution-focused therapy, SFBT, behavioral risk, Python developer, Ukraine">
-    <meta name="robots" content="index, follow">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Sergiy Duras">
-    <meta property="og:description" content="Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
-    <meta property="og:url" content="https://sergiy.duras.org/">
-    <meta property="og:image" content="https://sergiy.duras.org/static/img/npa2025-large.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="About · Sergiy Duras">
-    <meta name="twitter:description" content="Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.">
-    <meta name="twitter:image" content="https://sergiy.duras.org/static/img/npa2025-large.jpg">
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Sergiy Duras",
-        "url": "https://sergiy.duras.org",
-        "image": "https://sergiy.duras.org/static/img/npa2025-large.jpg",
-        "sameAs": ["https://www.psiwell.com/", "https://www.linkedin.com/in/duras/", "https://github.com/sduras", "https://codeberg.org/duras", "https://nownownow.com/p/svyZ", "https://npa-ua.org/register/duras-serhiy-hennadiyovych-2228/", "https://vpa.org.ua/about/chleni-asotsiatsiy/povni-diysni-chleni-asotsiatsiy/"],
-        "jobTitle": "Psychologist, Legal Expert, Python Developer",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Psiwell",
-          "url": "https://www.psiwell.com/"
-        },
-        "alumniOf": [{
-          "@type": "CollegeOrUniversity",
-          "name": "Kharkiv University",
-          "url": "https://karazin.ua/en/"
-        }],
-        "knowsAbout": ["Psychology", "Law", "Behavioral Risk", "Polygraph", "Solution-Focused Brief Therapy", "Python", "Human-Centered Design"],
-        "description": "Psychologist applying behavioral risk insights, SFBT principles, and Python development to build human-centered, solution-oriented software.",
-        "nationality": "Ukrainian"
-      }
-    </script>
-  </head>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} · Sergiy Duras</title>
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="preconnect" href="https://sergiy.duras.org" crossorigin>
+  <meta name="description" content="{% block description %}Default description{% endblock %}">
+  <meta name="author" content="Sergiy Duras">
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="Sergiy Duras, psychologist, legal expert, SFBT, Python developer, Ukraine">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{% block og_title %}Sergiy Duras{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Psychologist applying behavioral risk insights...{% endblock %}">
+  <meta property="og:url" content="https://sergiy.duras.org/">
+  <meta property="og:image" content="https://sergiy.duras.org/static/img/npa2025-large.jpg">
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <!-- Critical CSS -->
+  <style>
+  </style>
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+  <link rel="preload" href="{{ url_for('static', filename='css/style.css') }}" as="style">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- <link rel="stylesheet" href="https://csswizardry.com/ct/ct.css" class="ct" /> -->
+  {% block head_extra %}{% endblock %}
+</head>
   <body>
     <header role="banner">
       <div class="container">
-        <nav role="navigation">
+        <nav role="navigation" aria-label="Main navigation">
           <ul>
             <li>
               <a href="/">
@@ -71,19 +54,43 @@
         </nav>
       </div>
     </header>
-    <main role="main" class="container"> {% block content %}{% endblock %} </main>
+    <main role="main" class="container" id="main-content"> {% block content %}{% endblock %} </main>
     <footer role="contentinfo" class="container"> {% block footer %} <small> &copy; 2025 Sergiy Duras <br />
         <a href="http://durasqdaxox4ang72cs2zysqo7gri4fk7rbao72hajykruoglogtn7qd.onion/" class="onion-link" rel="noopener noreferrer" target="_blank">
           <span class="underline-text">Access via Tor (.onion)</span>
         </a>
-      </small> {% endblock %} </footer> {% block scripts %}
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVK7WTG3T0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+      </small> {% endblock %} </footer> {% block scripts %} <script defer src="https://www.googletagmanager.com/gtag/js?id=G-VVK7WTG3T0"></script>
+    <script defer>
+      window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-VVK7WTG3T0');
-</script> {% endblock %}
-  </body>
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-VVK7WTG3T0');
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Sergiy Duras",
+        "url": "https://sergiy.duras.org",
+        "image": "https://sergiy.duras.org/static/img/npa2025-large.jpg",
+        "sameAs": ["https://www.psiwell.com/", "https://www.linkedin.com/in/duras/", "https://github.com/sduras", "https://codeberg.org/duras", "https://nownownow.com/p/svyZ", "https://npa-ua.org/register/duras-serhiy-hennadiyovych-2228/", "https://vpa.org.ua/about/chleni-asotsiatsiy/povni-diysni-chleni-asotsiatsiy/"],
+        "jobTitle": "Psychologist, Legal Expert, Python Developer",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Psiwell",
+          "url": "https://www.psiwell.com/"
+        },
+        "alumniOf": [{
+          "@type": "CollegeOrUniversity",
+          "name": "Kharkiv University",
+          "url": "https://karazin.ua/en/"
+        }],
+        "knowsAbout": ["Psychology", "Law", "Behavioral Risk", "Polygraph", "Solution-Focused Brief Therapy", "Python", "Human-Centered Design"],
+        "description": "Psychologist applying behavioral risk insights and Python development to build human-centered, solution-oriented software.",
+        "nationality": "Ukrainian"
+      }
+    </script> {% endblock %}
 </html>
