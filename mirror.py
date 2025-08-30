@@ -431,7 +431,7 @@ Message:
         print(f"🔁 Initial server response: {code} {response}")
 
         smtp.ehlo("localhost.localdomain")
-        smtp.starttls()
+        smtp.starttls(server_hostname=MAIL_HOST)
         smtp.ehlo("localhost.localdomain")
         smtp.login(MAIL_USER, MAIL_PASSWORD)
         smtp.sendmail(msg["From"], MAIL_RECEIVER, msg.as_string())
