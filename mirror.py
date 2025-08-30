@@ -407,6 +407,11 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
+        SOCKS_PORT = 9050
+        SOCKS_HOST = "127.0.0.1"
+        socks.setdefaultproxy(socks.SOCKS5, SOCKS_HOST, SOCKS_PORT, rdns=True)
+        socket.socket = socks.socksocket
+
         with smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30) as smtp:
             smtp.set_debuglevel(1)
             smtp.ehlo()
