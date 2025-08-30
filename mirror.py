@@ -8,6 +8,7 @@ import socket
 import subprocess
 import sys
 import time
+import traceback
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from pathlib import Path
@@ -384,35 +385,80 @@ def lists():
     )
 
 
+@app.route("/send_email", methods=["POST"])
 def send_email():
-    context = ssl.create_default_context()
-    
-    socks.set_default_proxy(socks.SOCKS5, "127.0.0.1", 9050, rdns=True)
-    socket.socket = socks.socksocket
-    
-    with smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30) as smtp:
-        print("Connected to SMTP server over Tor")
-        
-        smtp.set_debuglevel(1)
+    name = request.form.get("name")
+    email = request.form.get("email")
+    message = request.form.get("message")
+
+    if not all([name, email, message]):
+        return jsonify({"error": "🔔 All fields are required"}), 400
+
+    msg = MIMEMultipart()
+    msg["From"] = f"{MAIL_USER}@{MAIL_HOST}"
+    msg["To"] = MAIL_RECEIVER
+    msg["Subject"] = "🧅 New message from Tor contact form"
+
+    body = f"""
+New message from your Tor site:
+
+Name: {name}
+Email: {email}
+Message:
+{message}
+    """
+    msg.attach(MIMEText(body, "plain", _charset="utf-8"))
+
+    try:
+        SOCKS_HOST = "127.0.0.1"
+        SOCKS_PORT = 9050
+
+        print(f"🛠 Creating SOCKS5 proxy socket with rdns=True to {MAIL_HOST}:{MAIL_PORT}")
+        socks.set_default_proxy(socks.SOCKS5, SOCKS_HOST, SOCKS_PORT, rdns=True)
+        tor_socket = socks.socksocket()
+        tor_socket.settimeout(30)
+        tor_socket.connect((MAIL_HOST, MAIL_PORT))
+
+        print("🌐 Connected to SMTP server over Tor")
+
+        smtp = smtplib.SMTP()
+        smtp.set_debuglevel(2)
+        smtp.sock = tor_socket
+
+        smtp.file = smtp.sock.makefile("rb")
+        code, response = smtp.getreply()
+        print(f"🔁 Initial server response: {code} {response}")
+
         smtp.ehlo("localhost.localdomain")
-        
-        smtp.docmd("STARTTLS")
-        
-        smtp.sock = context.wrap_socket(smtp.sock, server_hostname=MAIL_HOST)
-        
+
+        code, resp = smtp.docmd("STARTTLS")
+        if code != 220:
+            print(f"❌ Server did not accept STARTTLS: {code} {resp}")
+            raise smtplib.SMTPException(f"STARTTLS not supported by server: {resp}")
+
+        print("🔐 Manually upgrading the socket with SSL...")
+        tor_socket = ssl.wrap_socket(tor_socket, server_hostname=MAIL_HOST)
+        smtp.sock = tor_socket
+        smtp.file = smtp.sock.makefile("rb", 0)
+
+
+        print("🤝 Re-negotiating connection with EHLO over TLS...")
         smtp.ehlo("localhost.localdomain")
+
+         print("🔑 Logging in...")
         smtp.login(MAIL_USER, MAIL_PASSWORD)
+        print("📧 Sending email...")
+        smtp.sendmail(msg["From"], MAIL_RECEIVER, msg.as_string())
+        print("🚪 Quitting SMTP session...")
+        smtp.quit()
 
-        msg = MIMEMultipart()
-        msg["From"] = MAIL_USER
-        msg["To"] = MAIL_RECEIVER
-        msg["Subject"] = "Test email via OnionMail over Tor"
-
-        body = "This is a test email sent through OnionMail SMTP over Tor with STARTTLS."
-        msg.attach(MIMEText(body, "plain"))
-
-        smtp.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
         print("✅ Email sent successfully.")
+        return jsonify({"success": True}), 200
+
+    except Exception as e:
+        print("❌ Exception during email sending:")
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
         
         
 @app.after_request
