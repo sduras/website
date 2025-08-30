@@ -37,8 +37,6 @@ app = Flask(__name__, template_folder="api/templates", static_folder="api/static
 
 load_dotenv()
 
-SOCKS_PORT = 9050
-SOCKS_HOST = "127.0.0.1"
 try:
     socks.setdefaultproxy(socks.SOCKS5, SOCKS_HOST, SOCKS_PORT, rdns=True)
     socket.socket = socks.socksocket
@@ -436,14 +434,26 @@ if __name__ == "__main__":
     print("Starting setup...")
     install_dependencies()
     configure_tor()
+
     print("MAIL_USER:", MAIL_USER)
     print("MAIL_RECEIVER:", MAIL_RECEIVER)
     print("MAIL_PASSWORD:", MAIL_PASSWORD)
     print("MAIL_HOST:", MAIL_HOST)
     print("MAIL_PORT:", MAIL_PORT)
+    
     start_tor()
-
+    
     if wait_for_tor(timeout=60):
+        SOCKS_PORT = 9050
+        SOCKS_HOST = "127.0.0.1"
+        try:
+            socks.setdefaultproxy(socks.SOCKS5, SOCKS_HOST, SOCKS_PORT, rdns=True)
+            socket.socket = socks.socksocket
+            print(f"✅ PySocks is configured for all network traffic with remote DNS.")
+        except Exception as e:
+            print(f"❌ Failed to configure PySocks: {e}")
+            sys.exit(1)
+
         load_onion_address(force_reload=True)
         if ONION_ADDRESS:
             print(f"Your Tor hidden service is running at: {ONION_ADDRESS}")
