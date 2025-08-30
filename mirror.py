@@ -395,12 +395,13 @@ def send_email():
         return jsonify({"error": "🔔 All fields are required"}), 400
 
     msg = MIMEMultipart()
-    msg["From"] = MAIL_USER
+    msg["From"] = f"{MAIL_USER}@{MAIL_HOST}"
     msg["To"] = MAIL_RECEIVER
     msg["Subject"] = "🧅 New message from Tor contact form"
 
     body = f"""
 New message from your Tor site:
+
 Name: {name}
 Email: {email}
 Message:
@@ -409,54 +410,45 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        # Explicit socks proxy config
+        # Tor SOCKS5 proxy setup
         SOCKS_HOST = "127.0.0.1"
         SOCKS_PORT = 9050
-
-        print(f"🔧 Configuring PySocks with rdns=True for {SOCKS_HOST}:{SOCKS_PORT}")
+        print(f"🛠 Configuring PySocks: {SOCKS_HOST}:{SOCKS_PORT} with rdns=True")
         socks.setdefaultproxy(socks.SOCKS5, SOCKS_HOST, SOCKS_PORT, rdns=True)
-
-        # Make sure we override socket globally for any fallback DNS leaks
         socket.socket = socks.socksocket
-        print(f"🧪 socket.socket globally replaced with socks.socksocket")
 
-        # Create the proxy-aware socket manually
-        print(f"🌐 Connecting to mail server {MAIL_HOST}:{MAIL_PORT} via Tor SOCKS5...")
-        sock = socks.socksocket()
-        sock.settimeout(30)
+        # Connect to Onion SMTP server
+        print(f"🌐 Connecting to SMTP server: {MAIL_HOST}:{MAIL_PORT} over Tor")
+        smtp = smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30)
+        smtp.set_debuglevel(2)  # Maximum SMTP debug output
 
-        # If you want to observe the actual .connect() step:
-        print(f"📡 Attempting connection to {MAIL_HOST}:{MAIL_PORT}")
-        sock.connect((MAIL_HOST, MAIL_PORT))
-        print(f"✅ Connection established to {MAIL_HOST}:{MAIL_PORT} over Tor.")
+        # Send EHLO with a valid hostname
+        fake_hostname = "localhost.localdomain"
+        print(f"📨 Sending EHLO as: {fake_hostname}")
+        code, resp = smtp.ehlo(fake_hostname)
+        print(f"🔁 EHLO response: {code} {resp}")
 
-        smtp = smtplib.SMTP()
-        smtp.set_debuglevel(2)  # 0 = no debug, 1 = commands, 2 = full protocol
-
-        smtp.sock = sock
-        smtp.file = sock.makefile("rb")
-
-        print("📨 Sending EHLO...")
-        smtp.ehlo()
-
-        print("🔒 Starting TLS...")
+        # STARTTLS required
+        print("🔐 Initiating STARTTLS...")
         smtp.starttls()
-        smtp.ehlo()
+        smtp.ehlo(fake_hostname)  # Re-issue EHLO after securing connection
 
-        print("🔐 Logging in...")
+        # Authentication
+        print(f"🔑 Logging in as {MAIL_USER}")
         smtp.login(MAIL_USER, MAIL_PASSWORD)
 
-        print("📤 Sending message...")
-        smtp.sendmail(MAIL_USER, MAIL_RECEIVER, msg.as_string())
+        # Send mail
+        print("📤 Sending email...")
+        smtp.sendmail(msg["From"], MAIL_RECEIVER, msg.as_string())
         smtp.quit()
-
         print("✅ Email sent successfully.")
         return jsonify({"success": True}), 200
 
     except Exception as e:
         print("❌ Exception during email sending:")
-        traceback.print_exc()  # full stack trace
+        traceback.print_exc()
         return jsonify({"error": str(e)}), 500
+
 
 
 
