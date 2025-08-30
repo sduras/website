@@ -4070,16 +4070,6 @@
         "NoteFile": ""
     },
     {
-        "Author": "Manuel Matuzović",
-        "Title": "Web Accessibility Cookbook",
-        "Published": "2024",
-        "Format": "e-book",
-        "Rating": 3,
-        "Date Read": "2025-01-06",
-        "Note": 1,
-        "NoteFile": "Web_Accessibility_Cookbook_note.md"
-    },
-    {
         "Author": "Felix Zumstein",
         "Title": "Python for Excel",
         "Published": "2021",
@@ -4339,13 +4329,43 @@
         "Note": 0,
         "NoteFile": ""
     },
+	{
+        "Author": "Giles Colborne",
+        "Title": "Simple and Usable",
+        "Published": "2018",
+        "Format": "e-book",
+        "Rating": 4,
+        "Date Read": "2025-08-16",
+        "Note": 1,
+        "NoteFile": ""
+    },
+	{
+        "Author": "Heydon Pickering, Andy Bell",
+        "Title": "Every Layout",
+        "Published": "2019",
+        "Format": "e-book",
+        "Rating": 4,
+        "Date Read": "2025-08-20",
+        "Note": 1,
+        "NoteFile": ""
+    },
+	{
+        "Author": "Manuel Matuzović",
+        "Title": "Web Accessibility Cookbook",
+        "Published": "2024",
+        "Format": "e-book",
+        "Rating": 5,
+        "Date Read": "2025-08-25",
+        "Note": 1,
+        "NoteFile": ""
+    },
     {
         "Author": "Doug Hellmann",
         "Title": "The Python 3 Standard Library",
         "Published": "2018",
         "Format": "e-book",
         "Rating": 0,
-        "Date Read": "2025-08-19",
+        "Date Read": "2025-08-31",
         "Note": 0,
         "NoteFile": ""
     }
