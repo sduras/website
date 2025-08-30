@@ -37,6 +37,15 @@ app = Flask(__name__, template_folder="api/templates", static_folder="api/static
 
 load_dotenv()
 
+SOCKS_PORT = 9050
+SOCKS_HOST = "127.0.0.1"
+try:
+    socks.setdefaultproxy(socks.SOCKS5, SOCKS_HOST, SOCKS_PORT, rdns=True)
+    socket.socket = socks.socksocket
+    print(f"✅ PySocks is configured for all network traffic with remote DNS.")
+except Exception as e:
+    print(f"❌ Failed to configure PySocks globally: {e}")
+    
 TOR_DIR = os.path.expanduser(os.getenv("TOR_DIR", "~/.tor"))
 HIDDEN_SERVICE_DIR = os.path.join(TOR_DIR, "hidden_service")
 LOG_FILE = os.path.join(TOR_DIR, "tor.log")
@@ -400,9 +409,6 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050, rdns=True)
-        socket.socket = socks.socksocket
-
         with smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30) as smtp:
             smtp.set_debuglevel(1)
             smtp.ehlo()
