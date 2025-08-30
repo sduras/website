@@ -387,6 +387,11 @@ def lists():
 
 @app.route("/send_email", methods=["POST"])
 def send_email():
+    """
+    Handles a POST request to send an email.
+    The email is routed through a Tor SOCKS5 proxy and the SSL handshake
+    is manually handled to provide the server_hostname.
+    """
     name = request.form.get("name")
     email = request.form.get("email")
     message = request.form.get("message")
@@ -410,12 +415,11 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
+        # Configuration for the SOCKS5 proxy to Tor
         SOCKS_HOST = "127.0.0.1"
         SOCKS_PORT = 9050
 
-        print(
-            f"🛠 Creating SOCKS5 proxy socket with rdns=True to {MAIL_HOST}:{MAIL_PORT}"
-        )
+        print(f"🛠 Creating SOCKS5 proxy socket with rdns=True to {MAIL_HOST}:{MAIL_PORT}")
         socks.set_default_proxy(socks.SOCKS5, SOCKS_HOST, SOCKS_PORT, rdns=True)
         tor_socket = socks.socksocket()
         tor_socket.settimeout(30)
@@ -423,29 +427,38 @@ Message:
 
         print("🌐 Connected to SMTP server over Tor")
 
+        # Initialize SMTP object
         smtp = smtplib.SMTP()
         smtp.set_debuglevel(2)
-        smtp.sock = tor_socket
+        smtp.sock = tor_socket  # Use the pre-connected Tor socket
 
+        # Manually call connect (without hostname resolution) and get initial reply
         smtp.file = smtp.sock.makefile("rb")
         code, response = smtp.getreply()
         print(f"🔁 Initial server response: {code} {response}")
 
+        # Send EHLO command
         smtp.ehlo("localhost.localdomain")
 
+        # Issue STARTTLS command and check for a successful reply
         code, resp = smtp.docmd("STARTTLS")
         if code != 220:
             print(f"❌ Server did not accept STARTTLS: {code} {resp}")
             raise smtplib.SMTPException(f"STARTTLS not supported by server: {resp}")
 
+        # Manually wrap the socket with SSL to upgrade the connection using an SSLContext
         print("🔐 Manually upgrading the socket with SSL...")
-        tor_socket = ssl.wrap_socket(tor_socket, server_hostname=MAIL_HOST)
+        context = ssl.create_default_context()
+        tor_socket = context.wrap_socket(tor_socket, server_hostname=MAIL_HOST)
         smtp.sock = tor_socket
+        # The file object needs to be recreated for the new socket
         smtp.file = smtp.sock.makefile("rb", 0)
 
+        # Re-EHLO over the now-encrypted connection
         print("🤝 Re-negotiating connection with EHLO over TLS...")
         smtp.ehlo("localhost.localdomain")
 
+        # Log in and send the email
         print("🔑 Logging in...")
         smtp.login(MAIL_USER, MAIL_PASSWORD)
         print("📧 Sending email...")
