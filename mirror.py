@@ -410,37 +410,33 @@ Message:
     msg.attach(MIMEText(body, "plain", _charset="utf-8"))
 
     try:
-        # Tor SOCKS5 proxy setup
         SOCKS_HOST = "127.0.0.1"
         SOCKS_PORT = 9050
-        print(f"🛠 Configuring PySocks: {SOCKS_HOST}:{SOCKS_PORT} with rdns=True")
-        socks.setdefaultproxy(socks.SOCKS5, SOCKS_HOST, SOCKS_PORT, rdns=True)
-        socket.socket = socks.socksocket
 
-        # Connect to Onion SMTP server
-        print(f"🌐 Connecting to SMTP server: {MAIL_HOST}:{MAIL_PORT} over Tor")
-        smtp = smtplib.SMTP(MAIL_HOST, MAIL_PORT, timeout=30)
-        smtp.set_debuglevel(2)  # Maximum SMTP debug output
+        print(f"🛠 Creating SOCKS5 proxy socket with rdns=True to {MAIL_HOST}:{MAIL_PORT}")
+        socks.set_default_proxy(socks.SOCKS5, SOCKS_HOST, SOCKS_PORT, rdns=True)
+        tor_socket = socks.socksocket()
+        tor_socket.settimeout(30)
+        tor_socket.connect((MAIL_HOST, MAIL_PORT))
 
-        # Send EHLO with a valid hostname
-        fake_hostname = "localhost.localdomain"
-        print(f"📨 Sending EHLO as: {fake_hostname}")
-        code, resp = smtp.ehlo(fake_hostname)
-        print(f"🔁 EHLO response: {code} {resp}")
+        print("🌐 Connected to SMTP server over Tor")
 
-        # STARTTLS required
-        print("🔐 Initiating STARTTLS...")
+        smtp = smtplib.SMTP()
+        smtp.set_debuglevel(2)
+        smtp.sock = tor_socket  # Use the pre-connected Tor socket
+
+        # Manually call connect (without hostname resolution)
+        smtp.file = smtp.sock.makefile("rb")
+        code, response = smtp.getreply()
+        print(f"🔁 Initial server response: {code} {response}")
+
+        smtp.ehlo("localhost.localdomain")
         smtp.starttls()
-        smtp.ehlo(fake_hostname)  # Re-issue EHLO after securing connection
-
-        # Authentication
-        print(f"🔑 Logging in as {MAIL_USER}")
+        smtp.ehlo("localhost.localdomain")
         smtp.login(MAIL_USER, MAIL_PASSWORD)
-
-        # Send mail
-        print("📤 Sending email...")
         smtp.sendmail(msg["From"], MAIL_RECEIVER, msg.as_string())
         smtp.quit()
+
         print("✅ Email sent successfully.")
         return jsonify({"success": True}), 200
 
@@ -448,9 +444,6 @@ Message:
         print("❌ Exception during email sending:")
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
-
-
-
 
 
 @app.after_request
